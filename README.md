@@ -1,0 +1,4 @@
+IA
+==
+
+Artificial Intelligence project
