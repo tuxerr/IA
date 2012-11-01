@@ -4,9 +4,14 @@
 # fichier définissant l'interface générale
 import sys
 from interface import *
+from configuration import *
         
 def main():
-    inter = Interface()
+    #dictionnaire contenant les informations de configuration de la simulation
+    conf = conf_defaults()
+
+    #handle gérant l'interface qt de la simulation
+    inter = Interface(conf)
 
     # exit quand l'interface s'est coupée (fermeture du programme)
     sys.exit(inter.getAppHandle().exec_())
