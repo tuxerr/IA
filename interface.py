@@ -7,11 +7,12 @@ from PyQt4 import QtGui, QtCore
 
 class Interface(QtGui.QMainWindow):
     
-    def __init__(self,conf):
+    def __init__(self,conf,iamap):
         self.app = QtGui.QApplication(sys.argv)
         super().__init__()
         self.initUI()
         self.conf = conf
+        self.map = iamap
 
     def getAppHandle(self):
         return self.app
@@ -44,13 +45,29 @@ class Interface(QtGui.QMainWindow):
         runAction.setShortcut('Ctrl+R')
         runAction.triggered.connect(self.popConfigurationWindow)
 
-        actionList.append(exitAction);
-        actionList.append(confAction);
-        actionList.append(runAction);
+        genMap = QtGui.QAction(QtGui.QIcon('resources/generate.jpg'), 'Generate Map', self)
+        genMap.setShortcut('Ctrl+G')
+        genMap.triggered.connect(self.generateMap)
+
+        overview = QtGui.QAction(QtGui.QIcon('resources/overview.gif'), 'Map Overview', self)
+        overview.setShortcut('Ctrl+O')
+        overview.triggered.connect(self.popOverviewWindow)
+
+        actionList.append(exitAction)
+        actionList.append(confAction)
+        actionList.append(runAction)
+        actionList.append(genMap)
+        actionList.append(overview)
         return actionList;
 
     def popConfigurationWindow(self):
         self.confWidget = ConfigurationWidget(self.conf)
+
+    def popOverviewWindow(self):
+        self.overviewWidget = OverviewWidget(self.map)
+        
+    def generateMap(self):
+        self.map.generate_map(self.conf)
 
 
 class ConfigurationWidget(QtGui.QWidget):
@@ -92,9 +109,42 @@ class ConfigurationWidget(QtGui.QWidget):
     def taux_arbres_changevalue(self,new_val):
         if new_val != "":
             self.conf["taux_arbres"]=int(new_val)
-            print(self.conf)
 
     def taux_animaux_changevalue(self,new_val):
         if new_val != "":
             self.conf["taux_animaux"]=int(new_val)
-            print(self.conf)
+
+
+class OverviewWidget(QtGui.QGraphicsView):
+    def __init__(self,iamap):
+        self.scene = QtGui.QGraphicsScene()
+
+        super().__init__(self.scene)
+        self.map = iamap
+        self.initUI()
+
+    def initUI(self):
+        self.setWindowTitle('Map Overview')
+        self.setGeometry(200,200,600,600)
+
+        self.initScene()
+
+        self.centerOn(0,0)
+        self.show()
+
+    def initScene(self):
+        for i in range(0,len(self.map.matrix)):
+            for j in range(0,len(self.map.matrix[0])):
+
+                item = QtGui.QGraphicsRectItem()
+                cell = self.map.matrix[i][j]
+                if cell.cell_type=="water":
+                    item.setPen(QtGui.QColor(0,0,255))
+                elif cell.cell_type=="land":
+                    item.setPen(QtGui.QColor(0,255,0))
+
+                item.setRect(i,j,1,1)
+                self.scene.addItem(item)
+
+                    
+                
