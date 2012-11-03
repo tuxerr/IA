@@ -12,9 +12,8 @@ class IAMap:
         terrainNoise = SimplexNoise(2000)
         treeNoise = SimplexNoise(2000)
 
-        scale=40
+        scale=self.width/5
         scaleForest=scale/2
-
 
         for i in range(0,self.width):
             for j in range(0,self.height):
