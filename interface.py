@@ -154,8 +154,19 @@ class OverviewWidget(QtGui.QGraphicsView):
                     item.setPen(QtGui.QColor(0,0,255))
                     item.setBrush(QtGui.QColor(0,0,255))
                 elif cell.cell_type=="land":
-                    item.setPen(QtGui.QColor(0,255,0))
-                    item.setBrush(QtGui.QColor(0,255,0))
+
+                    if cell.has_property("tree"):
+                        item.setPen(QtGui.QColor(117,154,16))
+                        item.setBrush(QtGui.QColor(117,154,16))
+                    else:
+                        item.setPen(QtGui.QColor(0,255,0))
+                        item.setBrush(QtGui.QColor(0,255,0))
+                elif cell.cell_type=="beach":
+                    item.setPen(QtGui.QColor(255,218,102))
+                    item.setBrush(QtGui.QColor(255,218,102))
+                elif cell.cell_type=="mountain":
+                    item.setPen(QtGui.QColor(220,187,139))
+                    item.setBrush(QtGui.QColor(220,187,139))
 
                 item.setRect(i*20,j*20,20,20)
                 self.scene.addItem(item)
