@@ -12,6 +12,7 @@ def main():
     conf = conf_defaults()
 
     iamap = IAMap(200,200)
+    iamap.generate_map(conf)
 
     #handle gérant l'interface qt de la simulation
     inter = Interface(conf,iamap)

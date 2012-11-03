@@ -10,9 +10,9 @@ class Interface(QtGui.QMainWindow):
     def __init__(self,conf,iamap):
         self.app = QtGui.QApplication(sys.argv)
         super().__init__()
-        self.initUI()
         self.conf = conf
         self.map = iamap
+        self.initUI()
 
     def getAppHandle(self):
         return self.app
@@ -20,6 +20,9 @@ class Interface(QtGui.QMainWindow):
     def initUI(self):               
         self.setWindowTitle('Projet IA')    
         self.toolbar = self.addToolBar('General Toolbar')
+
+        self.overviewWidget = OverviewWidget(self.map)
+        self.setCentralWidget(self.overviewWidget)
 
         # add all toolbar buttons defined in initToolbarActions
         actionList = self.initToolbarActions()
@@ -49,15 +52,20 @@ class Interface(QtGui.QMainWindow):
         genMap.setShortcut('Ctrl+G')
         genMap.triggered.connect(self.generateMap)
 
-        overview = QtGui.QAction(QtGui.QIcon('resources/overview.gif'), 'Map Overview', self)
-        overview.setShortcut('Ctrl+O')
-        overview.triggered.connect(self.popOverviewWindow)
+        zoomin = QtGui.QAction(QtGui.QIcon('resources/zoomin.png'), 'Map Overview', self)
+        zoomin.setShortcut('Ctrl+O')
+        zoomin.triggered.connect(self.overviewWidget.zoomIn)
+
+        zoomout = QtGui.QAction(QtGui.QIcon('resources/zoomout.png'), 'Map Overview', self)
+        zoomout.setShortcut('Ctrl+O')
+        zoomout.triggered.connect(self.overviewWidget.zoomOut)
 
         actionList.append(exitAction)
         actionList.append(confAction)
         actionList.append(runAction)
         actionList.append(genMap)
-        actionList.append(overview)
+        actionList.append(zoomin)
+        actionList.append(zoomout)
         return actionList;
 
     def popConfigurationWindow(self):
@@ -68,6 +76,7 @@ class Interface(QtGui.QMainWindow):
         
     def generateMap(self):
         self.map.generate_map(self.conf)
+        self.overviewWidget.initScene()
 
 
 class ConfigurationWidget(QtGui.QWidget):
@@ -122,17 +131,20 @@ class OverviewWidget(QtGui.QGraphicsView):
         super().__init__(self.scene)
         self.map = iamap
         self.initUI()
+        self.scaleValue=0.2
+        self.scale(self.scaleValue,self.scaleValue)
 
     def initUI(self):
-        self.setWindowTitle('Map Overview')
-        self.setGeometry(200,200,600,600)
+#        self.setWindowTitle('Map Overview')
+#        self.setGeometry(200,200,600,600)
 
         self.initScene()
 
         self.centerOn(0,0)
-        self.show()
+#        self.show()
 
     def initScene(self):
+        self.scene.clear()
         for i in range(0,len(self.map.matrix)):
             for j in range(0,len(self.map.matrix[0])):
 
@@ -140,11 +152,21 @@ class OverviewWidget(QtGui.QGraphicsView):
                 cell = self.map.matrix[i][j]
                 if cell.cell_type=="water":
                     item.setPen(QtGui.QColor(0,0,255))
+                    item.setBrush(QtGui.QColor(0,0,255))
                 elif cell.cell_type=="land":
                     item.setPen(QtGui.QColor(0,255,0))
+                    item.setBrush(QtGui.QColor(0,255,0))
 
-                item.setRect(i,j,1,1)
+                item.setRect(i*20,j*20,20,20)
                 self.scene.addItem(item)
+
+    def zoomIn(self):
+        self.scale(2,2)
+
+    def zoomOut(self):
+        self.scale(0.5,0.5)
+
+        
 
                     
                 

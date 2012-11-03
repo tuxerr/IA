@@ -9,8 +9,8 @@ class IAMap:
         self.matrix = [ [ 0 for col in range(height) ] for row in range(width) ]
 
     def generate_map(self,conf):
-        simplexNoise = SimplexNoise()
-        scaleX,scaleY=30,30
+        simplexNoise = SimplexNoise(2000)
+        scaleX,scaleY=10,10
 
         for i in range(0,self.width):
             for j in range(0,self.height):

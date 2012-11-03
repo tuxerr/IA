@@ -103,9 +103,9 @@ class BaseNoise:
 		"""
 		if period is not None:
 			self.period = period
-		perm = range(self.period)
+		perm = list(range(self.period))
 		perm_right = self.period - 1
-		for i in list(perm):
+		for i in perm:
 			j = randint(0, perm_right)
 			perm[i], perm[j] = perm[j], perm[i]
 		self.permutation = tuple(perm) * 2
