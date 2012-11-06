@@ -92,6 +92,7 @@ class ConfigurationWidget(QtGui.QWidget):
         
         taux_arbres_label = QtGui.QLabel('Taux d\'arbres (%)')
         taux_animaux_label = QtGui.QLabel('Taux d\'animaux (%)')
+        taux_baies_label = QtGui.QLabel('Taux de baies (%)')
 
         taux_arbres_edit = QtGui.QLineEdit(str(self.conf['taux_arbres']))
         taux_arbres_edit.setValidator(validator)
@@ -100,6 +101,10 @@ class ConfigurationWidget(QtGui.QWidget):
         taux_animaux_edit = QtGui.QLineEdit(str(self.conf['taux_animaux']))
         taux_animaux_edit.setValidator(validator)
         taux_animaux_edit.textChanged[str].connect(self.taux_animaux_changevalue)
+
+        taux_baies_edit = QtGui.QLineEdit(str(self.conf['taux_baies']))
+        taux_baies_edit.setValidator(validator)
+        taux_baies_edit.textChanged[str].connect(self.taux_baies_changevalue)
         
         # configuration has a grid layout
         grid = QtGui.QGridLayout()
@@ -109,6 +114,8 @@ class ConfigurationWidget(QtGui.QWidget):
         grid.addWidget(taux_arbres_edit,1,1)
         grid.addWidget(taux_animaux_label,2,0)
         grid.addWidget(taux_animaux_edit,2,1)
+        grid.addWidget(taux_baies_label,3,0)
+        grid.addWidget(taux_baies_edit,3,1)
         
         self.setLayout(grid)
 
@@ -123,6 +130,10 @@ class ConfigurationWidget(QtGui.QWidget):
         if new_val != "":
             self.conf["taux_animaux"]=int(new_val)
 
+    def taux_baies_changevalue(self,new_val):
+        if new_val != "":
+            self.conf["taux_baies"]=int(new_val)
+
 
 class OverviewWidget(QtGui.QGraphicsView):
     def __init__(self,iamap):
@@ -130,9 +141,13 @@ class OverviewWidget(QtGui.QGraphicsView):
 
         super().__init__(self.scene)
         self.map = iamap
+        width=len(self.map.matrix)
+        height=len(self.map.matrix[0])
+        self.itemmatrix = [ [ 0 for col in range(height) ] for row in range(width) ]
         self.initUI()
         self.scaleValue=0.2
         self.scale(self.scaleValue,self.scaleValue)
+
 
     def initUI(self):
 #        self.setWindowTitle('Map Overview')
@@ -149,27 +164,45 @@ class OverviewWidget(QtGui.QGraphicsView):
             for j in range(0,len(self.map.matrix[0])):
 
                 item = QtGui.QGraphicsRectItem()
-                cell = self.map.matrix[i][j]
-                if cell.cell_type=="water":
-                    item.setPen(QtGui.QColor(0,0,255))
-                    item.setBrush(QtGui.QColor(0,0,255))
-                elif cell.cell_type=="land":
+                self.itemmatrix[i][j]=item
 
-                    if cell.has_property("tree"):
-                        item.setPen(QtGui.QColor(117,154,16))
-                        item.setBrush(QtGui.QColor(117,154,16))
-                    else:
-                        item.setPen(QtGui.QColor(0,255,0))
-                        item.setBrush(QtGui.QColor(0,255,0))
-                elif cell.cell_type=="beach":
-                    item.setPen(QtGui.QColor(255,218,102))
-                    item.setBrush(QtGui.QColor(255,218,102))
-                elif cell.cell_type=="mountain":
-                    item.setPen(QtGui.QColor(220,187,139))
-                    item.setBrush(QtGui.QColor(220,187,139))
+                self.setItemColor(i,j)
 
                 item.setRect(i*20,j*20,20,20)
                 self.scene.addItem(item)
+
+    def setItemColor(self,i,j):
+        item = self.itemmatrix[i][j]
+        cell = self.map.matrix[i][j]
+        if cell.cell_type=="water":
+            item.setPen(QtGui.QColor(0,0,255))
+            item.setBrush(QtGui.QColor(0,0,255))
+        elif cell.cell_type=="saltwater":
+            item.setPen(QtGui.QColor(15,15,100))
+            item.setBrush(QtGui.QColor(15,15,100))
+        elif cell.cell_type=="land":
+
+            if cell.has_property("tree"):
+                item.setPen(QtGui.QColor(117,154,16))
+                item.setBrush(QtGui.QColor(117,154,16))
+            elif cell.has_property("baies"):
+                item.setPen(QtGui.QColor(255,0,0))
+                item.setBrush(QtGui.QColor(255,0,0))
+            elif cell.has_property("animaux"):
+                item.setPen(QtGui.QColor(0,0,0))
+                item.setBrush(QtGui.QColor(0,0,0))
+            else:
+                item.setPen(QtGui.QColor(0,255,0))
+                item.setBrush(QtGui.QColor(0,255,0))
+        elif cell.cell_type=="beach":
+            item.setPen(QtGui.QColor(255,218,102))
+            item.setBrush(QtGui.QColor(255,218,102))
+        elif cell.cell_type=="mountain":
+            item.setPen(QtGui.QColor(220,187,139))
+            item.setBrush(QtGui.QColor(220,187,139))
+
+    def modifyScene(self,i,j):
+        self.setItemColor(i,j)
 
     def zoomIn(self):
         self.scale(2,2)

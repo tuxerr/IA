@@ -11,9 +11,11 @@ class IAMap:
     def generate_map(self,conf):
         terrainNoise = SimplexNoise(2000)
         treeNoise = SimplexNoise(2000)
+        foodNoise = SimplexNoise(2000)
 
         scale=self.width/5
         scaleForest=scale/2
+        scaleFood=scale/4
 
         for i in range(0,self.width):
             for j in range(0,self.height):
@@ -23,6 +25,9 @@ class IAMap:
 
                 treeValue = treeNoise.noise2(float(i)/scaleForest,float(j)/scaleForest)
                 treeValue=treeValue/2+0.5
+
+                foodValue = foodNoise.noise2(float(i)/scaleFood,float(j)/scaleFood)
+                foodValue=foodValue/2+0.5
              
                 distanceFromMiddle=sqrt(pow((i-self.width/2),2)+pow((j-self.height/2),2))/(sqrt(self.width*self.width+self.height*self.height)) #distance between 0 and 1
                 rawValue=rawValue*pow(1-distanceFromMiddle,8)
@@ -34,7 +39,34 @@ class IAMap:
                 if (treeValue<=conf["taux_arbres"]/100 and newCell.cell_type=="land"):
                     newCell.set_property("tree")
 
+                elif (foodValue<=conf["taux_baies"]/100 and newCell.cell_type=="land" and not newCell.has_property("tree")):
+                    newCell.set_property("baies")
+
+                elif (foodValue>=(1-conf["taux_animaux"]/100) and newCell.cell_type=="land"):
+                    newCell.set_property("animaux")
+
                 self.matrix[i][j] = newCell
+
+        self.fill_salt_water()
+
+    def fill_salt_water(self):
+
+        cells_to_test = [(0,0)]
+
+        while len(cells_to_test)!=0:
+            cellX,cellY = cell = cells_to_test.pop()
+           
+            if self.matrix[cellX][cellY].cell_type=="water":
+                self.matrix[cellX][cellY].cell_type="saltwater"
+                if cellX>0:
+                    cells_to_test.append((cellX-1,cellY))
+                if cellX<(self.width-1):
+                    cells_to_test.append((cellX+1,cellY))
+                if cellY>0:
+                    cells_to_test.append((cellX,cellY-1))
+                if cellY<(self.height-1):
+                    cells_to_test.append((cellX,cellY+1))
+
 
     def value_to_celltype(self,rawValue):
         if(rawValue<0.05):
