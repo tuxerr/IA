@@ -16,9 +16,10 @@ def main():
 
     #handle gérant l'interface qt de la simulation
     inter = Interface(conf,iamap)
-
+    print(iamap.A_start([100,100], [200,200]))
     # exit quand l'interface s'est coupée (fermeture du programme)
     sys.exit(inter.getAppHandle().exec_())
-
+    
+    
 if __name__ == '__main__':
     main() 
