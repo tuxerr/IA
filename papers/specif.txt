@@ -1,0 +1,132 @@
+Minutes du super meeting IA
+
+Participants : 
+Rémi Palandri
+Jason Crombez
+Marine Lavaux
+
+5 parties au projet 
+1 - génération de la carte (Perlin noise envisagé)
+2 - interface (affichage, zoom, etc...)
+3 - moteur de jeu (tours de jeu, ressource, carte, perso, simulation rapide – pour faire stats) Fait appel à la carte, l'interface et au code des « mecs »
+4 - code des mecs « de bases » (+animaux)
+5 - code du chef
+A*, non dynamique, hors brouillard de guerre (vue map entière)
+
+Organisation
+Rémi : 1, 2, 3
+Jason : 4,  A*
+Marine : 4
+
+Mise en place d'un « brouillard de guerre »
+
+Représentation des humains sur la carte :
+un humain occupe un pixel
+un pixel peut être occupé par n humains
+traversé des arbres
+traversé des bâtiments
+
+Mise en place d'un système de mémoire 
+deux personnes de même rôle partagent leurs infos si ils sont sur des cases adjacentes
+le chef a une mémoire « infinie »
+
+Jauge de « vie » à faire baisser en fonction des activités se récupère avec les repas du cuisinier
+Jauge de « repos » à faire baisser en fonction des activités se récupère en se reposant
+
+Vie/Mort :
+mourir de vieillesse
+implémentation de l'âge (pas d'exploitation des enfants!)
+le chef supposera qu'un personnage à rôle « dangereux » est mort si il ne revient pas au bout d'un certain temps
+
+Genre :
+à la naissance
+un homme + une femme pour la reproduction
+pas d'autre différences
+
+Une fois un rôle assigné il fait ce qu'il a à faire, puis quand il n'a plus rien à faire → chef
+
+Bâtiments :
+forum (zone d'influence initiale) + stockage non spécialisé de petite taille
+abris
+stockage nourriture spécialisé ou pas ? de plus grande taille
+stockage de bois (mise en place d'un rôle de bûcheron) de plus grande taille
+stockage d'eau de plus grande taille
+
+Ressource naturelle :
+repousse du bois
+repousse des baies ?
+
+Animaux :
+cherche à se nourrir
+si assez nourris, peuvent se reproduire (sexe opposé + proba)
+
+Chef :
+donne des tâches en temps limité
+s'inquiète au bout d'un certain temps
+décide des tâches à effectuer
+à sa mort remplacé par le premier venu le voir ou par un enfant (nouvel adulte)
+
+Humain :
+surveille ses jauges, privilégie sa survie
+
+Cultivateur :
+champs coûte du temps
+moins rentable que la chasse
+surface max par cultivateur
+rendement au prorata surface/temps
+va stocker ses récoltes
+
+Éleveur :
+à partir des animaux ramenés par les chasseurs
+nourrir les animaux avec aliments des cultures
+reproduction, plus rapide que dans la nature car mieux nourris
+
+Chasseur :
+exploration
+rencontre domestique, réussite → on le ramène au camp, échec → le mouton fuit hors d'atteinte
+rencontre sauvage, combat à mort si survie ramène x (à déterminer) unités de bouffe
+
+Porteur d'eau/baie/bûcheron :
+période d'exploration si pas de cible
+sinon A* pour aller à la cible
+mémoire en fonction du rôle (un nombre max de « cases mémoires »)
+tant que des choses à faire on continue, sinon on va voir le chef (si avant temps limité)
+stockage des ressources dans les bâtiments correspondants
+
+Constructeur :
+construire
+re-construire, réparer (intempéries)
+
+Cuisinier :
+se fourni au stockage
+prépare en « centre ville »
+nourriture prête instantanément
+nombre de repas en fonction des « unités » de bouffe
+
+Reproduction humaine :
+pendant leur temps de repos
+avec personne de sexe opposé
+probabilité que ça marche 
+incapacité temporaire (à déterminer)
+le chef peut influencer les probabilités (encourager/décourager la reproduction)
+
+Arbres :
+diminue à cause des bûcherons
+au bout d'un certain temps probabilité de re-spawn (qui augmente si pas de re-spawn immédiat)
+
+Catastrophes naturelles :
+catastrophe localisée géographiquement
+foudre → si personne sur la case meurt, si bâtiment → endommagé
+inondation, bâtiment → endommagé
+éboulement
+
+Humain :
+pas de pv (est juste « en vie »)
+sexe
+âge
+% de tuer loup
+jauge de vie
+jauge de repos
+
+Python 3.3 finalement :)
+

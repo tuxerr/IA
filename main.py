@@ -20,8 +20,11 @@ def main():
     
     waterCarrier = Etre("resources/worker_water.jpg",(0,0))
 
+    print(iamap.A_start([100,100], [200,200]))
+
     # exit quand l'interface s'est coupée (fermeture du programme)
     sys.exit(inter.getAppHandle().exec_())
 
+    
 if __name__ == '__main__':
     main() 
