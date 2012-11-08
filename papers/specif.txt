@@ -124,7 +124,7 @@ Humain :
 pas de pv (est juste « en vie »)
 sexe
 âge
-% de tuer loup
+% de tuer (loup) → plus simple de faire un animal herbivore/omnivore
 jauge de vie
 jauge de repos
 
