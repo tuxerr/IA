@@ -53,8 +53,6 @@ class IAMap:
 #Prend en entré le début et l'arrivé du chemin à créer et renvoie un chemin (liste de coordonée
 #l'arrivé et le départ sont de la forme [x,y]
     def A_start(self,start,stop):
-        print(self.matrix[start[0]][start[1]].cell_type)
-        print(self.matrix[stop[0]][stop[1]].cell_type)
         self.matrix[start[0]][start[1]].parent=-1
         self.cellNoAnalyse.append(start)
         currentcell=start
@@ -69,9 +67,11 @@ class IAMap:
                 noEnd=False
         if (noEnd):    
             chemin=self.pathCreation(stop)
+            cost=self.matrix[stop[0]][stop[1]].costF()
         else:
+            cost=-1
             chemin=[]
-        return chemin
+        return (cost,chemin)
 #Calcul les voisins du point, vérifie s'ils sont dans les listes
 #Modifie les distances
     def voisins(self,point,stop):

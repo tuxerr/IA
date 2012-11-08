@@ -16,7 +16,9 @@ def main():
 
     #handle gérant l'interface qt de la simulation
     inter = Interface(conf,iamap)
-    print(iamap.A_start([100,100], [200,200]))
+    (cost,chemin)=iamap.A_start([000,000], [300,300])
+    print(chemin)
+    print(cost)
     # exit quand l'interface s'est coupée (fermeture du programme)
     sys.exit(inter.getAppHandle().exec_())
     
