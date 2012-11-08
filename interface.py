@@ -4,6 +4,9 @@
 # fichier définissant l'interface générale
 import sys
 from PyQt4 import QtGui, QtCore
+from main import *
+
+global overviewWidgetGlobal
 
 class Interface(QtGui.QMainWindow):
     
@@ -18,10 +21,13 @@ class Interface(QtGui.QMainWindow):
         return self.app
         
     def initUI(self):               
+        global overviewWidgetGlobal
         self.setWindowTitle('Projet IA')    
         self.toolbar = self.addToolBar('General Toolbar')
 
         self.overviewWidget = OverviewWidget(self.map)
+        overviewWidgetGlobal = self.overviewWidget
+
         self.setCentralWidget(self.overviewWidget)
 
         # add all toolbar buttons defined in initToolbarActions
@@ -66,13 +72,10 @@ class Interface(QtGui.QMainWindow):
         actionList.append(genMap)
         actionList.append(zoomin)
         actionList.append(zoomout)
-        return actionList;
+        return actionList
 
     def popConfigurationWindow(self):
         self.confWidget = ConfigurationWidget(self.conf)
-
-    def popOverviewWindow(self):
-        self.overviewWidget = OverviewWidget(self.map)
         
     def generateMap(self):
         self.map.generate_map(self.conf)
@@ -144,7 +147,10 @@ class OverviewWidget(QtGui.QGraphicsView):
         width=len(self.map.matrix)
         height=len(self.map.matrix[0])
         self.itemmatrix = [ [ 0 for col in range(height) ] for row in range(width) ]
+        self.cell_size=20
+        
         self.initUI()
+        
         self.scaleValue=0.2
         self.scale(self.scaleValue,self.scaleValue)
 
@@ -168,8 +174,21 @@ class OverviewWidget(QtGui.QGraphicsView):
 
                 self.setItemColor(i,j)
 
-                item.setRect(i*20,j*20,20,20)
+                item.setRect(i*self.cell_size,j*self.cell_size,self.cell_size,self.cell_size)
                 self.scene.addItem(item)
+
+    def addItemToScene(self,sprite,position):
+        newItem = QtGui.QGraphicsPixmapItem(QtGui.QPixmap(sprite))
+        self.setItemPos(newItem,position)
+        self.scene.addItem(newItem)
+
+    def moveItem(self,item,movement):
+        movX,movY=movement
+        item.moveBy(movX*self.cell_size,movY*self.cell_size)
+
+    def setItemPos(self,item,position):
+        posX,posY=position
+        item.setPos(posX*self.cell_size,posY*self.cell_size)
 
     def setItemColor(self,i,j):
         item = self.itemmatrix[i][j]
