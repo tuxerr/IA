@@ -2,11 +2,14 @@ import random
 
 class Human:
     """A human is defined by the following characteristics:
-    -gender
     -age
     -life gauge
     -fatigue gauge
-    -% of chance to kill a wild animal"""
+    -gender
+    -% of chance to kill a wild animal
+    -memory"""
+
+    lifeStep = 0.01
 
     def __init__(self):
         self.age = 0
@@ -14,6 +17,11 @@ class Human:
         self.fatigueGauge = 100 # idem
         self.isMale = random.choice([True, False])
         self.chanceToKill = 0 # nom pas top
+        self.memory = []
+
+    
+
+
 
 
 
