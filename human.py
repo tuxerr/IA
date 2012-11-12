@@ -13,14 +13,16 @@ class Human(Etre):
 
     lifeStep = 0.02 # arbitraire a changer (test avec 0.5)
     currentLife = 0
+    fogOfWar = 4 # arbitraire
 
     def __init__(self):
         self.age = 0
         self.lifeGauge = 100 # max=100 arbitraire, a changer si besoin
         self.fatigueGauge = 100 # idem
         self.isMale = random.choice([True, False])
-        self.chanceToKill = 0 # nom pas top
-        self.memory = [] # strucure, a voir
+        self.chanceToKill = 0 # nom pas top, init a 0
+        self.fogOfWar
+        self.memory = [] # structure, a voir
 
     def ages(self):
         Human.currentLife += Human.lifeStep

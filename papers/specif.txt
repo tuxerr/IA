@@ -1,6 +1,9 @@
 Légende :
-+ : est implémenté quelque part
++ → est codé quelque part
 
+TODO (dans ce qui est partiellement codé)
+- sécuriser les déplacements (ne pas pouvoir se retrouver dans l'eau, par ex)
+- se mettre d'accord sur une facon de faire pour le code specifique a un role (pour l'instant je met tout au meme endroit comme une grosse sale)
 
 Minutes du super meeting IA
 
