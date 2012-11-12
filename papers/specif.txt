@@ -1,3 +1,7 @@
+Légende :
++ : est implémenté quelque part
+
+
 Minutes du super meeting IA
 
 Participants : 
@@ -34,12 +38,12 @@ Jauge de « vie » à faire baisser en fonction des activités se récupère a
 Jauge de « repos » à faire baisser en fonction des activités se récupère en se reposant
 
 Vie/Mort :
-mourir de vieillesse
-implémentation de l'âge (pas d'exploitation des enfants!)
-le chef supposera qu'un personnage à rôle « dangereux » est mort si il ne revient pas au bout d'un certain temps
++ mourir de vieillesse
++ implémentation de l'âge (pas d'exploitation des enfants!)
+le chef supposera qu'un personnage est mort si il ne revient pas au bout d'un certain temps
 
 Genre :
-à la naissance
++ à la naissance
 un homme + une femme pour la reproduction
 pas d'autre différences
 
@@ -68,6 +72,7 @@ décide des tâches à effectuer
 
 Humain :
 surveille ses jauges, privilégie sa survie
++ explo random initiale
 
 Cultivateur :
 champs coûte du temps
@@ -129,4 +134,3 @@ jauge de vie
 jauge de repos
 
 Python 3.3 finalement :)
-
