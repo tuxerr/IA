@@ -14,6 +14,7 @@ import random
 import math
 from etre import *
 import threading
+import time
 class Animal(Etre):
     
     def __init__(self,position):
@@ -58,6 +59,25 @@ class Animal(Etre):
             distance=distance+1
         return target
 
+    def cheminConjoint(self,matrix,target):
+        (cost,chemin)=matrix.A_Star(self.position,target.position)
+        return (cost,chemin)
+    
+    def rejoindreConjoint(self,matrix,target):
+        (cost,chemin)=self.cheminConjoint(matrix,target)
+        while(target.position!=self.position):
+            if cost!=-1:
+                currentCost=0
+                i=0;
+                while(currentCost<cost/2):
+                    if(abs(chemin[i][0]-self.position[0])+abs(chemin[i][1]-self.position[1]))==2:
+                        currentCost=currentCost+1.4
+                    else:
+                        currentCost=currentCost+1
+                    i=i+1
+
+                        
+                
         
 #soit il se nourrit, soit il se deplace
 
@@ -79,13 +99,31 @@ class Sheep(Animal,threading.Thread) :
     def fuire(self,hunter):
         fromHunter=[self.position[0]-hunter.position[0],self.position[1]-hunter.position[1]]
         directionDeFuite=[-fromHunter[0],-fromHunter[1]]
-               
+            
+    def enfanter(self,sheep):
+        if sheep.typeAnimal()=='Sheep':
+            if ((self.gender=='male') & (sheep.gender=='femelle')&(self.position==sheep.position)):
+                if ((self.isFecond) & (sheep.isFecond)):
+                    self.jaugeNourriture=self.jaugeNourriture-200
+                    sheep.jaugeNourriture=sheep.jaugeNourriture-200
+                    newSheep=Sheep((self.postion[0],sheep.position[1]))
+                    newSheep.start()
+                else:
+                    print("non fecond")
+            else:
+                print("probleme de genre ou de position")
+        else:
+            print("on a pas deux moutons")
+                    
+    
     def run(self):
-        i=0
-        while(i<10):
-            self.setPos((self.position[0]+20,self.position[1]+20))
-            i=i+1
-            print(self.position)
+        #i=0
+        while(1):
+            time.sleep(0.2)
+            self.move((random.choice([-1,0,1]),random.choice([-1,0,1])))
+            
+            #i=i+1
+            #print(self.position)
         
 #Le loup se nourri d'homme et de sheep
 class Wolf(Animal):

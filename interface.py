@@ -181,7 +181,6 @@ class OverviewWidget(QtGui.QGraphicsView):
         newItem = QtGui.QGraphicsPixmapItem(QtGui.QPixmap(sprite))
         self.setItemPos(newItem,position)
         self.scene.addItem(newItem)
-        print(newItem)
         return newItem
 
     def moveItem(self,item,movement):
@@ -190,7 +189,7 @@ class OverviewWidget(QtGui.QGraphicsView):
 
     def setItemPos(self,item,position):
         posX,posY=position
-        print(item.setPos(posX*self.cell_size,posY*self.cell_size))
+        item.setPos(posX*self.cell_size,posY*self.cell_size)
 
     def setItemColor(self,i,j):
         item = self.itemmatrix[i][j]

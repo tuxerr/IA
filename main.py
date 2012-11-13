@@ -25,9 +25,11 @@ def main():
     waterCarrier = Etre("resources/worker_water.jpg",(0,0))
     iamap.desMoutonsDePartout()
     # exit quand l'interface s'est coupée (fermeture du programme)
-    sheep=Sheep((100,100))
+    Sheep([50,50])
+    sheep=Sheep((50,50))
     sheep.start()
-    mouton=Sheep((150,150))
+    Sheep((75,75))
+    mouton=Sheep((75,75))
     mouton.start()
     sys.exit(inter.getAppHandle().exec_())
     

@@ -102,7 +102,7 @@ class IAMap:
         else:
             cost=-1
             chemin=[]
-        return (cost,chemin)
+        return (cost/10,chemin)
 #Calcul les voisins du point, vérifie s'ils sont dans les listes
 #Modifie les distances
     def voisins(self,point,stop):
