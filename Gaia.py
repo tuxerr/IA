@@ -13,6 +13,7 @@ Created on Nov 8, 2012
 import random
 import math
 from etre import *
+import threading
 class Animal(Etre):
     
     def __init__(self,position):
@@ -21,7 +22,8 @@ class Animal(Etre):
         self.jaugeNourriture=200
         self.vitesse=42
         self.etat='vivant'
-    
+        super().__init__("resources/Sheep.png",position)
+            
     def isCorrespond(self,animal):
         return(animal.isFecond()&self.isFecond()(self.gender!=animal.gender))
     
@@ -59,10 +61,11 @@ class Animal(Etre):
         
 #soit il se nourrit, soit il se deplace
 
-class Sheep(Animal) :
+class Sheep(Animal,threading.Thread) :
     
     def __init__(self,position):
-        super().__init__(position)
+        Animal.__init__(self,position)
+        threading.Thread.__init__(self)
         self.feeding=3
         #A voir avec les humains
         self.escape=random.choice(range(25,75)) 
@@ -76,8 +79,13 @@ class Sheep(Animal) :
     def fuire(self,hunter):
         fromHunter=[self.position[0]-hunter.position[0],self.position[1]-hunter.position[1]]
         directionDeFuite=[-fromHunter[0],-fromHunter[1]]
-        
-        
+               
+    def run(self):
+        i=0
+        while(i<10):
+            self.setPos((self.position[0]+20,self.position[1]+20))
+            i=i+1
+            print(self.position)
         
 #Le loup se nourri d'homme et de sheep
 class Wolf(Animal):
@@ -114,6 +122,3 @@ class Wolf(Animal):
             distance=distance+1
         return target
             
-        
-sheep=Sheep([1,2])
-sheep.printCoord()

@@ -1,5 +1,5 @@
 from perlin import *
-
+from Gaia import *
 class IAMap:
     
     def __init__(self,width,height):
@@ -47,7 +47,6 @@ class IAMap:
 
                 elif (foodValue>=(1-conf["taux_animaux"]/100) and newCell.cell_type=="land"):
                     newCell.set_property("animaux")
-
                 self.matrix[i][j] = newCell
 
         self.fill_salt_water()
@@ -186,6 +185,14 @@ class IAMap:
             point=currentParent
         chemin.reverse();
         return chemin
+
+
+    def desMoutonsDePartout(self):
+        for i in range(0,self.height-1):
+            for j in range(0,self.width-1):
+                if self.matrix[i][j].has_property("animaux"):
+                    Sheep((i,j))
+
 
 class IAMapCell:
     
