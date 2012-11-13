@@ -10,11 +10,12 @@ global overviewWidgetGlobal
 
 class Interface(QtGui.QMainWindow):
     
-    def __init__(self,conf,iamap):
+    def __init__(self,conf,iamap,manager):
         self.app = QtGui.QApplication(sys.argv)
         super().__init__()
         self.conf = conf
         self.map = iamap
+        self.manager = manager
         self.initUI()
 
     def getAppHandle(self):
@@ -52,7 +53,11 @@ class Interface(QtGui.QMainWindow):
 
         runAction = QtGui.QAction(QtGui.QIcon('resources/run.png'), 'Run simulation', self)
         runAction.setShortcut('Ctrl+R')
-        runAction.triggered.connect(self.popConfigurationWindow)
+        runAction.triggered.connect(self.launchSimulation)
+
+        pauseAction = QtGui.QAction(QtGui.QIcon('resources/pause.png'), 'Pause simulation', self)
+        pauseAction.setShortcut('Ctrl+P')
+        pauseAction.triggered.connect(self.stopSimulation)
 
         genMap = QtGui.QAction(QtGui.QIcon('resources/generate.jpg'), 'Generate Map', self)
         genMap.setShortcut('Ctrl+G')
@@ -69,10 +74,17 @@ class Interface(QtGui.QMainWindow):
         actionList.append(exitAction)
         actionList.append(confAction)
         actionList.append(runAction)
+        actionList.append(pauseAction)
         actionList.append(genMap)
         actionList.append(zoomin)
         actionList.append(zoomout)
         return actionList
+
+    def launchSimulation(self):
+        self.manager.startSimulation()
+
+    def stopSimulation(self):
+        self.manager.stopSimulation()
 
     def popConfigurationWindow(self):
         self.confWidget = ConfigurationWidget(self.conf)
@@ -186,7 +198,7 @@ class OverviewWidget(QtGui.QGraphicsView):
 
     def moveItem(self,item,movement):
         movX,movY=movement
-        item.moveBy(movX*self.cell_size,movY*self.cell_size)
+        item.moveBy(movX,movY)
 
     def setItemPos(self,item,position):
         posX,posY=position
