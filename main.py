@@ -8,6 +8,8 @@ from configuration import *
 from iamap import *
 from etre import *
 from Gaia import *
+from manager import *
+
 def main():
     #dictionnaire contenant les informations de configuration de la simulation
     conf = conf_defaults()
@@ -15,8 +17,10 @@ def main():
     iamap = IAMap(300,300)
     iamap.generate_map(conf)
 
+    manager = Manager()
+
     #handle gérant l'interface qt de la simulation
-    inter = Interface(conf,iamap)
+    inter = Interface(conf,iamap,manager)
 
     (cost,chemin)=iamap.A_start([75,75], [76,76])
     print(chemin)
@@ -31,6 +35,9 @@ def main():
     Sheep((75,75))
     mouton=Sheep((75,75))
     mouton.start()
+
+
+    # exit quand l'interface s'est coupée (fermeture du programme)
     sys.exit(inter.getAppHandle().exec_())
     
     

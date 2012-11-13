@@ -14,7 +14,11 @@ import random
 import math
 from etre import *
 import threading
+<<<<<<< HEAD
 import time
+=======
+
+>>>>>>> 84d6b4abd0ccf0065507fb44f7a3f6d4b4f9b847
 class Animal(Etre):
     
     def __init__(self,position):
@@ -96,7 +100,7 @@ class Sheep(Animal,threading.Thread) :
     def typeAnimal(self):
         return 'Sheep'
 #un hunter peut être soit un loup qui a loupé son coup soit un humain
-    def fuire(self,hunter):
+    def fuir(self,hunter): #JASON ON DIT FUIR PAS FUIRE, DYSLEXIQUE DE MERDE <3
         fromHunter=[self.position[0]-hunter.position[0],self.position[1]-hunter.position[1]]
         directionDeFuite=[-fromHunter[0],-fromHunter[1]]
             
@@ -124,7 +128,7 @@ class Sheep(Animal,threading.Thread) :
             
             #i=i+1
             #print(self.position)
-        
+
 #Le loup se nourri d'homme et de sheep
 class Wolf(Animal):
     

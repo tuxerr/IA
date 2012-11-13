@@ -11,6 +11,7 @@ class IAMap:
         self.cellAnalyse = []
         #Liste de coordonnée des cellues non calculées pour A*
         self.cellNoAnalyse =[]
+
     def generate_map(self,conf):
         terrainNoise = SimplexNoise(2000)
         treeNoise = SimplexNoise(2000)
@@ -81,6 +82,7 @@ class IAMap:
             cell_type="land"
         
         return cell_type
+
 #Prend en entré le début et l'arrivé du chemin à créer et renvoie un chemin (liste de coordonée
 #l'arrivé et le départ sont de la forme [x,y]
     def A_start(self,start,stop):
