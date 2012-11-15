@@ -19,7 +19,6 @@ class Animal(Etre):
     
     def __init__(self,position):
         self.position=position     
-        self.gender=random.choice(['femelle','male'])
         self.jaugeNourriture=200
         self.vitesse=42
         self.etat='vivant'

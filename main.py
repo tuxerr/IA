@@ -7,6 +7,7 @@ from interface import *
 from configuration import *
 from iamap import *
 from etre import *
+from human import *
 from Gaia import *
 from manager import *
 
@@ -26,7 +27,8 @@ def main():
     print(chemin)
     print(cost)
     
-    waterCarrier = Etre("resources/worker_water.jpg",(0,0))
+    waterCarrier = Human((120,120))
+    manager.addEtre(waterCarrier)
 #    iamap.desMoutonsDePartout()
 
     sheep=Sheep((100,100))

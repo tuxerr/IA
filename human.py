@@ -5,7 +5,7 @@ from lifeExpectancy import *
 class Human(Etre):
     """A human is defined by the following characteristics:
     -age
-    -life gauge
+    -food gauge
     -fatigue gauge
     -gender
     -% of chance to kill a wild animal
@@ -13,16 +13,17 @@ class Human(Etre):
 
     lifeStep = 0.02 # arbitraire a changer (test avec 0.5)
     currentLife = 0
-    fogOfWar = 4 # arbitraire
+#    fogOfWar = 4 # arbitraire
 
-    def __init__(self):
+    def __init__(self, position):
+        self.position=position     
         self.age = 0
-        self.lifeGauge = 100 # max=100 arbitraire, a changer si besoin
+        self.foodGauge = 100 # max=100 arbitraire, a changer si besoin
         self.fatigueGauge = 100 # idem
-        self.isMale = random.choice([True, False])
         self.chanceToKill = 0 # nom pas top, init a 0
-        self.fogOfWar
+#        self.fogOfWar
         self.memory = [] # structure, a voir
+        super().__init__("resources/worker_water.jpg",position)
 
     def ages(self):
         Human.currentLife += Human.lifeStep
@@ -38,7 +39,7 @@ class Human(Etre):
             return(False)
 
     def move(self,movement):
-        etre.move(movement)
+        super().move(movement)
 
     def randomExplo(self):
         d8 = random.randrange(1,8)
@@ -59,31 +60,9 @@ class Human(Etre):
         else:
             self.move((-1,1))
     
-
+    def run(self):
+        print("random explo")
+        self.randomExplo()
             
-
-personne = Human()
-lE = LifeExpectancy(40,25,6,10)
-personne.ages()
-personne.dies(lE)
-personne.ages()
-personne.dies(lE)
-personne.ages()
-personne.dies(lE)
-personne.ages()
-personne.dies(lE)
-personne.ages()
-personne.dies(lE)
-personne.ages()
-personne.dies(lE)
-personne.ages()
-personne.dies(lE)
-personne.ages()
-personne.dies(lE)
-personne.ages()
-personne.dies(lE)
-personne.ages()
-
-
 
 

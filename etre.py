@@ -9,6 +9,7 @@ from interface import *
 
 class Etre:
     def __init__(self,sprite,position):
+	self.gender=random.choice(['F','M'])
         self.qitem = interface.overviewWidgetGlobal.addItemToScene(sprite,position)
         
     def move(self,movement):
