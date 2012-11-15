@@ -197,7 +197,7 @@ class OverviewWidget(QtGui.QGraphicsView):
 
     def moveItem(self,item,movement):
         movX,movY=movement
-        item.moveBy(movX,movY)
+        item.moveBy(movX*self.cell_size,movY*self.cell_size)
 
     def setItemPos(self,item,position):
         posX,posY=position
