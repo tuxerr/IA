@@ -22,23 +22,21 @@ def main():
     #handle gérant l'interface qt de la simulation
     inter = Interface(conf,iamap,manager)
 
-    (cost,chemin)=iamap.A_start([75,75], [76,76])
-    print(chemin)
-    print(cost)
     
-    waterCarrier = Etre("resources/worker_water.jpg",(0,0))
-#    iamap.desMoutonsDePartout()
+    waterCarrier = Etre("resources/worker_water.jpg",(300-1,300-1))
+    iamap.desMoutonsDePartout()
+    #print(iamap.A_star((75,75),(150,150)))
+    # exit quand l'interface s'est coupée (fermeture du programme)
+    #Sheep([175,175])
+    #sheep=Sheep((175,175))
+    #sheep.start()
+    #Sheep((90,90))
+    #mouton=Sheep((90,90))
+    #mouton.start()
 
-    sheep=Sheep((100,100))
-    manager.addEtre(sheep)
-#    sheep.start()
-    mouton=Sheep((150,150))
-    manager.addEtre(mouton)
-#    mouton.start()
 
     # exit quand l'interface s'est coupée (fermeture du programme)
     sys.exit(inter.getAppHandle().exec_())
-    
     
 if __name__ == '__main__':
     main() 
