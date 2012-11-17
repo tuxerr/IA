@@ -17,6 +17,9 @@ import threading
 import time
 import iamap
 from iamap import *
+import manager
+from manager import *
+
 class Animal(Etre):
     
     def __init__(self,position):
@@ -26,13 +29,14 @@ class Animal(Etre):
         self.vitesse=42
         self.etat='vivant'
         super().__init__("resources/Sheep.png",position)
-            
+        self.target=0
+        self.chemin=[]
     def isCorrespond(self,animal):
         return((animal.isFecond())&(self.isFecond())&(self.gender!=animal.gender))
     
     #a redéfinir pour les animaux en cage
     def isFecond(self):
-        return((self.etat=='vivant')&(self.jaugeNourriture>=400))
+        return((self.etat=='vivant')&(self.jaugeNourriture>=300))
 
     #getAnimal et isAnimal à implementer pour les celulles
     #getAnimal doit revoyer une liste
@@ -65,20 +69,20 @@ class Animal(Etre):
     def rejoindreConjoint(self,target):
         matrix=iamap.matrixglobal
         (cost,chemin)=self.cheminConjoint(target)
-        while(target.position!=self.position):
-            time.sleep(0.2)
-            if cost!=-1:
-                currentCost=0
-                i=0;
-                while((currentCost<cost/(i+1))&(i<len(chemin))):
-                    if(abs(chemin[i][0]-self.position[0])+abs(chemin[i][1]-self.position[1]))==2:
-                        currentCost=currentCost+1.4
-                    else:
-                        currentCost=currentCost+1
-                    self.setPos(chemin[i])
-                    i=i+1
-                (cost,chemin)=self.cheminConjoint(target)
-                    
+        finChemin=[]
+        if cost>=2:
+            currentCost=0
+            i=0;
+            while((currentCost<(cost/2))&(i<len(chemin))):
+                if(abs(chemin[i][0]-self.position[0])+abs(chemin[i][1]-self.position[1]))==2:
+                    currentCost=currentCost+1.4
+                else:
+                    currentCost=currentCost+1
+                finChemin.append(chemin[i])
+                i=i+1
+        else:
+            finChemin=chemin
+        return finChemin
                         
                 
         
@@ -89,7 +93,7 @@ class Sheep(Animal,threading.Thread) :
     def __init__(self,position):
         Animal.__init__(self,position)
         threading.Thread.__init__(self)
-        self.feeding=3
+        self.feeding=50
         #A voir avec les humains
         self.escape=random.choice(range(25,75)) 
         
@@ -112,12 +116,13 @@ class Sheep(Animal,threading.Thread) :
                         self.jaugeNourriture=self.jaugeNourriture-200
                         sheep.jaugeNourriture=sheep.jaugeNourriture-200
                         newSheep=Sheep((self.position[0],self.position[1]))
+                        #newSheep=Sheep((200,200))
                         iamap.matrixglobal[newSheep.position[0]][newSheep.position[1]].set_have(newSheep)
                         iamap.matrixglobal[newSheep.position[0]][newSheep.position[1]].set_property("animaux")
-                        print(newSheep)
+                        manager.managerGlobal.addEtre(newSheep)
                         print("un bebe est né")
                     else:
-                        print("non fecond")
+                        print("non fecond",self.jaugeNourriture,sheep.jaugeNourriture)
                 else:
                     print("probleme de position")    
             else:
@@ -130,39 +135,40 @@ class Sheep(Animal,threading.Thread) :
         
     def choix(self):
         rand=random.randint(1,100)
-        if rand<80:
-            move=self.move((random.choice([-1,0,1]),random.choice([-1,0,1])))
-            while move==0:
+        if (rand>((500-self.jaugeNourriture)/5))|(len(iamap.iamapglobal.matrix[self.position[0]][self.position[1]].have)>1):
+            rand1=random.choice([-1,0,1])
+            rand2=random.choice([-1,0,1])
+            move=self.move((rand1,rand2))
+            while move==0|(rand1==0 & rand2==0):
                 move=self.move((random.choice(-1,0,1),random.choice(-1,0,1)))
-        else:
+        else:           
             self.nourrir()
-    def run(self):
-        #i=0
-        target=0
-        while(1):
-            time.sleep(0.2)
-            if target==0:
-                if self.jaugeNourriture<400:
-                    self.choix()
-                else:
-                    target=self.rechercheDeConjoint()
-            else:
-                if target.position!=self.position:
-                    self.rejoindreConjoint(target)
-                else:
-                    if(self.gender=="femelle"):
-                        print("enfanter")
-                        self.enfanter(target)
-                    else:
-                        while(self.jaugeNourriture>400):
-                            time.sleep(1)
-                    target=0
-                
             
-            #self.move((random.choice([-1,0,1]),random.choice([-1,0,1])))
-            #i=i+1
-            #print(self.position)
-
+    def run(self):
+        
+        if self.target== 0:
+            if self.jaugeNourriture<300:
+                self.choix()
+            else:
+                self.target=self.rechercheDeConjoint()
+        else:
+            if self.position==self.target.position:
+                if self.gender=="femelle":
+                    self.enfanter(self.target)
+                else:
+                    self.nourrir()
+                self.target=0
+                self.chemin=[]
+            else:
+                if self.chemin==[]:
+                    self.chemin=self.rejoindreConjoint(self.target)
+                if self.chemin != []:
+                    self.setPos(self.chemin[0])
+                    self.chemin.remove(self.chemin[0])
+        self.jaugeNourriture=self.jaugeNourriture-1
+        if self.jaugeNourriture<=0:
+            print("sheep dead")
+                    
 #Le loup se nourri d'homme et de sheep
 class Wolf(Animal):
     #http://dehais.perso.enseeiht.fr/tsi-ogl

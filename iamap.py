@@ -1,6 +1,7 @@
 from perlin import *
 from Gaia import *
-import threading
+import manager
+from manager import *
 global matrixglobal
 global iamapglobal
 class IAMap:
@@ -14,7 +15,6 @@ class IAMap:
         #Liste de coordonnée des cellules calculées pour A*
         self.cellAnalyse = []
         #Liste de coordonnée des cellues non calculées pour A*
-        self.lock=threading.Lock()
         self.cellNoAnalyse =[]
         iamapglobal=self
     
@@ -94,7 +94,6 @@ class IAMap:
 #Prend en entré le début et l'arrivé du chemin à créer et renvoie un chemin (liste de coordonée
 #l'arrivé et le départ sont de la forme [x,y]
     def A_star(self,start,stop):
-        self.lock.acquire()
         start=[start[0],start[1]]
         stop=[stop[0],stop[1]]
         self.cellNoAnalyse=[]
@@ -117,7 +116,6 @@ class IAMap:
         else:
             cost=-10
             chemin=[]
-        self.lock.release()
         return (cost/10,chemin)
 
 #Calcul les voisins du point, vérifie s'ils sont dans les listes
@@ -208,9 +206,8 @@ class IAMap:
             for j in range(0,self.width-1):
                 if self.matrix[i][j].has_property("animaux"):
                     sheep=Sheep((i,j))
-                    sheep.start()
                     self.matrix[i][j].set_have(sheep)
-                    
+                    manager.managerGlobal.addEtre(sheep)
 
 
 class IAMapCell:
