@@ -13,6 +13,7 @@ class Etre:
         self.qitem = interface.overviewWidgetGlobal.addItemToScene(sprite,position)
         self.position=position
         
+        
     def move(self,movement):
         i,j=self.position
         x,y=movement

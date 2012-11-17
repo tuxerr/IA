@@ -23,6 +23,7 @@ class IAMap:
         terrainNoise = SimplexNoise(2000)
         treeNoise = SimplexNoise(2000)
         foodNoise = SimplexNoise(2000)
+        wolfNoise = SimplexNoise(2000)
 
         scale=self.width/5
         scaleForest=scale/2
@@ -39,6 +40,9 @@ class IAMap:
 
                 foodValue = foodNoise.noise2(float(i)/scaleFood,float(j)/scaleFood)
                 foodValue=foodValue/2+0.5
+
+                wolfValue = wolfNoise.noise2(float(i)/scaleFood,float(j)/scaleFood)
+                wolfValue= wolfValue/2+0.5
              
                 distanceFromMiddle=sqrt(pow((i-self.width/2),2)+pow((j-self.height/2),2))/(sqrt(self.width*self.width+self.height*self.height)) #distance between 0 and 1
                 rawValue=rawValue*pow(1-distanceFromMiddle,8)
@@ -53,8 +57,12 @@ class IAMap:
                 elif (foodValue<=conf["taux_baies"]/100 and newCell.cell_type=="land" and not newCell.has_property("tree")):
                     newCell.set_property("baies")
 
-                elif (foodValue>=(1-conf["taux_animaux"]/100) and newCell.cell_type=="land"):
-                    newCell.set_property("animaux")
+                elif (foodValue>=(1-conf["taux_moutons"]/100) and newCell.cell_type=="land"):
+                    newCell.set_property("sheep")
+
+                elif (wolfValue<=conf["taux_loups"]/100 and newCell.cell_type=="land"):
+                    newCell.set_property("wolf")
+                    
                 self.matrix[i][j] = newCell
 
         self.fill_salt_water()
