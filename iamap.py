@@ -66,6 +66,8 @@ class IAMap:
                 self.matrix[i][j] = newCell
 
         self.fill_salt_water()
+        #self.desMoutonsDePartout()
+        #self.desLoupsDePartout()
         matrixglobal=self.matrix
         
     def fill_salt_water(self):
@@ -212,10 +214,18 @@ class IAMap:
     def desMoutonsDePartout(self):
         for i in range(0,self.height-1):
             for j in range(0,self.width-1):
-                if self.matrix[i][j].has_property("animaux"):
+                if self.matrix[i][j].has_property("sheep"):
                     sheep=Sheep((i,j))
                     self.matrix[i][j].set_have(sheep)
                     manager.managerGlobal.addEtre(sheep)
+                    
+    def desLoupsDePartout(self):
+        for i in range(0,self.height-1):
+            for j in range(0,self.width-1):
+                if self.matrix[i][j].has_property("wolf"):
+                    wolf=Wolf((i,j))
+                    self.matrix[i][j].set_have(wolf)
+                    manager.managerGlobal.addEtre(wolf)
 
 
 class IAMapCell:
@@ -249,7 +259,7 @@ class IAMapCell:
     def getAnimal(self,type):
         animaux=[]
         for animal in self.have:
-            if animal.typeAnimal()=="Sheep":
+            if animal.typeAnimal()==type:
                 animaux.append(animal)
         return animaux
     def __str__(self):

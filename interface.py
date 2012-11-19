@@ -231,12 +231,12 @@ class OverviewWidget(QtGui.QGraphicsView):
             elif cell.has_property("baies"):
                 item.setPen(QtGui.QColor(255,0,0))
                 item.setBrush(QtGui.QColor(255,0,0))
-            elif cell.has_property("wolf"):
-                item.setPen(QtGui.QColor(0,0,0))
-                item.setBrush(QtGui.QColor(0,0,0))
-            elif cell.has_property("sheep"):
-                item.setPen(QtGui.QColor(0,0,255))
-                item.setBrush(QtGui.QColor(0,0,255))
+            #elif cell.has_property("wolf"):
+            #    item.setPen(QtGui.QColor(0,0,0))
+            #    item.setBrush(QtGui.QColor(0,0,0))
+            #elif cell.has_property("sheep"):
+            #    item.setPen(QtGui.QColor(0,0,255))
+            #    item.setBrush(QtGui.QColor(0,0,255))
             else:
                 item.setPen(QtGui.QColor(0,255,0))
                 item.setBrush(QtGui.QColor(0,255,0))

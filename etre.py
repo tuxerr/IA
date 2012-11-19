@@ -4,10 +4,11 @@
 import sys
 import interface
 import iamap
+import manager
 from iamap import *
 from main import *
 from interface import *
-
+from manager import *
 class Etre:
     def __init__(self,sprite,position):
         self.qitem = interface.overviewWidgetGlobal.addItemToScene(sprite,position)
@@ -21,9 +22,9 @@ class Etre:
             interface.overviewWidgetGlobal.moveItem(self.qitem,movement)
             self.position=(i+x,j+y)
             iamap.matrixglobal[i][j].remove_have(self)
-            iamap.matrixglobal[i][j].remove_property("animaux")
+            iamap.matrixglobal[i][j].remove_property(self.typeAnimal())
             iamap.matrixglobal[i+x][j+y].set_have(self)
-            iamap.matrixglobal[i+x][j+y].set_property("animaux")
+            iamap.matrixglobal[i+x][j+y].set_property(self.typeAnimal())
             
     def setPos(self,pos):
         i,j=self.position
@@ -32,9 +33,18 @@ class Etre:
             interface.overviewWidgetGlobal.setItemPos(self.qitem,pos)
             self.position=pos
             iamap.matrixglobal[i][j].remove_have(self)
-            iamap.matrixglobal[i][j].remove_property("animaux")
+            iamap.matrixglobal[i][j].remove_property(self.typeAnimal())
             iamap.matrixglobal[x][y].set_have(self)
-            iamap.matrixglobal[x][y].set_property("animaux")
+            iamap.matrixglobal[x][y].set_property(self.typeAnimal())
+            
+    def mort(self):
+        i,j=self.position
+        self.etat='mort'
+        interface.overviewWidgetGlobal.setItemPos(self.qitem,[0,0])
+        iamap.matrixglobal[i][j].remove_have(self)
+        iamap.matrixglobal[i][j].remove_property(self.typeAnimal())
+        manager.managerGlobal.removeEtre(self)
+        
     def canGo(self,pos):
         i,j=pos
         canGo=False

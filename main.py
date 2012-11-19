@@ -21,20 +21,20 @@ def main():
 
     #handle gérant l'interface qt de la simulation
     inter = Interface(conf,iamap,manager)
-
+    iamap.desMoutonsDePartout()
+    iamap.desLoupsDePartout()
     
     waterCarrier = Etre("resources/worker_water.jpg",(300-1,300-1))
-    iamap.desMoutonsDePartout()
     #print(iamap.A_star((75,75),(150,150)))
     # exit quand l'interface s'est coupée (fermeture du programme)
-    #Sheep([175,175])
     #sheep=Sheep((175,175))
-    #sheep.start()
-    #Sheep((90,90))
-    #mouton=Sheep((90,90))
-    #mouton.start()
-
-
+    #mouton=Sheep((175,175))
+    #manager.addEtre(sheep)
+    #manager.addEtre(mouton)
+    #iamap.matrix[sheep.position[0]][sheep.position[1]].set_have(sheep)
+    #iamap.matrix[sheep.position[0]][sheep.position[1]].set_property(sheep.typeAnimal())
+    #iamap.matrix[mouton.position[0]][mouton.position[1]].set_have(mouton)
+    #iamap.matrix[mouton.position[0]][mouton.position[1]].set_property(mouton.typeAnimal())
     # exit quand l'interface s'est coupée (fermeture du programme)
     sys.exit(inter.getAppHandle().exec_())
     

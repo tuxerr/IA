@@ -7,7 +7,7 @@ class Manager():
         global managerGlobal
         self.timer=QtCore.QTimer()
         QtCore.QObject.connect(self.timer,QtCore.SIGNAL("timeout()"),self.runEtres)
-        self.timeout=200
+        self.timeout=1000
         self.listeEtres=[];
         managerGlobal=self
         
