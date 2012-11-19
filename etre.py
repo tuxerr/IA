@@ -9,9 +9,10 @@ from iamap import *
 from main import *
 from interface import *
 from manager import *
+
 class Etre:
-    def __init__(self,sprite,position):
-        self.qitem = interface.overviewWidgetGlobal.addItemToScene(sprite,position)
+    def __init__(self,sprite,sprite_scale,position):
+        self.qitem = interface.overviewWidgetGlobal.addItemToScene(sprite,position,sprite_scale)
         self.position=position
         
         
@@ -40,7 +41,7 @@ class Etre:
     def mort(self):
         i,j=self.position
         self.etat='mort'
-        interface.overviewWidgetGlobal.setItemPos(self.qitem,[0,0])
+        interface.overviewWidgetGlobal.removeItem(self.qitem)
         iamap.matrixglobal[i][j].remove_have(self)
         iamap.matrixglobal[i][j].remove_property(self.typeAnimal())
         manager.managerGlobal.removeEtre(self)

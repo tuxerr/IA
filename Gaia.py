@@ -22,13 +22,13 @@ from manager import *
 
 class Animal(Etre):
     
-    def __init__(self,sprite,position):
+    def __init__(self,sprite,scale,position):
         #self.position=position     
         self.gender=random.choice(['femelle','male'])
         self.jaugeNourriture=200
         self.vitesse=42
         self.etat='vivant'
-        super().__init__(sprite,position)
+        super().__init__(sprite,scale,position)
         self.target=0
         self.chemin=[]
         
@@ -115,7 +115,7 @@ class Animal(Etre):
 class Sheep(Animal) :
     
     def __init__(self,position):
-        Animal.__init__(self,"resources/Sheep.png",position)
+        Animal.__init__(self,"resources/Sheep.png",0.4,position)
         self.feeding=100
         #A voir avec les humains
         self.escape=random.choice(range(25,75)) 
@@ -181,7 +181,7 @@ class Sheep(Animal) :
 class Wolf(Animal):
     #http://dehais.perso.enseeiht.fr/tsi-ogl
     def __init__(self,position):
-        Animal.__init__(self,"resources/Wolf.png",position)
+        Animal.__init__(self,"resources/Wolf.png",0.4,position)
         #A voir avec les humains
         self.force=random.choice([1,2,3])
         self.distanceDeRecherche=10

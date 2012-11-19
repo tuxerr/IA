@@ -197,6 +197,7 @@ class IAMap:
                 cellmin=cell
                 minCost=cost
         return cellmin
+
 #création du chemin
 #il y a pas le start dans le chemin
     def pathCreation(self,stop):

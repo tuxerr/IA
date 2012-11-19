@@ -200,11 +200,15 @@ class OverviewWidget(QtGui.QGraphicsView):
                 item.setRect(i*self.cell_size,j*self.cell_size,self.cell_size,self.cell_size)
                 self.scene.addItem(item)
 
-    def addItemToScene(self,sprite,position):
+    def addItemToScene(self,sprite,position,sprite_scale):
         newItem = QtGui.QGraphicsPixmapItem(QtGui.QPixmap(sprite))
         self.setItemPos(newItem,position)
         self.scene.addItem(newItem)
+        newItem.scale(sprite_scale,sprite_scale)       
         return newItem
+
+    def removeItem(self,item):
+        self.scene.removeItem(item)
 
     def moveItem(self,item,movement):
         movX,movY=movement

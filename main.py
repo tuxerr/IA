@@ -24,7 +24,7 @@ def main():
     iamap.desMoutonsDePartout()
     iamap.desLoupsDePartout()
     
-    waterCarrier = Etre("resources/worker_water.jpg",(300-1,300-1))
+    waterCarrier = Etre("resources/worker_water.jpg",0.4,(300-1,300-1))
     #print(iamap.A_star((75,75),(150,150)))
     # exit quand l'interface s'est coupée (fermeture du programme)
     #sheep=Sheep((175,175))
