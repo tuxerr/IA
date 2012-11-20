@@ -1,6 +1,8 @@
 import random
 from etre import *
 from lifeExpectancy import *
+from iamap import *
+
 
 class Human(Etre):
     """A human is defined by the following characteristics:
@@ -59,6 +61,35 @@ class Human(Etre):
             self.move((-1,0))
         else:
             self.move((-1,1))
+
+    # ressource = baies, tree, sheep, wolf 
+    def rechercheDeRessource(self, ressource):
+        matrix = iamap.matrixglobal
+        i = self.position[0]
+        j = self.position[1]
+
+        for k in range(0,40): #arbitraire
+            for x in range(i-distance,i+distance):
+                for y in range(j-distance,j+distance):
+                    if((0<x)&(x<len(matrix))&(0<y)&(y<len(matrix))):
+                        if(matrix[x][y].has_property(ressource)):
+                            return (x,y)
+        return(-1,-1)
+    
+    # terrain = land, beach, mountain, water, salwater
+    def rechercheDeTerrain(self, terrain):
+        matrix = iamap.matrixglobal
+        i = self.position[0]
+        j = self.position[1]
+
+        for k in range(0,40): #arbitraire
+            for x in range(i-distance,i+distance):
+                for y in range(j-distance,j+distance):
+                    if((0<x)&(x<len(matrix))&(0<y)&(y<len(matrix))):
+                        if(matrix[x][y].cell_type == terrain):
+                            return (x,y)
+        return(-1,-1)
+        
     
     def run(self):
         print("random explo")

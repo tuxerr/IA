@@ -263,6 +263,7 @@ class IAMapCell:
             if animal.typeAnimal()==type:
                 animaux.append(animal)
         return animaux
+
     def __str__(self):
         if self.cell_type=="water":
             return "W"
