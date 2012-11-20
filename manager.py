@@ -1,14 +1,16 @@
 import sys
 from PyQt4 import QtCore
 from etre import *
-
+global managerGlobal
 class Manager():
     def __init__(self):
+        global managerGlobal
         self.timer=QtCore.QTimer()
         QtCore.QObject.connect(self.timer,QtCore.SIGNAL("timeout()"),self.runEtres)
         self.timeout=1000
         self.listeEtres=[];
-
+        managerGlobal=self
+        
     def startSimulation(self):
         self.timer.start(self.timeout)
 

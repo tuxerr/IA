@@ -106,16 +106,21 @@ class ConfigurationWidget(QtGui.QWidget):
         validator = QtGui.QIntValidator(0,100)
         
         taux_arbres_label = QtGui.QLabel('Taux d\'arbres (%)')
-        taux_animaux_label = QtGui.QLabel('Taux d\'animaux (%)')
+        taux_moutons_label = QtGui.QLabel('Taux de moutons (%)')
+        taux_loups_label = QtGui.QLabel('Taux de loups (%)')
         taux_baies_label = QtGui.QLabel('Taux de baies (%)')
 
         taux_arbres_edit = QtGui.QLineEdit(str(self.conf['taux_arbres']))
         taux_arbres_edit.setValidator(validator)
         taux_arbres_edit.textChanged[str].connect(self.taux_arbres_changevalue)
 
-        taux_animaux_edit = QtGui.QLineEdit(str(self.conf['taux_animaux']))
-        taux_animaux_edit.setValidator(validator)
-        taux_animaux_edit.textChanged[str].connect(self.taux_animaux_changevalue)
+        taux_moutons_edit = QtGui.QLineEdit(str(self.conf['taux_moutons']))
+        taux_moutons_edit.setValidator(validator)
+        taux_moutons_edit.textChanged[str].connect(self.taux_moutons_changevalue)
+
+        taux_loups_edit = QtGui.QLineEdit(str(self.conf['taux_loups']))
+        taux_loups_edit.setValidator(validator)
+        taux_loups_edit.textChanged[str].connect(self.taux_loups_changevalue)
 
         taux_baies_edit = QtGui.QLineEdit(str(self.conf['taux_baies']))
         taux_baies_edit.setValidator(validator)
@@ -127,10 +132,12 @@ class ConfigurationWidget(QtGui.QWidget):
 
         grid.addWidget(taux_arbres_label,1,0)
         grid.addWidget(taux_arbres_edit,1,1)
-        grid.addWidget(taux_animaux_label,2,0)
-        grid.addWidget(taux_animaux_edit,2,1)
-        grid.addWidget(taux_baies_label,3,0)
-        grid.addWidget(taux_baies_edit,3,1)
+        grid.addWidget(taux_moutons_label,2,0)
+        grid.addWidget(taux_moutons_edit,2,1)
+        grid.addWidget(taux_loups_label,3,0)
+        grid.addWidget(taux_loups_edit,3,1)
+        grid.addWidget(taux_baies_label,4,0)
+        grid.addWidget(taux_baies_edit,4,1)
         
         self.setLayout(grid)
 
@@ -141,9 +148,13 @@ class ConfigurationWidget(QtGui.QWidget):
         if new_val != "":
             self.conf["taux_arbres"]=int(new_val)
 
-    def taux_animaux_changevalue(self,new_val):
+    def taux_loups_changevalue(self,new_val):
         if new_val != "":
-            self.conf["taux_animaux"]=int(new_val)
+            self.conf["taux_loups"]=int(new_val)
+
+    def taux_moutons_changevalue(self,new_val):
+        if new_val != "":
+            self.conf["taux_moutons"]=int(new_val)
 
     def taux_baies_changevalue(self,new_val):
         if new_val != "":
@@ -189,20 +200,23 @@ class OverviewWidget(QtGui.QGraphicsView):
                 item.setRect(i*self.cell_size,j*self.cell_size,self.cell_size,self.cell_size)
                 self.scene.addItem(item)
 
-    def addItemToScene(self,sprite,position):
+    def addItemToScene(self,sprite,position,sprite_scale):
         newItem = QtGui.QGraphicsPixmapItem(QtGui.QPixmap(sprite))
         self.setItemPos(newItem,position)
         self.scene.addItem(newItem)
-        print(newItem)
+        newItem.scale(sprite_scale,sprite_scale)       
         return newItem
+
+    def removeItem(self,item):
+        self.scene.removeItem(item)
 
     def moveItem(self,item,movement):
         movX,movY=movement
-        item.moveBy(movX,movY)
+        item.moveBy(movX*self.cell_size,movY*self.cell_size)
 
     def setItemPos(self,item,position):
         posX,posY=position
-        print(item.setPos(posX*self.cell_size,posY*self.cell_size))
+        item.setPos(posX*self.cell_size,posY*self.cell_size)
 
     def setItemColor(self,i,j):
         item = self.itemmatrix[i][j]
@@ -221,9 +235,12 @@ class OverviewWidget(QtGui.QGraphicsView):
             elif cell.has_property("baies"):
                 item.setPen(QtGui.QColor(255,0,0))
                 item.setBrush(QtGui.QColor(255,0,0))
-            elif cell.has_property("animaux"):
-                item.setPen(QtGui.QColor(0,0,0))
-                item.setBrush(QtGui.QColor(0,0,0))
+            #elif cell.has_property("wolf"):
+            #    item.setPen(QtGui.QColor(0,0,0))
+            #    item.setBrush(QtGui.QColor(0,0,0))
+            #elif cell.has_property("sheep"):
+            #    item.setPen(QtGui.QColor(0,0,255))
+            #    item.setBrush(QtGui.QColor(0,0,255))
             else:
                 item.setPen(QtGui.QColor(0,255,0))
                 item.setBrush(QtGui.QColor(0,255,0))

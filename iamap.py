@@ -1,8 +1,13 @@
 from perlin import *
 from Gaia import *
+import manager
+from manager import *
+global matrixglobal
+global iamapglobal
 class IAMap:
     
     def __init__(self,width,height):
+        global iamapglobal
         self.width,self.height=width,height
 
         #matrix is a [lines][height] matrix, where [0][0] is bottom left
@@ -11,11 +16,14 @@ class IAMap:
         self.cellAnalyse = []
         #Liste de coordonnée des cellues non calculées pour A*
         self.cellNoAnalyse =[]
-
+        iamapglobal=self
+    
     def generate_map(self,conf):
+        global matrixglobal
         terrainNoise = SimplexNoise(2000)
         treeNoise = SimplexNoise(2000)
         foodNoise = SimplexNoise(2000)
+        wolfNoise = SimplexNoise(2000)
 
         scale=self.width/5
         scaleForest=scale/2
@@ -32,6 +40,9 @@ class IAMap:
 
                 foodValue = foodNoise.noise2(float(i)/scaleFood,float(j)/scaleFood)
                 foodValue=foodValue/2+0.5
+
+                wolfValue = wolfNoise.noise2(float(i)/scaleFood,float(j)/scaleFood)
+                wolfValue= wolfValue/2+0.5
              
                 distanceFromMiddle=sqrt(pow((i-self.width/2),2)+pow((j-self.height/2),2))/(sqrt(self.width*self.width+self.height*self.height)) #distance between 0 and 1
                 rawValue=rawValue*pow(1-distanceFromMiddle,8)
@@ -46,12 +57,19 @@ class IAMap:
                 elif (foodValue<=conf["taux_baies"]/100 and newCell.cell_type=="land" and not newCell.has_property("tree")):
                     newCell.set_property("baies")
 
-                elif (foodValue>=(1-conf["taux_animaux"]/100) and newCell.cell_type=="land"):
-                    newCell.set_property("animaux")
+                elif (foodValue>=(1-conf["taux_moutons"]/100) and newCell.cell_type=="land"):
+                    newCell.set_property("sheep")
+
+                elif (wolfValue<=conf["taux_loups"]/100 and newCell.cell_type=="land"):
+                    newCell.set_property("wolf")
+                    
                 self.matrix[i][j] = newCell
 
         self.fill_salt_water()
-
+        #self.desMoutonsDePartout()
+        #self.desLoupsDePartout()
+        matrixglobal=self.matrix
+        
     def fill_salt_water(self):
 
         cells_to_test = [(0,0)]
@@ -85,7 +103,11 @@ class IAMap:
 
 #Prend en entré le début et l'arrivé du chemin à créer et renvoie un chemin (liste de coordonée
 #l'arrivé et le départ sont de la forme [x,y]
-    def A_start(self,start,stop):
+    def A_star(self,start,stop):
+        start=[start[0],start[1]]
+        stop=[stop[0],stop[1]]
+        self.cellNoAnalyse=[]
+        self.cellAnalyse=[]
         self.matrix[start[0]][start[1]].parent=-1
         self.cellNoAnalyse.append(start)
         currentcell=start
@@ -94,7 +116,7 @@ class IAMap:
             self.cellNoAnalyse.remove(currentcell)
             self.cellAnalyse.append(currentcell)
             self.voisins(currentcell, stop)
-            if (self.cellNoAnalyse.__len__()!=0):
+            if (len(self.cellNoAnalyse)!=0):
                 currentcell = self.cellDistanceMin()
             else:
                 noEnd=False
@@ -102,9 +124,10 @@ class IAMap:
             chemin=self.pathCreation(stop)
             cost=self.matrix[stop[0]][stop[1]].costF()
         else:
-            cost=-1
+            cost=-10
             chemin=[]
-        return (cost,chemin)
+        return (cost/10,chemin)
+
 #Calcul les voisins du point, vérifie s'ils sont dans les listes
 #Modifie les distances
     def voisins(self,point,stop):
@@ -138,7 +161,6 @@ class IAMap:
             distance=distY*14+(distX-distY)*10
         else:
             distance=distX*14+(distY-distX)*10
-            
         return distance
     
 #Renvoie si le point est déjà Analysé, 1 ou 0
@@ -175,6 +197,7 @@ class IAMap:
                 cellmin=cell
                 minCost=cost
         return cellmin
+
 #création du chemin
 #il y a pas le start dans le chemin
     def pathCreation(self,stop):
@@ -192,8 +215,18 @@ class IAMap:
     def desMoutonsDePartout(self):
         for i in range(0,self.height-1):
             for j in range(0,self.width-1):
-                if self.matrix[i][j].has_property("animaux"):
-                    Sheep((i,j))
+                if self.matrix[i][j].has_property("sheep"):
+                    sheep=Sheep((i,j))
+                    self.matrix[i][j].set_have(sheep)
+                    manager.managerGlobal.addEtre(sheep)
+                    
+    def desLoupsDePartout(self):
+        for i in range(0,self.height-1):
+            for j in range(0,self.width-1):
+                if self.matrix[i][j].has_property("wolf"):
+                    wolf=Wolf((i,j))
+                    self.matrix[i][j].set_have(wolf)
+                    manager.managerGlobal.addEtre(wolf)
 
 
 class IAMapCell:
@@ -204,7 +237,8 @@ class IAMapCell:
         self.costH=0  #le coût heuristique pour A*
         self.costR=0  #le coût réel pour A*
         self.properties = [];
-
+        self.have=[]
+        
     def costF(self):
         return self.costH + self.costR
     
@@ -216,7 +250,19 @@ class IAMapCell:
 
     def has_property(self,property_to_test):
         return (property_to_test in self.properties)
-
+    
+    def set_have(self,etre):
+        self.have.append(etre)
+        
+    def remove_have(self,etre):
+        self.have.remove(etre)
+    
+    def getAnimal(self,type):
+        animaux=[]
+        for animal in self.have:
+            if animal.typeAnimal()==type:
+                animaux.append(animal)
+        return animaux
     def __str__(self):
         if self.cell_type=="water":
             return "W"
