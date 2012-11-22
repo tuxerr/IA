@@ -22,6 +22,7 @@ class Human(Etre):
         self.foodGauge = 100 # max=100 arbitraire, a changer si besoin
         self.fatigueGauge = 100 # idem
         self.chanceToKill = 0 # nom pas top, init a 0
+        self.role = "enfant"
         self.memory = [] # structure, a voir
         super().__init__("resources/worker_water.jpg",position)
 
@@ -72,6 +73,26 @@ class Human(Etre):
                         if(matrix[x][y].has_property(ressource)):
                             return (x,y)
         return(-1,-1)
+
+    # ressource mouvante = mouton, loup
+    def rechercheRessourceMouvante(self, typeAnimal):
+        matrix = iamap.matrixglobal
+        i = self.position[0]
+        j = self.position[1]
+        target = 0
+        distance = 0
+        distanceMax = 40 #arbitraire
+        isSearching = True 
+        while(isSearching&(distance<distanceMax)):
+            for x in range(i-distance,i+distance):
+                for y in range(j-distance,j+distance):
+                    if((0<x)&(x<len(matrix))&(0<y)&(y<len(matrix))):
+                        if(matrix[x][y].has_property(typeAnimal)):
+                            target =  matrix[x][y].getAnimal(typeAnimal)
+                            isSearching = False
+            distance=distance+1
+        return target
+
     
     # terrain = land, beach, mountain, water, salwater (immobile)
     def rechercheTerrain(self, terrain):
@@ -102,7 +123,7 @@ class Human(Etre):
             for x in range(i-distance,i+distance):
                 for y in range(j-distance,j+distance):
                     if((0<x)&(x<len(matrix))&(0<y)&(y<len(matrix))):
-                        if(matrix[x][y].has_property(typeHuman)):
+                        if(matrix[x][y].has_property("human")):
                             for human in matrix[x][y].getHuman():
                                 if(self.isCorrespond(human)):
                                     target = human
@@ -119,11 +140,30 @@ class Human(Etre):
         matrix = iamap.matrixglobal
         (cost, chemin) = iamap.iamapglobal.A_star(self.position, target.position)
         return chemin
-        
-    
+          
     def run(self):
-        print("random explo")
-        self.randomExplo()
-            
+        role = self.role
+        if role == "enfant":
+            self.runEnfant()
+        elif role == "chef":
+            self.runChef()
+        elif role == "cultivateur":
+            self.runCultivateur()
+        elif role == "eleveur":
+            self.runEleveur()
+        elif role == "chasseurLoup":
+            self.runChasseurLoup()
+        elif role == "chasseurMouton":
+            self.runChasseurMouton()
+        elif role == "cueilleur":
+            self.runCueilleur()
+        elif role == "bucheron":
+            self.runBucheron()
+        elif role == "porteurEau":
+            self.runPorteurEau()
+        elif role == "constructeur":
+            self.runConstructeur()
+        else:
+            self.runCuisinier()
 
-
+        
