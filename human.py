@@ -167,6 +167,14 @@ class Human(Etre):
         else:
             self.runCuisinier()
 
-        
     def runCuisinier(self):
-#TODO
+        """ cuisinier (en plus de surveiller ses jauges) :
+        - va chercher au stockage le plus proche dans sa mémoire
+        - vide ou pas de stockage en mémoire -> recherche nouveau
+        - prendre nourriture (indiff)
+        - retourner au centre ville (ou case adjacente ?)
+        - cuisiner pendant n tours
+        - distribuer
+        - cest vide ? on recommence (ou partiellement vide ?)""" 
+        # TODO
+        

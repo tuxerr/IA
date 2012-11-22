@@ -3,7 +3,10 @@ Légende :
 
 TODO (dans ce qui est partiellement codé)
 - sécuriser les déplacements (ne pas pouvoir se retrouver dans l'eau, par ex)
-- se mettre d'accord sur une facon de faire pour le code specifique a un role (pour l'instant je met tout au meme endroit comme une grosse sale)
+- batiment endommagé et réparations
+- batiment de plusieurs pixels de large
+- gestion de mort naturelle plus précise
+
 
 Minutes du super meeting IA
 
@@ -45,19 +48,19 @@ Vie/Mort :
 + implémentation de l'âge (pas d'exploitation des enfants!)
 le chef supposera qu'un personnage est mort si il ne revient pas au bout d'un certain temps
 
-Genre :
++ Genre :
 + à la naissance
-un homme + une femme pour la reproduction
-pas d'autre différences
++ un homme + une femme pour la reproduction
++ pas d'autre différences
 
 Une fois un rôle assigné il fait ce qu'il a à faire, puis quand il n'a plus rien à faire → chef
 
-Bâtiments :
-forum (zone d'influence initiale) + stockage non spécialisé de petite taille
-abris
-stockage nourriture spécialisé ou pas ? de plus grande taille
-stockage de bois (mise en place d'un rôle de bûcheron) de plus grande taille
-stockage d'eau de plus grande taille
++ Bâtiments :
++ forum (zone d'influence initiale) + stockage non spécialisé de petite taille
++ abris
++ stockage nourriture spécialisé ou pas ? de plus grande taille
++ stockage de bois (mise en place d'un rôle de bûcheron) de plus grande taille
++ stockage d'eau de plus grande taille
 
 Ressource naturelle :
 repousse du bois
@@ -113,7 +116,7 @@ nombre de repas en fonction des « unités » de bouffe
 
 Reproduction humaine :
 pendant leur temps de repos
-avec personne de sexe opposé
++ avec personne de sexe opposé
 probabilité que ça marche 
 incapacité temporaire (à déterminer)
 le chef peut influencer les probabilités (encourager/décourager la reproduction)
