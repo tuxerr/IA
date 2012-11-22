@@ -5,25 +5,26 @@ from iamap import *
 
 
 class Human(Etre):
-    """A human is defined by the following characteristics:
-    -age
-    -food gauge
-    -fatigue gauge
-    -gender
-    -% of chance to kill a wild animal
-    -memory"""
+    """Un humain est defini par :
+    - position
+    - age
+    - jauge de nourriture
+    - jauge de fatigue
+    - genre
+    - % de chance de tuer un animal sauvage lors d'un combat
+    - memoire"""
 
     lifeStep = 0.02 # arbitraire a changer (test avec 0.5)
     currentLife = 0
 
     def __init__(self, position):
-        self.position=position     
+        self.position = position     
         self.age = 0
         self.foodGauge = 100 # max=100 arbitraire, a changer si besoin
         self.fatigueGauge = 100 # idem
         self.chanceToKill = 0 # nom pas top, init a 0
         self.role = "enfant"
-        self.memory = [] # structure, a voir
+        self.memory = [] # (ressource,x,y)
         super().__init__("resources/worker_water.jpg",position)
 
     def ages(self):
@@ -61,7 +62,7 @@ class Human(Etre):
         else:
             self.move((-1,1))
 
-    # ressource = baies, tree (immobile)
+    # ressource = baies, tree, batiment (immobile)
     def rechercheRessource(self, ressource):
         matrix = iamap.matrixglobal
         i = self.position[0]
@@ -167,3 +168,5 @@ class Human(Etre):
             self.runCuisinier()
 
         
+    def runCuisinier(self):
+#TODO
