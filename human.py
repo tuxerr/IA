@@ -3,7 +3,6 @@ from etre import *
 from lifeExpectancy import *
 from iamap import *
 
-
 class Human(Etre):
     """Un humain est defini par :
     - position
@@ -25,6 +24,7 @@ class Human(Etre):
         self.chanceToKill = 0 # nom pas top, init a 0
         self.role = "enfant"
         self.memory = [] # (ressource,x,y)
+        self.isIn = False
         super().__init__("resources/worker_water.jpg",position)
 
     def ages(self):
