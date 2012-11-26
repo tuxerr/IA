@@ -11,7 +11,9 @@ class Human(Etre):
     - jauge de fatigue
     - genre
     - % de chance de tuer un animal sauvage lors d'un combat
-    - memoire"""
+    - memoire forme (ressource, x, y)
+    la ressource pouvant etre "batFood", "batWood", "forum", "abri" 
+    """
 
     lifeStep = 0.02 # arbitraire a changer (test avec 0.5)
     currentLife = 0
@@ -176,5 +178,18 @@ class Human(Etre):
         - cuisiner pendant n tours
         - distribuer
         - cest vide ? on recommence (ou partiellement vide ?)""" 
-        # TODO
         
+        self.runSurvie()
+        for (ressource, x, y) in self.memory:
+            matrix = iamap.matrixglobal
+            distMin = float("inf")
+            if (ressoure == "batFood" or ressource == "forum"):
+                (cost, chemin) = iamap.iamapglobal.A_star(self.position, (x,y)) 
+                if (cost < distMin):
+                    distMin = cost
+                    cheminMin = chemin
+        if (distMin == float("inf")): 
+            res = [(-1,-1)]
+        else:
+            res = chemin
+        return res
