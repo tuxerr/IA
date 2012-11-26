@@ -10,6 +10,7 @@ class Batiment:
         self.capacityFood = 0
         self.capacityWood = 0
         self.capacityHuman = 0
+        self.content = []
 
     def sortirRessource(self, aSortir, nombre):
         if (aSortir == "food"):
@@ -73,6 +74,7 @@ class CentreVille(Batiment):
         self.capacityFood = 20 #arbitraire
         self.capacityWood = 20 #arbitraire
         self.capacityHuman = 10 #arbitraire
+        self.content = ["human","food","wood"]
 
 
 class StockageBois(Batiment):
@@ -81,6 +83,7 @@ class StockageBois(Batiment):
         Batiment.__init__(self, position)
         self.type = "stockageBois"
         self.capacityWood = 30 #arbitraire
+        self.content.append("wood")
 
 
 class StockageNourriture(Batiment):
@@ -89,6 +92,7 @@ class StockageNourriture(Batiment):
         Batiment.__init__(self, position)
         self.type = "stockageNourriture"
         self.capacityFood = 30 #arbitraire
+        self.content.append("food")
 
 
 class Abri(Batiment):
@@ -97,3 +101,4 @@ class Abri(Batiment):
         Batiment.__init__(self, position)
         self.type = "abri"
         self.capacityHuman = 10 #arbitraire
+        self.content.append("human")

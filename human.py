@@ -136,13 +136,43 @@ class Human(Etre):
 
     def cheminCible(self, target):
         matrix = iamap.matrixglobal
-        (cost, chemin) = iamap.iamapglobal.A_star(self.position, target)
+        (cout, chemin) = iamap.iamapglobal.A_star(self.position, target)
         return chemin
+
+    def cheminCibleCout(self, target):
+        return iamap.iamapglobal.A_star(self.position, target)
 
     def cheminCibleMouvante(self, target):
         matrix = iamap.matrixglobal
-        (cost, chemin) = iamap.iamapglobal.A_star(self.position, target.position)
+        (cout, chemin) = iamap.iamapglobal.A_star(self.position, target.position)
         return chemin
+
+    """trouver le batiment le plus proche contenant/pouvant contenir
+    la type de "ressources" suivant (food, wood, human)"""
+    def memoireBat(self, contentType):
+        for (typeMem, x, y) in self.memory:
+            matrix = iamap.matrixglobal
+            distMin = float("inf")
+            if (contentType == "food"):
+                if (typeMem=="batFood" or typeMem=="forum"):
+                    (cout, chemin) = self.cheminCibleCout((x,y))
+                    if (cost < distMin):
+                        distMin = cost
+                        cheminMin = chemin
+            elif (contentType == "wood"):
+                if (typeMem=="batWood" or typeMem=="forum"):
+                    (cout, chemin) = self.cheminCibleCout((x,y))
+            elif (contentType == "human"):
+                if (typeMem=="forum" or typeMem=="abri"):
+                    (cout, chemin) = self.cheminCibleCout((x,y))
+            if (cout < distMin):
+                distMin = cout
+                cheminMin = chemin
+        if (distMin == float("inf")): 
+            res = [(-1,-1)]
+        else:
+            res = cheminMin
+        return res
           
     def run(self):
         role = self.role
@@ -169,27 +199,15 @@ class Human(Etre):
         else:
             self.runCuisinier()
 
-    def runCuisinier(self):
-        """ cuisinier (en plus de surveiller ses jauges) :
-        - va chercher au stockage le plus proche dans sa mémoire
-        - vide ou pas de stockage en mémoire -> recherche nouveau
-        - prendre nourriture (indiff)
-        - retourner au centre ville (ou case adjacente ?)
-        - cuisiner pendant n tours
-        - distribuer
-        - cest vide ? on recommence (ou partiellement vide ?)""" 
-        
+    """ cuisinier (en plus de surveiller ses jauges) :
+    - va chercher au stockage le plus proche dans sa mémoire
+    - vide ou pas de stockage en mémoire -> recherche nouveau
+    - prendre nourriture (indiff)
+    - retourner au centre ville (ou case adjacente ?)
+    - cuisiner pendant n tours
+    - distribuer
+    - cest vide ? on recommence (ou partiellement vide ?)""" 
+
+    def runCuisinier(self):        
         self.runSurvie()
-        for (ressource, x, y) in self.memory:
-            matrix = iamap.matrixglobal
-            distMin = float("inf")
-            if (ressoure == "batFood" or ressource == "forum"):
-                (cost, chemin) = iamap.iamapglobal.A_star(self.position, (x,y)) 
-                if (cost < distMin):
-                    distMin = cost
-                    cheminMin = chemin
-        if (distMin == float("inf")): 
-            res = [(-1,-1)]
-        else:
-            res = chemin
-        return res
+        self.memoireBat("food")
