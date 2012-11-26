@@ -26,10 +26,8 @@ class Animal(Etre):
         #self.position=position     
         self.jaugeNourriture=200
         self.vitesse=42
-        self.etat='vivant'
         super().__init__(sprite,scale,position)
         self.target=0
-        self.chemin=[]
         
     def isCorrespond(self,animal):
         return((animal.isFecond())&(self.isFecond())&(self.gender!=animal.gender))
@@ -178,7 +176,7 @@ class Sheep(Animal) :
                     
 #Le loup se nourri d'homme et de sheep
 class Wolf(Animal):
-    #http://dehais.perso.enseeiht.fr/tsi-ogl
+
     def __init__(self,position):
         Animal.__init__(self,"resources/Wolf.png",0.4,position)
         #A voir avec les humains

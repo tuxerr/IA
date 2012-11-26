@@ -21,26 +21,30 @@ class Human(Etre):
     def __init__(self, position):
         self.position = position     
         self.age = 0
-        self.foodGauge = 100 # max=100 arbitraire, a changer si besoin
+        self.jaugeNourriture = 100 # max=100 arbitraire
         self.fatigueGauge = 100 # idem
         self.chanceToKill = 0 # nom pas top, init a 0
         self.role = "enfant"
-        self.memory = [] # (ressource,x,y)
+        self.memory = [] # (ressource,x,y) infini for now
         self.isIn = False
         super().__init__("resources/worker_water.jpg",position)
 
-    def ages(self):
+    def vieilli(self):
         Human.currentLife += Human.lifeStep
         if Human.currentLife == 1:
             self.age +=1
             Human.currentLife = 0
 
-    def dies(self, lifeE):
+    def mortNaturelle(self, lifeE):
         d100 = random.randint(1, 100)
         if d100 < lifeE.currentMortality(self.age):
-            return(True)
+            res = True
         else:
-            return(False)
+            res = False
+        return res
+        
+    def mortDeFaim(self):
+        return (self.jaugeNourriture <= 0)
 
     def move(self,movement):
         super().move(movement)
@@ -76,6 +80,9 @@ class Human(Etre):
                         if(matrix[x][y].has_property(ressource)):
                             return (x,y)
         return(-1,-1)
+#
+# TODO ajouter les element dans la memoire
+#
 
     # ressource mouvante = mouton, loup
     def rechercheRessourceMouvante(self, typeAnimal):
@@ -173,8 +180,12 @@ class Human(Etre):
         else:
             res = cheminMin
         return res
+
+    def partirChercher(self, ressource):
+        #TODO
           
     def run(self):
+        self.runSurvie()
         role = self.role
         if role == "enfant":
             self.runEnfant()
@@ -198,6 +209,11 @@ class Human(Etre):
             self.runConstructeur()
         else:
             self.runCuisinier()
+        self.vieilli()
+        self.jaugeNourriture = self.jaugeNourriture - 1
+        if (self.mortNaturelle() or self.mortDeFaim()):
+            self.mort()
+            print("human dead")
 
     """ cuisinier (en plus de surveiller ses jauges) :
     - va chercher au stockage le plus proche dans sa mémoire
@@ -206,10 +222,19 @@ class Human(Etre):
     - retourner au centre ville (ou case adjacente ?)
     - cuisiner pendant n tours
     - distribuer
-    - cest vide ? on recommence (ou partiellement vide ?)""" 
+    - cest vide ? on recommence""" 
 
-    def runCuisinier(self):        
-        self.runSurvie()
-        chemin = self.memoireBat("food")
-        if (chemin == [(-1,-1)]): #fail pas d'endroit a food en memoire
-
+    def runCuisinier(self):
+        if (hasTarget):
+            TODO#TODO
+        else:
+            chemin = self.memoireBat("food")
+            if (chemin == [(-1,-1)]): #fail pas d'endroit a food en memoire (ne devrait pas arriver => forum)
+                target = self.rechercheRessource("forum")
+                if (target == (-1,-1)):
+                    target = self.rechercheRessource("batFood")
+                    if (target == (-1, -1)): #pas de stockage en vue
+                    #TODO partir en recherche
+                        self.partirChercher("forum")
+        #TODO to be continued...
+            
