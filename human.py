@@ -210,4 +210,6 @@ class Human(Etre):
 
     def runCuisinier(self):        
         self.runSurvie()
-        self.memoireBat("food")
+        chemin = self.memoireBat("food")
+        if (chemin == [(-1,-1)]): #fail pas d'endroit a food en memoire
+
