@@ -270,6 +270,15 @@ class IAMapCell:
             res.append(human)
         return res
 
+#TODO voir si getHuman(self, role) n'est pas possible
+
+    def getHumanByRole(self, role):
+        res = []
+        for human in self.have:
+            if (human.role == role):
+                res.append(human)
+        return res
+
     def getBatiment(self, type):
         res = []
         for batiment in self.have:

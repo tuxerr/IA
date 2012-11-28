@@ -234,14 +234,22 @@ class Human(Etre):
     -- verifie qu'il reste de la nourriture dans le chaudron
     """ 
 
+#TODO memoireCuisine
+#TODO improve memoire batiment (a voir en fonction de memoire cuisine)
 
     def runCuisinier(self):
+        matrix = iamap.matrixglobal
+        x = self.position[0]
+        y = self.position[1]
+        # si on se trouve sur le forum on partage la mémoire du chef
+        # le partage de la mémoire est instantannee et relatif au role
+        if matrix[x][y].has_property('forum'):
+            monChef = matrix[x][y].getHumanByRole('chef')
+            self.memoireCuisine(monChef)
         if (hasTarget): # sait ou aller, qu'il doit se reposer
-            TODO#TODO
+            if (self.position == self.target.position):
+#TODO avancer                
         else: # cuisine-sert/verifie (obligatoirement a son chaudron)
-            matrix = iamap.matrixglobal
-            x = self.position[0]
-            y = self.position[1]
             monChaudron = matrix[x][y].getBatiment('chaudron')
             if (monChaudron.fillinFood == 0):
                 chemin = self.memoireBatiment('food') 
