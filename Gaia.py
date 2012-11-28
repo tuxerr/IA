@@ -122,6 +122,7 @@ class Sheep(Animal) :
     
     def typeAnimal(self):
         return 'sheep'
+
 #un hunter peut être soit un loup qui a loupé son coup soit un humain
     def fuir(self,hunter): 
         fromHunter=[self.position[0]-hunter.position[0],self.position[1]-hunter.position[1]]

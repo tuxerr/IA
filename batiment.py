@@ -78,42 +78,53 @@ class Batiment:
         return res
         
 
-class CentreVille(Batiment):
+class Forum(Batiment):
 
     def __init__(self, position):
         Batiment.__init__(self, position)
-        self.type = "centreVille"
         self.capacityFood = 20 #arbitraire
         self.capacityWood = 20 #arbitraire
         self.capacityHuman = 10 #arbitraire
+
+    def typeBatiment(self):
+        return 'forum'
 
 
 class StockageBois(Batiment):
 
     def __init__(self, position):
         Batiment.__init__(self, position)
-        self.type = "stockageBois"
         self.capacityWood = 30 #arbitraire
+
+    def typeBatiment(self):
+        return 'stockageBois'
 
 
 class StockageNourriture(Batiment):
 
     def __init__(self, position):
         Batiment.__init__(self, position)
-        self.type = "stockageNourriture"
         self.capacityFood = 30 #arbitraire
+
+    def typeBatiment(self):
+        return 'stockageNourriture'
 
 
 class Abri(Batiment):
 
     def __init__(self, position):
         Batiment.__init__(self, position)
-        self.type = "abri"
         self.capacityHuman = 10 #arbitraire
+
+    def typeBatiment(self):
+        return 'abri'
+
 
 class Chaudron(Batiment):#pas completement pertinent, a voir
 
     def __init__(self, position):#forum ou alentours
         Batiment.__init__(self, position)
-        self.type = "chaudron"
         self.capacityFood = 10 #arbitraire
+        
+    def typeBatiment(self):
+        return 'chaudron'
