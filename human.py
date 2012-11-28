@@ -180,9 +180,6 @@ class Human(Etre):
         else:
             res = cheminMin
         return res
-
-    def partirChercher(self, ressource):
-        #TODO
           
     def run(self):
         self.runSurvie()
@@ -215,20 +212,37 @@ class Human(Etre):
             self.mort()
             print("human dead")
 
-    """ cuisinier (en plus de surveiller ses jauges) :
+    """ cuisinier (en plus de surveiller ses jauges)
+    la premiere fois : 
+    - le chef indique l'emplacement d'un chaudron sans cuisinier
+    - target pour le cuisinier chaudron
+    description lineaire :
     - va chercher au stockage le plus proche dans sa mémoire
     - vide ou pas de stockage en mémoire -> recherche nouveau
     - prendre nourriture (indiff)
     - retourner au centre ville (ou case adjacente ?)
     - cuisiner pendant n tours
     - distribuer
-    - cest vide ? on recommence""" 
+    - cest vide ? on recommence
+    description a chaque etape :
+    - soit il sait ou aller
+    -- chercher bouffe
+    -- aller voir le chef (forum, pour savoir ou chercher bouffe)
+    -- retourner au forum pour cuisiner avec la bouffe
+    - soit il sert a manger/cuisine
+    -- donc reste sur place
+    -- verifie qu'il reste de la nourriture dans le chaudron
+    """ 
+
 
     def runCuisinier(self):
-        if (hasTarget):
+        if (hasTarget): # sait ou aller, qu'il doit se reposer
             TODO#TODO
-        else:
-            chemin = self.memoireBat("food")
+        else: # cuisine-sert/verifie (obligatoirement a son chaudron)
+            
+            
+""" A incorporer eventuellement remaniement du truc
+chemin = self.memoireBat("food")
             if (chemin == [(-1,-1)]): #fail pas d'endroit a food en memoire (ne devrait pas arriver => forum)
                 target = self.rechercheRessource("forum")
                 if (target == (-1,-1)):
@@ -236,5 +250,4 @@ class Human(Etre):
                     if (target == (-1, -1)): #pas de stockage en vue
                     #TODO partir en recherche
                         self.partirChercher("forum")
-        #TODO to be continued...
-            
+""

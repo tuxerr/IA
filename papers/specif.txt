@@ -1,12 +1,11 @@
 Légende :
 + → est codé quelque part
 
-TODO (dans ce qui est partiellement codé)
+TODO améliorations potentielles (dans ce qui est partiellement codé)
 - sécuriser les déplacements (ne pas pouvoir se retrouver dans l'eau, par ex)
 - batiment endommagé et réparations
 - batiment de plusieurs pixels de large
 - gestion de mort naturelle plus précise
-
 
 Minutes du super meeting IA
 
@@ -28,7 +27,7 @@ Rémi : 1, 2, 3
 Jason : 4,  A*
 Marine : 4
 
-Mise en place d'un « brouillard de guerre »
++ Mise en place d'un « brouillard de guerre » -> matérialisé par la distance de vision (recherche a une distance de 40)
 
 Représentation des humains sur la carte :
 un humain occupe un pixel

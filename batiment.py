@@ -10,7 +10,18 @@ class Batiment:
         self.capacityFood = 0
         self.capacityWood = 0
         self.capacityHuman = 0
-        self.content = []
+
+    def peutContenir(self, ressource):
+        res = False
+        if (ressource == "food"):
+            res = (self.capacityFood != 0)
+        elif (ressource == "wood"):
+            res = (self.capacityWood != 0)
+        elif (ressource == "human"):
+            res = (self.capacityHuman != 0)
+        else:
+            print("peutContenir : ressource inconnue")
+        return res
 
     def sortirRessource(self, aSortir, nombre):
         if (aSortir == "food"):
@@ -66,6 +77,7 @@ class Batiment:
             res = -1
         return res
         
+
 class CentreVille(Batiment):
 
     def __init__(self, position):
@@ -74,7 +86,6 @@ class CentreVille(Batiment):
         self.capacityFood = 20 #arbitraire
         self.capacityWood = 20 #arbitraire
         self.capacityHuman = 10 #arbitraire
-        self.content = ["human","food","wood"]
 
 
 class StockageBois(Batiment):
@@ -83,7 +94,6 @@ class StockageBois(Batiment):
         Batiment.__init__(self, position)
         self.type = "stockageBois"
         self.capacityWood = 30 #arbitraire
-        self.content.append("wood")
 
 
 class StockageNourriture(Batiment):
@@ -92,7 +102,6 @@ class StockageNourriture(Batiment):
         Batiment.__init__(self, position)
         self.type = "stockageNourriture"
         self.capacityFood = 30 #arbitraire
-        self.content.append("food")
 
 
 class Abri(Batiment):
@@ -101,4 +110,10 @@ class Abri(Batiment):
         Batiment.__init__(self, position)
         self.type = "abri"
         self.capacityHuman = 10 #arbitraire
-        self.content.append("human")
+
+class Chaudron(Batiment):#pas completement pertinent, a voir
+
+    def __init__(self, position):#forum ou alentours
+        Batiment.__init__(self, position)
+        self.type = "chaudron"
+        self.capacityFood = 10 #arbitraire
