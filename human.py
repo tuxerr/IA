@@ -24,7 +24,7 @@ class Human(Etre):
         self.jaugeNourriture = 100 # max=100 arbitraire
         self.fatigueGauge = 100 # idem
         self.chanceToKill = 0 # nom pas top, init a 0
-        self.role = "enfant"
+        self.role = 'enfant'
         self.memory = [] # (ressource,x,y) infini for now
         self.isIn = False
         super().__init__("resources/worker_water.jpg",position)
@@ -133,7 +133,7 @@ class Human(Etre):
             for x in range(i-distance,i+distance):
                 for y in range(j-distance,j+distance):
                     if((0<x)&(x<len(matrix))&(0<y)&(y<len(matrix))):
-                        if(matrix[x][y].has_property("human")):
+                        if(matrix[x][y].has_property('human')):
                             for human in matrix[x][y].getHuman():
                                 if(self.isCorrespond(human)):
                                     target = human
@@ -156,21 +156,21 @@ class Human(Etre):
 
     """trouver le batiment le plus proche contenant/pouvant contenir
     la type de "ressources" suivant (food, wood, human)"""
-    def memoireBat(self, contentType):
+    def memoireBatiment(self, contentType):
         for (typeMem, x, y) in self.memory:
             matrix = iamap.matrixglobal
             distMin = float("inf")
-            if (contentType == "food"):
-                if (typeMem=="batFood" or typeMem=="forum"):
+            if (contentType == 'food'):
+                if (typeMem == 'stockageNourriture' or typeMem == 'forum'):
                     (cout, chemin) = self.cheminCibleCout((x,y))
                     if (cost < distMin):
                         distMin = cost
                         cheminMin = chemin
-            elif (contentType == "wood"):
-                if (typeMem=="batWood" or typeMem=="forum"):
+            elif (contentType == 'wood'):
+                if (typeMem == 'stockageBois' or typeMem == 'forum'):
                     (cout, chemin) = self.cheminCibleCout((x,y))
-            elif (contentType == "human"):
-                if (typeMem=="forum" or typeMem=="abri"):
+            elif (contentType == 'human'):
+                if (typeMem == 'forum' or typeMem == 'abri'):
                     (cout, chemin) = self.cheminCibleCout((x,y))
             if (cout < distMin):
                 distMin = cout
@@ -184,25 +184,25 @@ class Human(Etre):
     def run(self):
         self.runSurvie()
         role = self.role
-        if role == "enfant":
+        if role == 'enfant':
             self.runEnfant()
-        elif role == "chef":
+        elif role == 'chef':
             self.runChef()
-        elif role == "cultivateur":
+        elif role == 'cultivateur':
             self.runCultivateur()
-        elif role == "eleveur":
+        elif role == 'eleveur':
             self.runEleveur()
-        elif role == "chasseurLoup":
+        elif role == 'chasseurLoup':
             self.runChasseurLoup()
-        elif role == "chasseurMouton":
+        elif role == 'chasseurMouton':
             self.runChasseurMouton()
-        elif role == "cueilleur":
+        elif role == 'cueilleur':
             self.runCueilleur()
-        elif role == "bucheron":
+        elif role == 'bucheron':
             self.runBucheron()
-        elif role == "porteurEau":
+        elif role == 'porteurEau':
             self.runPorteurEau()
-        elif role == "constructeur":
+        elif role == 'constructeur':
             self.runConstructeur()
         else:
             self.runCuisinier()
@@ -239,15 +239,12 @@ class Human(Etre):
         if (hasTarget): # sait ou aller, qu'il doit se reposer
             TODO#TODO
         else: # cuisine-sert/verifie (obligatoirement a son chaudron)
-            
-            
-""" A incorporer eventuellement remaniement du truc
-chemin = self.memoireBat("food")
-            if (chemin == [(-1,-1)]): #fail pas d'endroit a food en memoire (ne devrait pas arriver => forum)
-                target = self.rechercheRessource("forum")
-                if (target == (-1,-1)):
-                    target = self.rechercheRessource("batFood")
-                    if (target == (-1, -1)): #pas de stockage en vue
-                    #TODO partir en recherche
-                        self.partirChercher("forum")
-""
+            matrix = iamap.matrixglobal
+            x = self.position[0]
+            y = self.position[1]
+            monChaudron = matrix[x][y].getBatiment('chaudron')
+            if (monChaudron.fillinFood == 0):
+                chemin = self.memoireBatiment('food') 
+                # au moins un res le forum
+                # donc a une target pour le tour prochain
+        
