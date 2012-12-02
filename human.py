@@ -27,6 +27,9 @@ class Human(Etre):
         self.role = 'enfant'
         self.memory = [] # (ressource,x,y) infini for now
         self.isIn = False
+        self.target = 'none'
+        self.food = 0
+        self.wood = 0
         super().__init__("resources/worker_water.jpg",position)
 
     def vieilli(self):
@@ -154,9 +157,8 @@ class Human(Etre):
         (cout, chemin) = iamap.iamapglobal.A_star(self.position, target.position)
         return chemin
 
-    """trouver le batiment le plus proche contenant/pouvant contenir
-    la type de "ressources" suivant (food, wood, human)"""
-    def memoireBatiment(self, contentType):
+    """trouver le batiment le plus proche du type souhaité"""
+    def memoireBatiment(self, Type):
         for (typeMem, x, y) in self.memory:
             matrix = iamap.matrixglobal
             distMin = float("inf")
@@ -228,7 +230,7 @@ class Human(Etre):
     - soit il sait ou aller
     -- chercher bouffe
     -- aller voir le chef (forum, pour savoir ou chercher bouffe)
-    -- retourner au forum pour cuisiner avec la bouffe
+    -- retourner au chaudron pour cuisiner avec la bouffe
     - soit il sert a manger/cuisine
     -- donc reste sur place
     -- verifie qu'il reste de la nourriture dans le chaudron
@@ -246,13 +248,30 @@ class Human(Etre):
         if matrix[x][y].has_property('forum'):
             monChef = matrix[x][y].getHumanByRole('chef')
             self.memoireCuisine(monChef)
-        if (hasTarget): # sait ou aller, qu'il doit se reposer
-            if (self.position == self.target.position):
-#TODO avancer                
+            maTarget = self.target
+        if (maTarget != 'none'): # sait ou aller 
+            if (self.position == self.target.position): # il y est
+                if (maTarget == 'food'):
+                    # tester si il y a bien de la nourriture presente
+                    monBatiment = (matrix[x][y].getBatiment())[0]
+                    nbSorti = monBatiment.sortirRessource('food', 10)
+                    if (nbSorti > 0): # il y en a on retourne chaudron
+                        self.target = 'chaudron'
+                        self.food = nbSorti
+                        self.memoireBatiment('chaudron')
+                    else: # il n'y en a pas on cherche ailleurs
+                        self.rechercheLieuStockage('food')
+                elif (maTarget == 'chaudron'):
+                    monBatiment = (matrix[x][y].getBatiment())[0]
+                    monBatiment.rentrerRessource('food', self.food)
+                    self.food = 0
+                    self.target = 'none'
+            else: # il y va
+                self.setPos(self.chemin[0])
+                self.chemin.remove(self.chemin[0])               
         else: # cuisine-sert/verifie (obligatoirement a son chaudron)
             monChaudron = matrix[x][y].getBatiment('chaudron')
             if (monChaudron.fillinFood == 0):
-                chemin = self.memoireBatiment('food') 
-                # au moins un res le forum
-                # donc a une target pour le tour prochain
+                self.chemin = self.memoireBatiment('food')
+                self.target = 'food'# au moins un res le forum
         

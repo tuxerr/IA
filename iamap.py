@@ -279,11 +279,10 @@ class IAMapCell:
                 res.append(human)
         return res
 
-    def getBatiment(self, type):
+    def getBatiment(self):
         res = []
         for batiment in self.have:
-            if (batiment.typeBatiment() == type):
-                res.append(batiment)
+            res.append(batiment)
         return res
 
     def __str__(self):
