@@ -181,7 +181,7 @@ class Wolf(Animal):
     def __init__(self,position):
         Animal.__init__(self,"resources/Wolf.png",0.4,position)
         #A voir avec les humains
-        self.force=random.choice([1,2,3])
+        self.force=random.choice(range(50,100)) 
         self.distanceDeRecherche=10
         self.nourriture=0
         self.cheminNourriture=[]
@@ -189,6 +189,15 @@ class Wolf(Animal):
     def typeAnimal(self):
         return 'wolf'
     
+    def attaquer(self,target):
+        i,j=self.position
+        x,y=target.position
+        
+        if (abs(i-x)+abs(j-y))<2:
+              
+            
+        
+        
     def chercheNourriture(self):
         matrix=iamap.matrixglobal
         typeAnimal='sheep'
