@@ -157,8 +157,11 @@ class Human(Etre):
         (cout, chemin) = iamap.iamapglobal.A_star(self.position, target.position)
         return chemin
 
-    """trouver le batiment le plus proche du type souhaité"""
-    def memoireBatiment(self, Type):
+    """renvoie l'intégralité des batiments correspondants a la demande
+    dans une liste non triee (pour le moment plus simple sinon il 
+    faudrait d'abord trié par rapport au point actuel puis par 
+    rapport au premier de la liste etc...) => amelioration possible"""
+    def memoireBatiment(self, batType):
         for (typeMem, x, y) in self.memory:
             matrix = iamap.matrixglobal
             distMin = float("inf")
