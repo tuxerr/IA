@@ -263,6 +263,29 @@ class IAMapCell:
             if animal.typeAnimal()==type:
                 animaux.append(animal)
         return animaux
+
+    def getHuman(self):
+        res = []
+        for human in self.have:
+            res.append(human)
+        return res
+
+#TODO voir si getHuman(self, role) n'est pas possible
+
+    def getHumanByRole(self, role):
+        res = []
+        for human in self.have:
+            if (human.role == role):
+                res.append(human)
+        return res
+
+    def getBatiment(self, type):
+        res = []
+        for batiment in self.have:
+            if (batiment.typeBatiment() == type):
+                res.append(batiment)
+        return res
+
     def __str__(self):
         if self.cell_type=="water":
             return "W"

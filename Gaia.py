@@ -24,13 +24,10 @@ class Animal(Etre):
     
     def __init__(self,sprite,scale,position):
         #self.position=position     
-        self.gender=random.choice(['femelle','male'])
         self.jaugeNourriture=200
         self.vitesse=42
-        self.etat='vivant'
         super().__init__(sprite,scale,position)
         self.target=0
-        self.chemin=[]
         
     def isCorrespond(self,animal):
         return((animal.isFecond())&(self.isFecond())&(self.gender!=animal.gender))
@@ -125,6 +122,7 @@ class Sheep(Animal) :
     
     def typeAnimal(self):
         return 'sheep'
+
 #un hunter peut être soit un loup qui a loupé son coup soit un humain
     def fuir(self,hunter): 
         fromHunter=[self.position[0]-hunter.position[0],self.position[1]-hunter.position[1]]
@@ -179,7 +177,7 @@ class Sheep(Animal) :
                     
 #Le loup se nourri d'homme et de sheep
 class Wolf(Animal):
-    #http://dehais.perso.enseeiht.fr/tsi-ogl
+
     def __init__(self,position):
         Animal.__init__(self,"resources/Wolf.png",0.4,position)
         #A voir avec les humains

@@ -7,6 +7,7 @@ from interface import *
 from configuration import *
 from iamap import *
 from etre import *
+from human import *
 from Gaia import *
 from manager import *
 
@@ -24,6 +25,7 @@ def main():
     iamap.desMoutonsDePartout()
     iamap.desLoupsDePartout()
     
+
     waterCarrier = Etre("resources/worker_water.jpg",0.4,(300-1,300-1))
     #print(iamap.A_star((75,75),(150,150)))
     # exit quand l'interface s'est coupée (fermeture du programme)
@@ -35,6 +37,7 @@ def main():
     #iamap.matrix[sheep.position[0]][sheep.position[1]].set_property(sheep.typeAnimal())
     #iamap.matrix[mouton.position[0]][mouton.position[1]].set_have(mouton)
     #iamap.matrix[mouton.position[0]][mouton.position[1]].set_property(mouton.typeAnimal())
+
     # exit quand l'interface s'est coupée (fermeture du programme)
     sys.exit(inter.getAppHandle().exec_())
     

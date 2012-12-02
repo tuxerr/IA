@@ -11,10 +11,13 @@ from interface import *
 from manager import *
 
 class Etre:
+
     def __init__(self,sprite,sprite_scale,position):
         self.qitem = interface.overviewWidgetGlobal.addItemToScene(sprite,position,sprite_scale)
+        self.gender=random.choice(['F','M'])
         self.position=position
-        
+        self.etat='vivant'
+        self.chemin=[]
         
     def move(self,movement):
         i,j=self.position
