@@ -28,6 +28,8 @@ class Human(Etre):
         self.memory = [] # (ressource,x,y) infini for now
         self.isIn = False
         self.target = 'none'
+        self.listeTarget = [] # liste de (x,y)
+        self.chemin = []
         self.food = 0
         self.wood = 0
         super().__init__("resources/worker_water.jpg",position)
@@ -160,31 +162,29 @@ class Human(Etre):
     """renvoie l'intégralité des batiments correspondants a la demande
     dans une liste non triee (pour le moment plus simple sinon il 
     faudrait d'abord trié par rapport au point actuel puis par 
-    rapport au premier de la liste etc...) => amelioration possible"""
+    rapport au premier de la liste etc...) => amelioration possible
+    on trie quand meme le premier"""
     def memoireBatiment(self, batType):
         for (typeMem, x, y) in self.memory:
             matrix = iamap.matrixglobal
             distMin = float("inf")
-            if (contentType == 'food'):
+            cheminMin = []
+            if (batType == 'food'):
                 if (typeMem == 'stockageNourriture' or typeMem == 'forum'):
-                    (cout, chemin) = self.cheminCibleCout((x,y))
-                    if (cost < distMin):
-                        distMin = cost
-                        cheminMin = chemin
+                    (cost, chemin) = self.cheminCibleCout((x,y))
             elif (contentType == 'wood'):
                 if (typeMem == 'stockageBois' or typeMem == 'forum'):
-                    (cout, chemin) = self.cheminCibleCout((x,y))
+                    (cost, chemin) = self.cheminCibleCout((x,y))
             elif (contentType == 'human'):
                 if (typeMem == 'forum' or typeMem == 'abri'):
-                    (cout, chemin) = self.cheminCibleCout((x,y))
-            if (cout < distMin):
-                distMin = cout
+                    (cost, chemin) = self.cheminCibleCout((x,y))
+            if (cost < distMin):
+                distMin = cost
                 cheminMin = chemin
-        if (distMin == float("inf")): 
-            res = [(-1,-1)]
-        else:
-            res = cheminMin
-        return res
+                (self.listeTarget).insert(0,(x,y))
+            else:
+                (self.listeTarget).append((x,y))
+            self.chemin = cheminMin
           
     def run(self):
         self.runSurvie()
@@ -240,7 +240,6 @@ class Human(Etre):
     """ 
 
 #TODO memoireCuisine
-#TODO improve memoire batiment (a voir en fonction de memoire cuisine)
 
     def runCuisinier(self):
         matrix = iamap.matrixglobal
