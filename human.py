@@ -181,16 +181,16 @@ class Human(Etre):
             if (cost < distMin):
                 distMin = cost
                 cheminMin = chemin
-                (self.listeTarget).insert(0,(x,y))
+                self.listeTarget.insert(0,(x,y))
             else:
-                (self.listeTarget).append((x,y))
+                self.listeTarget.append((x,y))
             self.chemin = cheminMin
 
     def memoireCuisine(self, chef):
         for (typeMem, x, y) in chef.memory:
             if (typeMem == 'stockageNourriture'):
-                if ((self.memory).count((typeMem,x,y)) == 0):
-                    (self.memory).append((typeMem,x,y))
+                if (self.memory.count((typeMem,x,y)) == 0):
+                    self.memory.append((typeMem,x,y))
           
     def run(self):
         self.runSurvie()
@@ -286,4 +286,5 @@ class Human(Etre):
             if (monChaudron.fillinFood == 0):
                 self.chemin = self.memoireBatiment('food')
                 self.target = 'food'# au moins un res le forum
-        
+    
+    def runCultivateur(self):
