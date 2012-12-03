@@ -186,7 +186,7 @@ class Human(Etre):
                 self.listeTarget.append((x,y))
             self.chemin = cheminMin
 
-    def memoireCuisine(self, chef):
+    def memoireStockageFood(self, chef):
         for (typeMem, x, y) in chef.memory:
             if (typeMem == 'stockageNourriture'):
                 if (self.memory.count((typeMem,x,y)) == 0):
@@ -259,7 +259,7 @@ class Human(Etre):
         # le partage de la mémoire est instantannee et relatif au role
         if matrix[x][y].has_property('forum'):
             monChef = matrix[x][y].getHumanByRole('chef')
-            self.memoireCuisine(monChef)
+            self.memoireStockageFood(monChef)
             maTarget = self.target
         if (maTarget != 'none'): # sait ou aller 
             if (self.position == self.target.position): # il y est
@@ -308,3 +308,12 @@ class Human(Etre):
     -- verifie que le champ n'est pas "plein"
     """ 
     def runCultivateur(self):
+        matrix = iamap.matrixglobal
+        x = self.position[0]
+        y = self.position[1]
+        # si on se trouve sur le forum on partage la mémoire du chef
+        # le partage de la mémoire est instantannee et relatif au role
+        if matrix[x][y].has_property('forum'):
+            monChef = matrix[x][y].getHumanByRole('chef')
+            self.memoireStockageFood(monChef)
+            maTarget = self.target
