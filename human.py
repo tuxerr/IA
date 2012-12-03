@@ -25,7 +25,7 @@ class Human(Etre):
         self.fatigueGauge = 100 # idem
         self.chanceToKill = 0 # nom pas top, init a 0
         self.role = 'enfant'
-        self.memory = [] # (ressource,x,y) infini for now
+        self.memory = [] # (ressource,x,y) infini (plus simple)
         self.isIn = False
         self.target = 'none'
         self.listeTarget = [] # liste de (x,y)
@@ -185,6 +185,12 @@ class Human(Etre):
             else:
                 (self.listeTarget).append((x,y))
             self.chemin = cheminMin
+
+    def memoireCuisine(self, chef):
+        for (typeMem, x, y) in chef.memory:
+            if (typeMem == 'stockageNourriture'):
+                if ((self.memory).count((typeMem,x,y)) == 0):
+                    (self.memory).append((typeMem,x,y))
           
     def run(self):
         self.runSurvie()
@@ -209,8 +215,10 @@ class Human(Etre):
             self.runPorteurEau()
         elif role == 'constructeur':
             self.runConstructeur()
-        else:
+        elif role == 'cuisinier':
             self.runCuisinier()
+        else:
+             print("role inconnu !")
         self.vieilli()
         self.jaugeNourriture = self.jaugeNourriture - 1
         if (self.mortNaturelle() or self.mortDeFaim()):
@@ -239,8 +247,10 @@ class Human(Etre):
     -- verifie qu'il reste de la nourriture dans le chaudron
     """ 
 
-#TODO memoireCuisine
 
+    # TODO pour l'instant le cuisinier cuisine indéfiniement
+    # voir la frequence/ ou demander au chef a chaque remplissage si
+    # on continue
     def runCuisinier(self):
         matrix = iamap.matrixglobal
         x = self.position[0]
