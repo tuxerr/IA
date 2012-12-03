@@ -114,17 +114,39 @@ class Abri(Batiment):
 
     def __init__(self, position):
         Batiment.__init__(self, position)
-        self.capacityHuman = 10 #arbitraire
+        self.capacityHuman = 10 # arbitraire
 
     def typeBatiment(self):
         return 'abri'
 
 
-class Chaudron(Batiment):#pas completement pertinent, a voir
+class Chaudron(Batiment):
 
-    def __init__(self, position):#forum ou alentours
+    def __init__(self, position):
         Batiment.__init__(self, position)
-        self.capacityFood = 10 #arbitraire
+        self.capacityFood = 10 # arbitraire
         
     def typeBatiment(self):
         return 'chaudron'
+
+class Ferme(Batiment):
+
+    def __init__(self, position):
+        Batiment.__init__(self, position)
+        self.capacityFood = 10 # arbitraire
+        self.tour = 0
+        self.tourMax = 9 # arbitraire
+
+    def typeBatiment(self):
+        return 'ferme'
+
+    def cultive(self):
+        self.tour += 1
+        if (self.tour > tourMax):
+            self.fillinFood += 1
+            self.tour = 0
+            
+    def recolte(self):
+        res = self.fillinFood 
+        self.fillinFood = 0
+        return res

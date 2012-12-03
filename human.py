@@ -233,15 +233,15 @@ class Human(Etre):
     - va chercher au stockage le plus proche dans sa mémoire
     - vide ou pas de stockage en mémoire -> recherche nouveau
     - prendre nourriture (indiff)
-    - retourner au centre ville (ou case adjacente ?)
-    - cuisiner pendant n tours
+    - retourner chaudron
+    - cuisiner pendant n tours (NON FAIT)
     - distribuer
     - cest vide ? on recommence
     description a chaque etape :
     - soit il sait ou aller
+    -- chaudron
     -- chercher bouffe
     -- aller voir le chef (forum, pour savoir ou chercher bouffe)
-    -- retourner au chaudron pour cuisiner avec la bouffe
     - soit il sert a manger/cuisine
     -- donc reste sur place
     -- verifie qu'il reste de la nourriture dans le chaudron
@@ -286,5 +286,25 @@ class Human(Etre):
             if (monChaudron.fillinFood == 0):
                 self.chemin = self.memoireBatiment('food')
                 self.target = 'food'# au moins un res le forum
-    
+
+    """ cultivateur (en plus de surveiller ses jauges)
+    la premiere fois : 
+    - le chef indique l'emplacement d'une ferme sans cultivateur
+    - target pour le cuisinier ferme
+    description lineaire :
+    - cultive
+    - une fois fini => stockage
+    - va chercher au stockage le plus proche dans sa mémoire
+    - plein ou pas de stockage en mémoire -> recherche nouveau
+    - poser nourriture (indiff)
+    - retourner a la ferme
+    description a chaque etape :
+    - soit il sait ou aller
+    -- ferme
+    -- poser bouffe
+    -- aller voir le chef (forum, pour savoir ou poser bouffe)
+    - soit il cultive
+    -- donc reste sur place
+    -- verifie que le champ n'est pas "plein"
+    """ 
     def runCultivateur(self):
