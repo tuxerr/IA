@@ -76,7 +76,33 @@ class Batiment:
         else:
             res = -1
         return res
+
+    def pleinNourriture(self):
+        res = False
+        if (self.fillinFood == self.capacityFood):
+            res = True
+        return res
+
+    def pleinBois(self):
+        res = False
+        if (self.fillinWood == self.capacityWood):
+            res = True
+        return res
+
+    def pleinHumain(self):
+        res = False
+        if (self.fillinHuman == self.capacityHuman):
+            res = True
+        return res
         
+    def videNourriture(self):
+        return (self.fillinFood == 0)
+
+    def videBois(self):
+        return (self.fillinWood == 0)
+
+    def videHumain(self):
+        return (self.fillinHuman == 0)
 
 class Forum(Batiment):
 
@@ -99,15 +125,11 @@ class StockageBois(Batiment):
     def typeBatiment(self):
         return 'stockageBois'
 
+    def estVide(self):
+        return self.videBois()
 
-class StockageNourriture(Batiment):
-
-    def __init__(self, position):
-        Batiment.__init__(self, position)
-        self.capacityFood = 30 #arbitraire
-
-    def typeBatiment(self):
-        return 'stockageNourriture'
+    def estPlein(self):
+        return self.pleinBois()
 
 
 class Abri(Batiment):
@@ -119,7 +141,35 @@ class Abri(Batiment):
     def typeBatiment(self):
         return 'abri'
 
+    def estVide(self):
+        return self.videHumain()
 
+    def estPlein(self):
+        return self.pleinHumain()
+
+
+class BatimentNourriture(Batiment):
+
+    def __init__(self, position):
+        Batiment.__init__(self,position)
+
+    def estVide(self):
+        return self.videNourriture()
+
+    def estPlein(self):
+        return self.pleinNourriture()
+
+
+class StockageNourriture(BatimentNourriture):
+
+    def __init__(self, position):
+        BatimentNourriture.__init__(self, position)
+        self.capacityFood = 30 #arbitraire
+
+    def typeBatiment(self):
+        return 'stockageNourriture'
+
+    
 class Chaudron(Batiment):
 
     def __init__(self, position):
@@ -129,7 +179,7 @@ class Chaudron(Batiment):
     def typeBatiment(self):
         return 'chaudron'
 
-class Ferme(Batiment):
+class Champ(Batiment):
 
     def __init__(self, position):
         Batiment.__init__(self, position)
@@ -138,7 +188,7 @@ class Ferme(Batiment):
         self.tourMax = 9 # arbitraire
 
     def typeBatiment(self):
-        return 'ferme'
+        return 'champ'
 
     def cultive(self):
         self.tour += 1
@@ -150,3 +200,4 @@ class Ferme(Batiment):
         res = self.fillinFood 
         self.fillinFood = 0
         return res
+

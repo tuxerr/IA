@@ -34,6 +34,11 @@ class Human(Etre):
         self.wood = 0
         super().__init__("resources/worker_water.jpg",position)
 
+    def resetTarget(self):
+        self.target = ('none', 0, 0)
+        self.listeTarget = []
+        self.chemin = []
+
     def vieilli(self):
         Human.currentLife += Human.lifeStep
         if Human.currentLife == 1:
@@ -257,32 +262,35 @@ class Human(Etre):
         # le partage de la mémoire est instantannee et relatif au role
         if matrix[x][y].has_property('forum'):
             monChef = matrix[x][y].getHumanByRole('chef')
-            self.PartageMemoire(monChef, 'stockageNourriture')
-            (maTarget, x, y) = self.target
+            self.partageMemoire(monChef, 'stockageNourriture')
+            self.memoireBatiment('stockageNourriture')
+        (maTarget, x, y) = self.target
         if (maTarget != 'none'): # sait ou aller 
             if (self.position == (x, y)): # il y est
-                if (maTarget == 'food'):
+                if (maTarget == 'stockageNourriture'):
                     # tester si il y a bien de la nourriture presente
                     monBatiment = (matrix[x][y].getBatiment())[0]
-                    nbSorti = monBatiment.sortirRessource('food', 10)
+                    nbSorti = monBatiment.sortirRessource('food', 10-self.food)
+                    self.food += nbSorti
                     if (nbSorti > 0): # il y en a on retourne chaudron
-                        self.food = nbSorti
+                        # tant pis si on est pas "a plein"
                         self.memoireBatiment('MonChaudron')
                     else: # il n'y en a pas on cherche ailleurs
-                        self.rechercheLieuStockage('food')
+                        if (listeTarget == []):
+                            self.memoireBatiment('forum')
+                        else:
+                            self.target = self.listeTarget.pop(0)
                 elif (maTarget == 'MonChaudron'):
                     monBatiment = (matrix[x][y].getBatiment())[0]
-                    monBatiment.rentrerRessource('food', self.food)
-                    self.food = 0
-                    self.target = ('none', 0, 0)
+                    nbRentre = monBatiment.rentrerRessource('food', self.food)
+                    self.food -= nbRentre
+                    self.resetTarget()
             else: # il y va
-                self.setPos(self.chemin[0])
-                self.chemin.remove(self.chemin[0])               
+                self.setPos(self.chemin.pop(0))               
         else: # cuisine-sert/verifie (obligatoirement a son chaudron)
             monChaudron = matrix[x][y].getBatiment('chaudron')
             if (monChaudron.fillinFood == 0):
-                self.memoireBatiment('food')
-                self.memoireBatiment('forum')# au moins un res le forum
+                self.memoireBatiment('stockageNourriture')
 
     """ cultivateur (en plus de surveiller ses jauges)
     la premiere fois : 
@@ -304,6 +312,7 @@ class Human(Etre):
     -- donc reste sur place
     -- verifie que le champ n'est pas "plein"
     """ 
+     
     def runCultivateur(self):
         matrix = iamap.matrixglobal
         x = self.position[0]
@@ -312,9 +321,35 @@ class Human(Etre):
         # le partage de la mémoire est instantannee et relatif au role
         if matrix[x][y].has_property('forum'):
             monChef = matrix[x][y].getHumanByRole('chef')
-            self.memoireStockageFood(monChef)
-
-
+            self.partageMemoire(monChef, 'stockageNourriture')
+            self.memoireBatiment('stockageNourriture')
+        (maTarget, x, y) = self.target
+        if (maTarget != 'none'): # sait ou aller
+            if (self.position == (x,y)): #il y est
+                if (maTarget == 'stockageNourriture'):
+                    # tester si il y a bien de la place
+                    monBatiment = (matrix[x][y].getBatiment())[0]
+                    nbRentre = monBatiment.rentrerRessource('food', self.food)
+                    self.food -= nbRentre
+                    if (self.food = 0): # tout est rentre
+                        self.memoireBatiment('MonChamp')
+                    else: # il n'y en a pas on cherche ailleurs
+                        if (listeTarget == []):
+                            self.memoireBatiment('forum')
+                        else:
+                            self.target = self.listeTarget.pop(0)
+                elif (maTarget == 'MonChamp'):
+                    monBatiment = (matrix[x][y].getBatiment())[0]
+                    self.resetTarget()
+            else: #il y va
+                self.setPos(self.chemin.pop(0))
+        else: # cultive son lopin de terre
+            monChamp = matrix[x][y].getBatiment('champ')
+            if (monChamp.estPlein()):
+                self.food += monChamp.recolte()
+                self.memoireBatiment('stockageNourriture')
+            else:
+                monChamp.cultive()
 
 
     # a priori methodes qui seront appelées par le chef quand il existera
