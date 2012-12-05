@@ -27,7 +27,7 @@ class Human(Etre):
         self.role = 'enfant'
         self.memory = [] # (ressource,x,y) infini (plus simple)
         self.isIn = False
-        self.target = 'none'
+        self.target = ('none', 0, 0)
         self.listeTarget = [] # liste de (x,y)
         self.chemin = []
         self.food = 0
@@ -178,6 +178,7 @@ class Human(Etre):
             else:
                 self.listeTarget.append((x,y))
             self.chemin = cheminMin
+        self.target = listeTarget.pop(0)
 
     def partageMemoire(self, chef, typePartage):
         for (typeMem, x, y) in chef.memory:
@@ -245,15 +246,6 @@ class Human(Etre):
     -- verifie qu'il reste de la nourriture dans le chaudron
     """ 
 
-
-    # a priori methode qui sera appelée par le chef quand il existera
-    def devientCuisinier(self, monChaudron):
-        self.role = 'cuisnier'
-        self.supprimeMemoire('monChaudron')
-        self.memory.append(monChaudron)
-
-
-
     # TODO pour l'instant le cuisinier cuisine indéfiniement
     # voir la frequence/ ou demander au chef a chaque remplissage si
     # on continue
@@ -266,15 +258,14 @@ class Human(Etre):
         if matrix[x][y].has_property('forum'):
             monChef = matrix[x][y].getHumanByRole('chef')
             self.PartageMemoire(monChef, 'stockageNourriture')
-            maTarget = self.target
+            (maTarget, x, y) = self.target
         if (maTarget != 'none'): # sait ou aller 
-            if (self.position == self.target.position): # il y est
+            if (self.position == (x, y)): # il y est
                 if (maTarget == 'food'):
                     # tester si il y a bien de la nourriture presente
                     monBatiment = (matrix[x][y].getBatiment())[0]
                     nbSorti = monBatiment.sortirRessource('food', 10)
                     if (nbSorti > 0): # il y en a on retourne chaudron
-                        self.target = 'chaudron'
                         self.food = nbSorti
                         self.memoireBatiment('MonChaudron')
                     else: # il n'y en a pas on cherche ailleurs
@@ -283,15 +274,15 @@ class Human(Etre):
                     monBatiment = (matrix[x][y].getBatiment())[0]
                     monBatiment.rentrerRessource('food', self.food)
                     self.food = 0
-                    self.target = 'none'
+                    self.target = ('none', 0, 0)
             else: # il y va
                 self.setPos(self.chemin[0])
                 self.chemin.remove(self.chemin[0])               
         else: # cuisine-sert/verifie (obligatoirement a son chaudron)
             monChaudron = matrix[x][y].getBatiment('chaudron')
             if (monChaudron.fillinFood == 0):
-                self.chemin = self.memoireBatiment('food')
-                self.target = 'food'# au moins un res le forum
+                self.memoireBatiment('food')
+                self.memoireBatiment('forum')# au moins un res le forum
 
     """ cultivateur (en plus de surveiller ses jauges)
     la premiere fois : 
@@ -322,4 +313,24 @@ class Human(Etre):
         if matrix[x][y].has_property('forum'):
             monChef = matrix[x][y].getHumanByRole('chef')
             self.memoireStockageFood(monChef)
-            maTarget = self.target
+
+
+
+
+    # a priori methodes qui seront appelées par le chef quand il existera
+
+    def devientCuisinier(self, monChaudron):
+        self.role = 'cuisinier'
+        self.supprimeMemoire('monChaudron')
+        self.memory.append(monChaudron)
+        self.target = monChaudron
+        (nom, x, y) = monChaudron
+        self.chemin = cheminCible((x,y)) 
+
+    def devientCultivateur(self, maFerme):
+        self.role = 'cultivateur'
+        self.supprimeMemoire('maFerme')
+        self.memory.append(maFerme)
+        self.target = maFerme
+        (nom, x, y) = maFerme
+        self.chemin = cheminCible((x,y)) 
