@@ -10,6 +10,16 @@ class Batiment:
         self.capacityFood = 0
         self.capacityWood = 0
         self.capacityHuman = 0
+        self.tourConstruction = 0
+        self.tourConsructionMax = 24 # arbitraire
+
+   def construit(self):
+       res = False
+       self.tourConstruction += 1
+       if (self.tourConstruction > tourConstructionMax):
+          res = True 
+          # mettre en position
+       return res
 
     def peutContenir(self, ressource):
         res = False
