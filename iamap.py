@@ -236,7 +236,7 @@ class IAMapCell:
         self.parent=0 #le parent pour A*, en coordonée  
         self.costH=0  #le coût heuristique pour A*
         self.costR=0  #le coût réel pour A*
-        self.properties = [];
+        self.properties = []
         self.have=[]
         
     def costF(self):

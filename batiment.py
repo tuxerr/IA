@@ -1,5 +1,6 @@
 from human import *
 from interface import *
+from iamap import *
 
 class Batiment:
 
@@ -23,6 +24,9 @@ class Batiment:
 
    def placer(self, sprite, scale):
        interface.overviewWidgetGlobal.addItemToScene(sprite, self.position, scale)
+       iamap.matrixglobal[self.position[0]][self.position[1]].set_have(self)
+       iamap.matrixglobal[self.position[0]][self.position[1]].set_property(self.typeBatiment()) 
+       # je ne sais pas si ca marche correctment typeBatiment() 
 
     def peutContenir(self, ressource):
         res = False
