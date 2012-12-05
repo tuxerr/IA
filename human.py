@@ -169,15 +169,8 @@ class Human(Etre):
             matrix = iamap.matrixglobal
             distMin = float("inf")
             cheminMin = []
-            if (batType == 'food'):
-                if (typeMem == 'stockageNourriture' or typeMem == 'forum'):
-                    (cost, chemin) = self.cheminCibleCout((x,y))
-            elif (contentType == 'wood'):
-                if (typeMem == 'stockageBois' or typeMem == 'forum'):
-                    (cost, chemin) = self.cheminCibleCout((x,y))
-            elif (contentType == 'human'):
-                if (typeMem == 'forum' or typeMem == 'abri'):
-                    (cost, chemin) = self.cheminCibleCout((x,y))
+            if (typeMem == batType):
+                (cost, chemin) = self.cheminCibleCout((x,y))
             if (cost < distMin):
                 distMin = cost
                 cheminMin = chemin
@@ -186,11 +179,16 @@ class Human(Etre):
                 self.listeTarget.append((x,y))
             self.chemin = cheminMin
 
-    def memoireStockageFood(self, chef):
+    def partageMemoire(self, chef, typePartage):
         for (typeMem, x, y) in chef.memory:
-            if (typeMem == 'stockageNourriture'):
+            if (typeMem == typePartage):
                 if (self.memory.count((typeMem,x,y)) == 0):
                     self.memory.append((typeMem,x,y))
+                    
+    def supprimeMemoire(self, typeSupprime):
+        for (typeMem, x, y) in self.memory:
+            if (typeMem == typeSupprime):
+                self.memory.remove((typeMem, x, y))
           
     def run(self):
         self.runSurvie()
@@ -248,6 +246,14 @@ class Human(Etre):
     """ 
 
 
+    # a priori methode qui sera appelée par le chef quand il existera
+    def devientCuisinier(self, monChaudron):
+        self.role = 'cuisnier'
+        self.supprimeMemoire('monChaudron')
+        self.memory.append(monChaudron)
+
+
+
     # TODO pour l'instant le cuisinier cuisine indéfiniement
     # voir la frequence/ ou demander au chef a chaque remplissage si
     # on continue
@@ -259,7 +265,7 @@ class Human(Etre):
         # le partage de la mémoire est instantannee et relatif au role
         if matrix[x][y].has_property('forum'):
             monChef = matrix[x][y].getHumanByRole('chef')
-            self.memoireStockageFood(monChef)
+            self.PartageMemoire(monChef, 'stockageNourriture')
             maTarget = self.target
         if (maTarget != 'none'): # sait ou aller 
             if (self.position == self.target.position): # il y est
@@ -270,10 +276,10 @@ class Human(Etre):
                     if (nbSorti > 0): # il y en a on retourne chaudron
                         self.target = 'chaudron'
                         self.food = nbSorti
-                        self.memoireBatiment('chaudron')
+                        self.memoireBatiment('MonChaudron')
                     else: # il n'y en a pas on cherche ailleurs
                         self.rechercheLieuStockage('food')
-                elif (maTarget == 'chaudron'):
+                elif (maTarget == 'MonChaudron'):
                     monBatiment = (matrix[x][y].getBatiment())[0]
                     monBatiment.rentrerRessource('food', self.food)
                     self.food = 0
