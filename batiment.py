@@ -1,4 +1,5 @@
 from human import *
+from interface import *
 
 class Batiment:
 
@@ -18,8 +19,10 @@ class Batiment:
        self.tourConstruction += 1
        if (self.tourConstruction > tourConstructionMax):
           res = True 
-          # mettre en position
        return res
+
+   def placer(self, sprite, scale):
+       interface.overviewWidgetGlobal.addItemToScene(sprite, self.position, scale)
 
     def peutContenir(self, ressource):
         res = False
@@ -121,6 +124,7 @@ class Forum(Batiment):
         self.capacityFood = 20 #arbitraire
         self.capacityWood = 20 #arbitraire
         self.capacityHuman = 10 #arbitraire
+        self.placer("resources/forum.jpg",0.5) #TODO
 
     def typeBatiment(self):
         return 'forum'
@@ -141,6 +145,9 @@ class StockageBois(Batiment):
     def estPlein(self):
         return self.pleinBois()
 
+    def toucheFinale(self):
+        self.placer("resources/woodStock.jpg", 0.5) #TODO
+
 
 class Abri(Batiment):
 
@@ -156,6 +163,9 @@ class Abri(Batiment):
 
     def estPlein(self):
         return self.pleinHumain()
+
+    def toucheFinale(self):
+        self.placer("resources/abri.jpg", 0.5) #TODO
 
 
 class BatimentNourriture(Batiment):
@@ -179,6 +189,8 @@ class StockageNourriture(BatimentNourriture):
     def typeBatiment(self):
         return 'stockageNourriture'
 
+    def toucheFinale(self):
+        self.placer("resources/foodStock.jpg", 0.5) #TODO
     
 class Chaudron(Batiment):
 
@@ -188,6 +200,9 @@ class Chaudron(Batiment):
         
     def typeBatiment(self):
         return 'chaudron'
+
+    def toucheFinale(self):
+        self.placer("resources/chaudron.jpg", 0.5) #TODO
 
 class Champ(Batiment):
 
@@ -210,4 +225,6 @@ class Champ(Batiment):
         res = self.fillinFood 
         self.fillinFood = 0
         return res
-
+ 
+    def toucheFinale(self):
+        self.placer("resources/champ.jpg", 0.5) #TODO
