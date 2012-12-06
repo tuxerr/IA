@@ -369,3 +369,6 @@ class Human(Etre):
         self.target = maFerme
         (nom, x, y) = maFerme
         self.chemin = cheminCible((x,y)) 
+
+    def devientConstructeur(self, typeBatiment):
+        self.
