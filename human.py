@@ -28,6 +28,7 @@ class Human(Etre):
         self.memory = [] # (ressource,x,y) infini (plus simple)
         self.isIn = False
         self.target = ('none', 0, 0)
+        self.aConstruire = 'rien' #memoire utile au constructeur très moche
         self.listeTarget = [] # liste de (x,y)
         self.chemin = []
         self.food = 0
@@ -119,6 +120,8 @@ class Human(Etre):
         matrix = iamap.matrixglobal
         i = self.position[0]
         j = self.position[1]
+        target = 0
+        distance
         for k in range(0,40): #arbitraire
             for x in range(i-k,i+k):
                 for y in range(j-k,j+k):
@@ -135,7 +138,7 @@ class Human(Etre):
         matrix = iamap.matrixglobal
         i = self.position[0]
         j = self.position[1]
-        target = 0
+        target = 0 #TODO pb
         distance = 0
         distanceMax = 40 #arbitraire
         isSearching = True 
@@ -353,6 +356,7 @@ class Human(Etre):
 
 
     # a priori methodes qui seront appelées par le chef quand il existera
+    # il y a sans doute possibilité de factoriser tout ca...
 
     def devientCuisinier(self, monChaudron):
         self.role = 'cuisinier'
@@ -371,4 +375,6 @@ class Human(Etre):
         self.chemin = cheminCible((x,y)) 
 
     def devientConstructeur(self, typeBatiment):
-        self.
+        self.role = 'constructeur'
+        self.aConstruire = typeBatiment
+        self.rechercheTerrain('land')
