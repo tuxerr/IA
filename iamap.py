@@ -1,6 +1,7 @@
 from perlin import *
 from Gaia import *
 from human import *
+from batiment import *
 import manager
 from manager import *
 global matrixglobal
@@ -237,6 +238,11 @@ class IAMap:
         self.matrix[i][j].set_property("human")
         self.matrix[i][j].set_have(human)
         manager.managerGlobal.addEtre(human)
+
+    def unForum(self):
+        i = int(self.height/2-1)
+        j = int(self.width/2-1)
+        forum = Forum((i,j))
 
 class IAMapCell:
     

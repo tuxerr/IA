@@ -14,20 +14,19 @@ class Batiment:
         self.capacityHuman = 0
         self.tourConstruction = 0
         self.tourConsructionMax = 24 # arbitraire
+        
+    def construit(self):
+        res = False
+        self.tourConstruction += 1
+        if (self.tourConstruction > tourConstructionMax):
+            res = True 
+        return res
 
-   def construit(self):
-       res = False
-       self.tourConstruction += 1
-       if (self.tourConstruction > tourConstructionMax):
-          res = True 
-       return res
-
-   def placer(self, sprite, scale):
-       interface.overviewWidgetGlobal.addItemToScene(sprite, self.position, scale)
-       iamap.matrixglobal[self.position[0]][self.position[1]].set_have(self)
-       iamap.matrixglobal[self.position[0]][self.position[1]].set_property(self.typeBatiment()) 
-       # je ne sais pas si ca marche correctment typeBatiment() 
-
+    def placer(self, sprite, scale):
+        interface.overviewWidgetGlobal.addItemToScene(sprite, self.position, scale)
+        iamap.matrixglobal[self.position[0]][self.position[1]].set_property(self.typeBatiment()) 
+    # je ne sais pas si ca marche correctment typeBatiment() 
+        
     def peutContenir(self, ressource):
         res = False
         if (ressource == "food"):
@@ -59,7 +58,7 @@ class Batiment:
             res = -1
         return res
     
-   def rentrerRessource(self, aRentrer, nombre):
+    def rentrerRessource(self, aRentrer, nombre):
         if (aRentrer == "food"):
             res = self.capacityFood - self.fillinFood
             if (nombre > res):
@@ -78,7 +77,7 @@ class Batiment:
             res = -1
         return res
 
-   def sortir(self, human):
+    def sortir(self, human):
         if (human.isIn == True):
             human.isOut = False
             res = 1
@@ -128,7 +127,7 @@ class Forum(Batiment):
         self.capacityFood = 20 #arbitraire
         self.capacityWood = 20 #arbitraire
         self.capacityHuman = 10 #arbitraire
-        self.placer("resources/forum.jpg",0.5) #TODO
+        self.placer("resources/forum.png",0.4)
 
     def typeBatiment(self):
         return 'forum'
