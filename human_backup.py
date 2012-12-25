@@ -3,7 +3,7 @@ from etre import *
 from lifeExpectancy import *
 from iamap import *
 
-class Human(Etre):
+class Human_bc(Etre):
     """Un humain est defini par :
     - position
     - age

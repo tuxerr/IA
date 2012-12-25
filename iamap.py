@@ -1,9 +1,11 @@
 from perlin import *
 from Gaia import *
+from human import *
 import manager
 from manager import *
 global matrixglobal
 global iamapglobal
+
 class IAMap:
     
     def __init__(self,width,height):
@@ -228,6 +230,13 @@ class IAMap:
                     self.matrix[i][j].set_have(wolf)
                     manager.managerGlobal.addEtre(wolf)
 
+    def desHumains(self):
+        i = int(self.height/2)
+        j = int(self.width/2)
+        human = Human((i,j))
+        self.matrix[i][j].set_property("human")
+        self.matrix[i][j].set_have(human)
+        manager.managerGlobal.addEtre(human)
 
 class IAMapCell:
     

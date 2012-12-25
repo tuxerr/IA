@@ -193,10 +193,9 @@ class Wolf(Animal):
         i,j=self.position
         x,y=target.position
         
-        if (abs(i-x)+abs(j-y))<2:
+ #       if (abs(i-x)+abs(j-y))<2:
               
             
-        
         
     def chercheNourriture(self):
         matrix=iamap.matrixglobal
