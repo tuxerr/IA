@@ -4,6 +4,7 @@ from human import *
 from batiment import *
 import manager
 from manager import *
+from random import randint
 global matrixglobal
 global iamapglobal
 
@@ -232,9 +233,14 @@ class IAMap:
                     manager.managerGlobal.addEtre(wolf)
 
     def desHumains(self):
-        i = int(self.height/2)
-        j = int(self.width/2)
-        human = Human((i,j))
+        i=0
+        j=0
+
+        while self.matrix[i][j].cell_type!="land" && self.matrix[i][j].has_property("tree"):
+            i = randint(0,int(self.height))
+            j = randint(0,int(self.width))
+
+        
         self.matrix[i][j].set_property("human")
         self.matrix[i][j].set_have(human)
         manager.managerGlobal.addEtre(human)
