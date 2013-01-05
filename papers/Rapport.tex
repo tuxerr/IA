@@ -173,13 +173,16 @@ jauge de nourriture si il est assez alimenté il cherchera à se reproduire
 si ce n'est pas le cas soit (cette condition est déterminée par le hasard mais 
 pondérée par la jauge de nourriture) il se mettra à errer ou se nourrira (la 
 probabilité qu'il se nourrisse sera d'autant plus importante que la jauge de 
-nourriture sera basse).
+nourriture sera basse mais dépend en partie d'un nombre arbitraire).\\
 
 		\begin{itemize}
 		\item Les loups\\
 		\end{itemize}
 
-
+Les loups se nourrissent de moutons, qu'ils doivent donc chasser. La 
+principale différence dans la fonction \textit{run}, par rapport, à celle du 
+mouton, est donc que de même qu'il y a recherche dans le cas de la 
+reproduction, il y a également recherche lorsqu'il faut se nourrir.
 
 \end{document}
 	
