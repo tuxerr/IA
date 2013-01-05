@@ -126,8 +126,38 @@ l'agent, vivant ou mort).
 
 Il existe deux types d'agents animaux, les domesticables et les sauvages. Sur 
 l'interface graphique ceux-ci sont représentés respectivement par des moutons 
-et des loups. 
-					
+et des loups.\\
+
+Les éléments factorisables à ces deux types d'agents sont 
+regroupés au sein de la classe \textit{Animal} se trouvant dans le fichier 
+\textit{Gaia.py} et héritant de la classe \textit{Etre}. Les classes 
+\textit{Sheep} et \textit{Wolf}, également présentes dans \textit{Gaia.py}
+héritent de cette classe \textit{Animal}. Ce type d'héritage multiple étant 
+possible en \textit{Python}. Ce que l'on factorise au niveau de la classe 
+\textit{Animal} consiste essentiellement en des comportements (méthodes). Il 
+s'agit des fonctions concernant la reproduction.\\
+
+Comme précisé dans le sujet, la reproduction dépend de la possibilité de deux 
+animaux de sexe opposé à se rencontrer ainsi que du fait que ceux-ci sont 
+suffisamment bien alimenté. Les fonctions nécessaires sont donc de rendre 
+possible la vérification de ces conditions (en terme de genre et d'état de la 
+jauge de nourriture), ainsi que la recherche d'un partenaire pour se 
+reproduire si ces conditions sont vérifiées, le fait de de le rejoindre ainsi 
+que l'enfantement.\\
+
+Dans le cadre de la modélisation de ces comportement nous avons fait certaines 
+hypothèses, celles-ci pouvaient être simplificatrices ou bien avoir un 
+caractère arbitraire. L'hypothèse simplificatrice que nous avons faite est de 
+considérer que le temps de gestation est nul, de plus l'individu qui voit le 
+jour est instantanément considéré comme étant un adulte. Les choix arbitraires 
+que nous avons faits se situent au niveau de tous les paramêtres qu'il nous a 
+fallut fixer, il s'agit par exemple du champ de vision des animaux, le rayon 
+de ce champ de vision est une constante arbitraire et il en va de même pour 
+le niveau de la jauge de nourriture qui défini si l'animal a faim ou bien est 
+disposé à se reproduire.\\
+
+
+
 \end{document}
 	
 	
