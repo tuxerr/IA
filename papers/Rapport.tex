@@ -100,7 +100,7 @@ L'univers est clos, il s'agit d'une île. Celle-ci est est générée
 automatiquement à l'aide de Perlin Noise, c'est également le cas en ce qui 
 concerne les différents types de terrains (forêts, lacs, ...) les 
 coefficients peuvent être ajustés afin de créer des cartes ayant leur 
-spécificités propres.
+spécificités propres.\\
 
 % detail perlin noise ?
 
@@ -120,9 +120,13 @@ regroupe ce qui peut être factorisé. Il s'agit pour une part de tout ce qui
 concerne la gestion des entités en lien avec l'intreface et d'autre part 
 d'attributs non spécifiques à un type d'agent particulier (le genre par 
 exemple, qui sera utilisé dans le cadre de la reproduction ou bien l'état de 
-l'agent, vivant ou mort).
+l'agent, vivant ou mort).\\
 
-		\subsection{Les animaux}
+Tous les types d'agents disposeront d'une fonction \textit{run} qui sera jouée 
+à chaque tour de la simulation, certains comportement tels que la mort si la 
+jauge de nourriture tombe à zéro seront également universels.
+
+		\subsubsection{Les animaux}
 
 Il existe deux types d'agents animaux, les domesticables et les sauvages. Sur 
 l'interface graphique ceux-ci sont représentés respectivement par des moutons 
@@ -155,6 +159,25 @@ fallut fixer, il s'agit par exemple du champ de vision des animaux, le rayon
 de ce champ de vision est une constante arbitraire et il en va de même pour 
 le niveau de la jauge de nourriture qui défini si l'animal a faim ou bien est 
 disposé à se reproduire.\\
+
+		\begin{itemize}
+		\item Les moutons\\
+		\end{itemize}
+
+Les moutons se nourrissent d'herbe, ils peuvent donc décider de se nourrir 
+quelle que soit la nature du terrain sur lequel ils se trouvent. Ils n'ont 
+donc pas besoin de chercher leur nourriture.\\
+
+La fonction \textit{run} du mouton dépend essentiellement de l'état de sa 
+jauge de nourriture si il est assez alimenté il cherchera à se reproduire 
+si ce n'est pas le cas soit (cette condition est déterminée par le hasard mais 
+pondérée par la jauge de nourriture) il se mettra à errer ou se nourrira (la 
+probabilité qu'il se nourrisse sera d'autant plus importante que la jauge de 
+nourriture sera basse).
+
+		\begin{itemize}
+		\item Les loups\\
+		\end{itemize}
 
 
 
