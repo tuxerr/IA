@@ -83,7 +83,7 @@ class Animal(Etre):
                         
     def enfanter(self,animal):
         if animal.typeAnimal()==self.typeAnimal():
-            if ((self.gender=='femelle') & (animal.gender=='male')):
+            if ((self.gender=='F') & (animal.gender=='M')):
                 if(self.position==animal.position):
                     if ((self.isFecond()) & (animal.isFecond())):
                         self.jaugeNourriture=self.jaugeNourriture-200
@@ -116,7 +116,7 @@ class Sheep(Animal) :
         self.feeding=100
         #A voir avec les humains
         self.escape=random.choice(range(25,75)) 
-        
+        self.directionDeFuite=[]
     def printCoord(self):
         print(self.position)
     
@@ -126,8 +126,19 @@ class Sheep(Animal) :
 #un hunter peut être soit un loup qui a loupé son coup soit un humain
     def fuir(self,hunter): 
         fromHunter=[self.position[0]-hunter.position[0],self.position[1]-hunter.position[1]]
-        directionDeFuite=[-fromHunter[0],-fromHunter[1]]
+        self.directionDeFuite=[-fromHunter[0],-fromHunter[1]]        
             
+    def moveFuir(self):
+        i,j=self.directionDeFuite
+        a=i
+        b=j
+        count=0
+        while self.move([a,b]):
+            if count==0:
+                a=-i
+                
+            
+         
                     
     def nourrir(self):
         self.jaugeNourriture=self.jaugeNourriture+self.feeding
@@ -155,7 +166,7 @@ class Sheep(Animal) :
         else:
             if (self.isFecond())&(self.target.isFecond()):
                 if self.position==self.target.position:
-                    if self.gender=="femelle":
+                    if self.gender=="F":
                         self.enfanter(self.target)
                     else:
                         self.nourrir()
@@ -188,15 +199,24 @@ class Wolf(Animal):
         
     def typeAnimal(self):
         return 'wolf'
-    
+
+#On  regarde si la cible fuit ou pas.    
     def attaquer(self,target):
         i,j=self.position
         x,y=target.position
         
         if (abs(i-x)+abs(j-y))<2:
-              
-            
-        
+            if self.force>target.escape:
+                #La nourriture sur pate ne fuit pas et se laisse manger
+                target.notMove()
+                return True
+            else:
+                target.fuir(self)
+                self.nourriture=0
+                self.cheminNourriture=[]
+                return False
+        else:
+            return True
         
     def chercheNourriture(self):
         matrix=iamap.matrixglobal
@@ -226,13 +246,14 @@ class Wolf(Animal):
         rand2=random.choice([-1,0,1])
         move=self.move((rand1,rand2))
         while move==0&(rand1==0 & rand2==0):
-            move=self.move((random.choice(-1,0,1),random.choice(-1,0,1)))
+            move=self.move((random.choice([-1,0,1]),random.choice([-1,0,1])))
             
     def nourrir(self,nourriture):
         if (nourriture.etat=='vivant')&(self.position==nourriture.position):
-            nourriture.mort()
             self.jaugeNourriture=self.jaugeNourriture+nourriture.jaugeNourriture
+            nourriture.mort()
             print("un sheep est mort")
+            
     def run(self):
         if self.target==0:
             if self.nourriture==0:
@@ -245,20 +266,21 @@ class Wolf(Animal):
                     else:
                         self.target=self.rechercheDeConjoint()
             else:
+            
                 if self.position==self.nourriture.position:
                     self.nourrir(self.nourriture)
                     self.cheminNourriture=[]
                     self.nourriture=0
-                else:
-                    if self.cheminNourriture==[]:
-                        self.cheminNourriture=self.rejoindreConjoint(self.nourriture)
-                    if self.cheminNourriture != []:
+                #elif (self.attaquer(self.nourriture)):
+                elif self.cheminNourriture==[]:
+                    self.cheminNourriture=self.rejoindreConjoint(self.nourriture)
+                elif self.cheminNourriture != []:
                         self.setPos(self.cheminNourriture[0])
                         self.cheminNourriture.remove(self.cheminNourriture[0])
         else:
             if (self.isFecond())&(self.target.isFecond()):
                 if self.position==self.target.position:
-                    if self.gender=="femelle":
+                    if self.gender=="F":
                         self.enfanter(self.target)
                     self.target=0
                     self.chemin=[]

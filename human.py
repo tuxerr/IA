@@ -163,8 +163,8 @@ class Human(Etre):
             if (contentType == 'food'):
                 if (typeMem == 'stockageNourriture' or typeMem == 'forum'):
                     (cout, chemin) = self.cheminCibleCout((x,y))
-                    if (cost < distMin):
-                        distMin = cost
+                    if (cout < distMin):
+                        distMin = cout
                         cheminMin = chemin
             elif (contentType == 'wood'):
                 if (typeMem == 'stockageBois' or typeMem == 'forum'):
@@ -237,7 +237,7 @@ class Human(Etre):
 #TODO memoireCuisine
 #TODO improve memoire batiment (a voir en fonction de memoire cuisine)
 
-    def runCuisinier(self):
+"""   def runCuisinier(self):
         matrix = iamap.matrixglobal
         x = self.position[0]
         y = self.position[1]
@@ -249,10 +249,11 @@ class Human(Etre):
         if (hasTarget): # sait ou aller, qu'il doit se reposer
             if (self.position == self.target.position):
 #TODO avancer                
+                    
         else: # cuisine-sert/verifie (obligatoirement a son chaudron)
             monChaudron = matrix[x][y].getBatiment('chaudron')
             if (monChaudron.fillinFood == 0):
                 chemin = self.memoireBatiment('food') 
                 # au moins un res le forum
                 # donc a une target pour le tour prochain
-        
+"""
