@@ -1,121 +1,13 @@
 import random
-from etre import *
-from lifeExpectancy import *
+import iamap
+import manager
 from iamap import *
+from manager import *
 
 class Human(Etre):
-    """Un humain est defini par :
-    - position
-    - age
-    - jauge de nourriture
-    - jauge de fatigue
-    - genre
-    - % de chance de tuer un animal sauvage lors d'un combat
-    - memoire forme (ressource, x, y)
-    la ressource pouvant etre "batFood", "batWood", "forum", "abri" 
-    """
-
-    lifeStep = 0.02 # arbitraire a changer (test avec 0.5)
-    currentLife = 0
 
     def __init__(self, position):
-        self.position = position     
-        self.age = 0
-        self.jaugeNourriture = 100 # max=100 arbitraire
-        self.fatigueGauge = 100 # idem
-        self.chanceToKill = 0 # nom pas top, init a 0
-        self.role = 'enfant'
-        self.memory = [] # (ressource,x,y) infini for now
-        self.isIn = False
-        super().__init__("resources/worker_water.jpg",position)
-
-    def vieilli(self):
-        Human.currentLife += Human.lifeStep
-        if Human.currentLife == 1:
-            self.age +=1
-            Human.currentLife = 0
-
-    def mortNaturelle(self, lifeE):
-        d100 = random.randint(1, 100)
-        if d100 < lifeE.currentMortality(self.age):
-            res = True
-        else:
-            res = False
-        return res
-        
-    def mortDeFaim(self):
-        return (self.jaugeNourriture <= 0)
-
-    def move(self,movement):
-        super().move(movement)
-
-    def randomExplo(self):
-        d8 = random.randrange(1,8)
-        if d8 == 1:
-            self.move((0,1))
-        elif d8 == 2:
-            self.move((1,1))
-        elif d8 == 3:
-            self.move((1,0))
-        elif d8 == 4:
-            self.move((1,-1))
-        elif d8 == 5:
-            self.move((0,-1))
-        elif d8 == 6:
-            self.move((-1,-1))
-        elif d8 == 7:
-            self.move((-1,0))
-        else:
-            self.move((-1,1))
-
-    # ressource = baies, tree, batiment (immobile)
-    def rechercheRessource(self, ressource):
-        matrix = iamap.matrixglobal
-        i = self.position[0]
-        j = self.position[1]
-        for k in range(0,40): #arbitraire
-            for x in range(i-k,i+k):
-                for y in range(j-k,j+k):
-                    if((0<x)&(x<len(matrix))&(0<y)&(y<len(matrix))):
-                        if(matrix[x][y].has_property(ressource)):
-                            return (x,y)
-        return(-1,-1)
-#
-# TODO ajouter les element dans la memoire
-#
-
-    # ressource mouvante = mouton, loup
-    def rechercheRessourceMouvante(self, typeAnimal):
-        matrix = iamap.matrixglobal
-        i = self.position[0]
-        j = self.position[1]
-        target = 0
-        distance = 0
-        distanceMax = 40 #arbitraire
-        isSearching = True 
-        while(isSearching&(distance<distanceMax)):
-            for x in range(i-distance,i+distance):
-                for y in range(j-distance,j+distance):
-                    if((0<x)&(x<len(matrix))&(0<y)&(y<len(matrix))):
-                        if(matrix[x][y].has_property(typeAnimal)):
-                            target =  matrix[x][y].getAnimal(typeAnimal)
-                            isSearching = False
-            distance=distance+1
-        return target
-
-    
-    # terrain = land, beach, mountain, water, salwater (immobile)
-    def rechercheTerrain(self, terrain):
-        matrix = iamap.matrixglobal
-        i = self.position[0]
-        j = self.position[1]
-        for k in range(0,40): #arbitraire
-            for x in range(i-k,i+k):
-                for y in range(j-k,j+k):
-                    if((0<x)&(x<len(matrix))&(0<y)&(y<len(matrix))):
-                        if(matrix[x][y].cell_type == terrain):
-                            return (x,y)
-        return(-1,-1)
+        super().__init__("resources/water_carrier.png",0.4,position)
 
     def isCorrespond(self, human):
         return((human.isFecond())&(self.gender!=human.gender)&(human.age >15))
@@ -257,3 +149,5 @@ class Human(Etre):
                 # au moins un res le forum
                 # donc a une target pour le tour prochain
 """
+#    def run(self):
+#        print("run")

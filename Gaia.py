@@ -203,7 +203,6 @@ class Wolf(Animal):
 #On  regarde si la cible fuit ou pas.    
     def attaquer(self,target):
         i,j=self.position
-        x,y=target.position
         
         if (abs(i-x)+abs(j-y))<2:
             if self.force>target.escape:
@@ -217,6 +216,9 @@ class Wolf(Animal):
                 return False
         else:
             return True
+ #       if (abs(i-x)+abs(j-y))<2:
+              
+            
         
     def chercheNourriture(self):
         matrix=iamap.matrixglobal

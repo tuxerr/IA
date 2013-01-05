@@ -5,6 +5,7 @@ import sys
 import interface
 import iamap
 import manager
+import random
 from iamap import *
 from main import *
 from interface import *

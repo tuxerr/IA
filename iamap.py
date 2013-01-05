@@ -1,9 +1,13 @@
 from perlin import *
 from Gaia import *
+from human import *
+from batiment import *
 import manager
 from manager import *
+from random import randint
 global matrixglobal
 global iamapglobal
+
 class IAMap:
     
     def __init__(self,width,height):
@@ -228,6 +232,23 @@ class IAMap:
                     self.matrix[i][j].set_have(wolf)
                     manager.managerGlobal.addEtre(wolf)
 
+    def desHumains(self):
+        i=0
+        j=0
+
+        while self.matrix[i][j].cell_type!="land" && self.matrix[i][j].has_property("tree"):
+            i = randint(0,int(self.height))
+            j = randint(0,int(self.width))
+
+        
+        self.matrix[i][j].set_property("human")
+        self.matrix[i][j].set_have(human)
+        manager.managerGlobal.addEtre(human)
+
+    def unForum(self):
+        i = int(self.height/2-1)
+        j = int(self.width/2-1)
+        forum = Forum((i,j))
 
 class IAMapCell:
     
@@ -236,7 +257,7 @@ class IAMapCell:
         self.parent=0 #le parent pour A*, en coordonée  
         self.costH=0  #le coût heuristique pour A*
         self.costR=0  #le coût réel pour A*
-        self.properties = [];
+        self.properties = []
         self.have=[]
         
     def costF(self):
@@ -279,11 +300,10 @@ class IAMapCell:
                 res.append(human)
         return res
 
-    def getBatiment(self, type):
+    def getBatiment(self):
         res = []
         for batiment in self.have:
-            if (batiment.typeBatiment() == type):
-                res.append(batiment)
+            res.append(batiment)
         return res
 
     def __str__(self):

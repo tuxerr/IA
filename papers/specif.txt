@@ -6,6 +6,7 @@ TODO améliorations potentielles (dans ce qui est partiellement codé)
 - batiment endommagé et réparations
 - batiment de plusieurs pixels de large
 - gestion de mort naturelle plus précise
+- ajout d'un temps de préparation 
 
 Minutes du super meeting IA
 
