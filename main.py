@@ -19,13 +19,14 @@ def main():
     iamap.generate_map(conf)
 
     manager = Manager()
-
     #handle gérant l'interface qt de la simulation
+    gaia = Nature()
     inter = Interface(conf,iamap,manager)
+    manager.addEtre(gaia)
     iamap.desMoutonsDePartout()
     iamap.desLoupsDePartout()
-    iamap.desHumains()
-    iamap.unForum()
+    #iamap.desHumains()
+    #iamap.unForum()
 
     #print(iamap.A_star((75,75),(150,150)))
     # exit quand l'interface s'est coupée (fermeture du programme)

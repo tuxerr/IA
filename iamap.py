@@ -236,12 +236,13 @@ class IAMap:
         i=0
         j=0
 
-        while self.matrix[i][j].cell_type!="land" && self.matrix[i][j].has_property("tree"):
+        while (self.matrix[i][j].cell_type!="land") & (not(self.matrix[i][j].has_property("tree"))):
             i = randint(0,int(self.height))
             j = randint(0,int(self.width))
 
-        
+        print(i,j)        
         self.matrix[i][j].set_property("human")
+        human=Human((i,j))
         self.matrix[i][j].set_have(human)
         manager.managerGlobal.addEtre(human)
 
@@ -249,6 +250,7 @@ class IAMap:
         i = int(self.height/2-1)
         j = int(self.width/2-1)
         forum = Forum((i,j))
+        print(i,j)
 
 class IAMapCell:
     
