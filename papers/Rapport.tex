@@ -126,6 +126,20 @@ Tous les types d'agents disposeront d'une fonction \textit{run} qui sera jouée
 à chaque tour de la simulation, certains comportement tels que la mort si la 
 jauge de nourriture tombe à zéro seront également universels.
 
+La modélisation du vieillissement est elle aussi commune, l'âge en lui même 
+n'est pas prs en compte mais la mort des agents par vieillesse existe. La 
+modélisation mathématique retenue est une simplification du modèle de Weibull 
+(courbe en baignoire). En effet au début le taux de mortalité est décroissant 
+et correspond à une période de mortalité infantile, ensuite le taux de 
+mortalité est constant (et faible) puis il ré-augmente.\\
+
+% figure baignoire
+
+Dans notre modèle la courbe a été simplifiée en la modélisant par des droites 
+dont les coefficients ont été choisis arbitrairement, cette modélisation se 
+trouve dans le fichier \textit{LifeExpectancy.py}. A chaque appel de la 
+fonction \textit{run} pour savoir si l'agent meurt de mort naturelle.
+
 		\subsubsection{Les animaux}
 
 Il existe deux types d'agents animaux, les domesticables et les sauvages. Sur 
@@ -185,6 +199,8 @@ mouton, est donc que de même qu'il y a recherche dans le cas de la
 reproduction, il y a également recherche lorsqu'il faut se nourrir.
 
 		\subsubsection{Les humains}
+
+
 
 \end{document}
 	
