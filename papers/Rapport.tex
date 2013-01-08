@@ -109,7 +109,13 @@ informations relatives au terrain, aux agents et bâtiments présents sur la
 cellule. Ces informations sont réparties en deux catégories, celles qui sont 
 mutuellement exclusives (une cellule ne peut être que d'un seul type de 
 terrain) et celles s'ajoutent les unes aux autres (une cellule peut à la fois 
-contenir un bâtiment, plusieurs agents animaux et plusieurs agents humains).
+contenir un bâtiment, plusieurs agents animaux et plusieurs agents humains).\\
+
+Une cellule étant unitaire, un agent quand il se trouve sur une cellule 
+l'occupe en totalité et n'occupe qu'elle, en revanche une cellule peut-être 
+par plusieurs agents simultanément. Les bâtiments occupent une seule cellule, 
+les cellules sont occupées par un seul bâtiment au maximum. Les agents peuvent 
+traverser une cellule occupée par un bâtiment.
 
 	\subsection{Les agents}
 
