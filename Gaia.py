@@ -19,6 +19,52 @@ import iamap
 from iamap import *
 import manager
 from manager import *
+global gaia
+
+class Nature():
+    def __init__(self):
+        global gaia
+        self.herbes=[]
+        self.arbres=[]
+        self.herbesTime=10
+        self.arbresTime=100
+        gaia=self
+        
+    def addHerbes(self,h):
+        self.herbes.append([h,0])
+        iamap.matrixglobal[h[0]][h[1]].set_property("noHerbes")
+
+    def addArbres(self,a):
+        self.arbres.append([h,0])
+        iamap.matrixglobal[a[0]][a[1]].set_property("noArbres")
+        iamap.matrixglobal[a[0]][a[1]].remove_property("tree")
+        
+    def incHerbes(self):
+        for h in self.herbes:
+            h[1]=h[1]+1
+
+    def incArbres(self):
+        for a in self.arbres:
+            a[1]=a[1]+1
+
+    def removeHerbes(self):
+        for h in self.herbes:
+            if (h[1]>=self.herbesTime):
+                self.herbes.remove(h)    
+                iamap.matrixglobal[h[0][0]][h[0][1]].remove_property("noHerbes")
+
+    def removeArbres(self):
+        for a in self.arbres:
+            if (a[1]>=self.arbresTime):
+                self.arbres.remove(a)
+                iamap.matrixglobal[a[0]][a[1]].remove_property("noArbres")
+                iamap.matrixglobal[a[0][0]][a[0][1]].set_property("tree")
+        
+    def run(self):
+        self.incHerbes()
+        self.incArbres()
+        self.removeHerbes()
+        self.removeArbres()
 
 class Animal(Etre):
     
@@ -83,7 +129,7 @@ class Animal(Etre):
                         
     def enfanter(self,animal):
         if animal.typeAnimal()==self.typeAnimal():
-            if ((self.gender=='femelle') & (animal.gender=='male')):
+            if ((self.gender=='F') & (animal.gender=='M')):
                 if(self.position==animal.position):
                     if ((self.isFecond()) & (animal.isFecond())):
                         self.jaugeNourriture=self.jaugeNourriture-200
@@ -113,10 +159,10 @@ class Sheep(Animal) :
     
     def __init__(self,position):
         Animal.__init__(self,"resources/Sheep.png",0.4,position)
-        self.feeding=100
+        self.feeding=10
         #A voir avec les humains
         self.escape=random.choice(range(25,75)) 
-        
+        self.directionDeFuite=[]
     def printCoord(self):
         print(self.position)
     
@@ -126,25 +172,41 @@ class Sheep(Animal) :
 #un hunter peut être soit un loup qui a loupé son coup soit un humain
     def fuir(self,hunter): 
         fromHunter=[self.position[0]-hunter.position[0],self.position[1]-hunter.position[1]]
-        directionDeFuite=[-fromHunter[0],-fromHunter[1]]
+        self.directionDeFuite=[-fromHunter[0],-fromHunter[1]]        
             
-                    
+#    def moveFuir(self):
+#        i,j=self.directionDeFuite
+#        a=i
+#        b=j
+#        count=0
+#        while self.move([a,b]):
+#            if count==0:
+#                a=-i
+                            
     def nourrir(self):
         self.jaugeNourriture=self.jaugeNourriture+self.feeding
-        
-    def choix(self):
-        rand=random.randint(1,100)
-        if (rand>((500-self.jaugeNourriture)/5)):
-            #|(len(iamap.iamapglobal.matrix[self.position[0]][self.position[1]].have)>1):
+        gaia.addHerbes(self.position)
+
+    def deplacement(self):
+        rand1=random.choice([-1,0,1])
+        rand2=random.choice([-1,0,1])
+        move=self.move((rand1,rand2))
+        while (move==0)&(rand1==0)&(rand2==0):
             rand1=random.choice([-1,0,1])
             rand2=random.choice([-1,0,1])
             move=self.move((rand1,rand2))
-            while (move==0)&(rand1==0 & rand2==0):
-                rand1=random.choice([-1,0,1])
-                rand2=random.choice([-1,0,1])
-                move=self.move((rand1,rand2))
-        else:           
-            self.nourrir()
+
+    def choix(self):
+        rand=random.randint(1,100)
+        if (iamap.matrixglobal[self.position[0]][self.position[1]].has_property("noHerbes")):
+                self.deplacement()
+        else:
+             
+            if (rand>((500-self.jaugeNourriture)/5)):
+                #|(len(iamap.iamapglobal.matrix[self.position[0]][self.position[1]].have)>1):
+                self.deplacement()
+            else:           
+                self.nourrir()
             
     def run(self):
         if self.target== 0:
@@ -155,7 +217,7 @@ class Sheep(Animal) :
         else:
             if (self.isFecond())&(self.target.isFecond()):
                 if self.position==self.target.position:
-                    if self.gender=="femelle":
+                    if self.gender=="F":
                         self.enfanter(self.target)
                     else:
                         self.nourrir()
@@ -188,11 +250,23 @@ class Wolf(Animal):
         
     def typeAnimal(self):
         return 'wolf'
-    
+
+#On  regarde si la cible fuit ou pas.    
     def attaquer(self,target):
         i,j=self.position
-        x,y=target.position
         
+        if (abs(i-x)+abs(j-y))<2:
+            if self.force>target.escape:
+                #La nourriture sur pate ne fuit pas et se laisse manger
+                target.notMove()
+                return True
+            else:
+                target.fuir(self)
+                self.nourriture=0
+                self.cheminNourriture=[]
+                return False
+        else:
+            return True
  #       if (abs(i-x)+abs(j-y))<2:
               
             
@@ -225,13 +299,14 @@ class Wolf(Animal):
         rand2=random.choice([-1,0,1])
         move=self.move((rand1,rand2))
         while move==0&(rand1==0 & rand2==0):
-            move=self.move((random.choice(-1,0,1),random.choice(-1,0,1)))
+            move=self.move((random.choice([-1,0,1]),random.choice([-1,0,1])))
             
     def nourrir(self,nourriture):
         if (nourriture.etat=='vivant')&(self.position==nourriture.position):
-            nourriture.mort()
             self.jaugeNourriture=self.jaugeNourriture+nourriture.jaugeNourriture
+            nourriture.mort()
             print("un sheep est mort")
+            
     def run(self):
         if self.target==0:
             if self.nourriture==0:
@@ -244,20 +319,21 @@ class Wolf(Animal):
                     else:
                         self.target=self.rechercheDeConjoint()
             else:
+            
                 if self.position==self.nourriture.position:
                     self.nourrir(self.nourriture)
                     self.cheminNourriture=[]
                     self.nourriture=0
-                else:
-                    if self.cheminNourriture==[]:
-                        self.cheminNourriture=self.rejoindreConjoint(self.nourriture)
-                    if self.cheminNourriture != []:
+                #elif (self.attaquer(self.nourriture)):
+                elif self.cheminNourriture==[]:
+                    self.cheminNourriture=self.rejoindreConjoint(self.nourriture)
+                elif self.cheminNourriture != []:
                         self.setPos(self.cheminNourriture[0])
                         self.cheminNourriture.remove(self.cheminNourriture[0])
         else:
             if (self.isFecond())&(self.target.isFecond()):
                 if self.position==self.target.position:
-                    if self.gender=="femelle":
+                    if self.gender=="F":
                         self.enfanter(self.target)
                     self.target=0
                     self.chemin=[]
@@ -274,3 +350,4 @@ class Wolf(Animal):
         if self.jaugeNourriture<=0:
             self.mort()
             print("wolf dead")
+
