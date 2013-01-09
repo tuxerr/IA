@@ -14,6 +14,10 @@ class Human(Etre):
             global chef
             self.role=role
             self.memoireChef=[]
+#on enregistre l'ensemble des informations qui peuvent posé des problémes
+            self.memoireMort=[]
+#on suppose que 2 fois le temps de scout permet d'être sur de pas avoir de probleme
+            self.reset=100
             chef=self
         else:
             self.position=position
@@ -132,10 +136,17 @@ class Human(Etre):
             distance=distance+1
 #Mise a jour de la mémoir avec le chef
     def appendMemoireChef(self):
+        self.utilisationMemoireMort()
         for memoire in self.memoire:
             if chef.memoireChef.count(memoire) == 0:
                 chef.memoireChef.append(memoire)
-                
+
+    def utilisationMemoireMort(self):
+        for memoire in chef.memoireMort:
+            if self.memoire.count(memoire[0]):
+                self.memoire.remove(memoire[0])
+            
+        
 
     def choixScout(self):
         rand1=random.choice([-1,0,1])
@@ -247,6 +258,7 @@ class Human(Etre):
                     self.ressource=0
                     iamap.matrixglobal[self.forum[0]][self.forum[1]].getBatiment("forum").rentrerRessource("food",1)
                     chef.memoireChef.remove(["baies",self.but])
+                    chef.memoireMort.append([["baies",self.but],0])
                 else:
                     self.miseAjourDeLaMemoire(["baies"])
             else:
@@ -277,6 +289,7 @@ class Human(Etre):
                     self.ressource=0
                     iamap.matrixglobal[self.forum[0]][self.forum[1]].getBatiment("forum").rentrerRessource("wood",1)
                     chef.memoireChef.remove(["tree",self.but])
+                    chef.memoireMort.append([["tree",self.but],0])
                 else:
                     self.miseAjourDeLaMemoire(["tree"])
             else:
@@ -317,12 +330,22 @@ class Human(Etre):
         else:
             self.demandeWater()
 
+    def incMemoireMort(self):
+        for memoire in self.memoireMort:
+            memoire[1]=memoire[1]+1
+
+    def removeMemoireMort(self):
+        for memoire in self.memoireMort:
+            if memoire[1]>=self.reset:
+                self.memoireMort.remove(memoire)
+            
 
     def runChef(self):
         #Il n'a strictement rien a faire.
         #Il est juste une memoire sur pate
         #print(self.memoireChef)
-        1+1
+        self.incMemoireMort()
+        self.removeMemoireMort()
 
 #Role utilisé:
 #chef scout cueilleur bucheron porteurEau
