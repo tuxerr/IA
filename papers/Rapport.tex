@@ -109,7 +109,37 @@ informations relatives au terrain, aux agents et bâtiments présents sur la
 cellule. Ces informations sont réparties en deux catégories, celles qui sont 
 mutuellement exclusives (une cellule ne peut être que d'un seul type de 
 terrain) et celles s'ajoutent les unes aux autres (une cellule peut à la fois 
-contenir un bâtiment, plusieurs agents animaux et plusieurs agents humains).
+contenir un bâtiment, plusieurs agents animaux et plusieurs agents humains).\\
+
+Une cellule étant unitaire, un agent quand il se trouve sur une cellule 
+l'occupe en totalité et n'occupe qu'elle, en revanche une cellule peut-être 
+par plusieurs agents simultanément. Les bâtiments occupent une seule cellule, 
+les cellules sont occupées par un seul bâtiment au maximum. Les agents peuvent 
+traverser une cellule occupée par un bâtiment.
+
+	\subsection{Les bâtiments}
+
+Il existe plusieurs types différents de bâtiments.
+	\begin{itemize}
+	
+	\item le Forum : il sera présent initialement sur la carte et les 
+agents humains auront son emplacement en mémoire, car c'est là où se situera 
+le chef et où viendront les agents pour recevoir des directives.
+
+	\item Les stockages de ressources : ils sont spécialisés dans un type 
+de ressource particulière et ont une capacité maximale.
+
+	\item Les abris : ont une capacité maximale, la mémoire des agents 
+présents dans le bâtiment n'ets pas assuré par le bâtiment mais par l'agent.
+
+	\item Les champs : ils sont comme des stockages de nourriture dont 
+le contenu augmenterait périodiquement si ils sont cultivés.
+
+	\item Les chaudrons : ce sont les endroits où les agents humains dont 
+le rôle sera de cuisiner cuisineront et donc où les agents humains ayant faim 
+viendront se restaurer.
+
+	\end{itemize}
 
 	\subsection{Les agents}
 
@@ -125,6 +155,20 @@ l'agent, vivant ou mort).\\
 Tous les types d'agents disposeront d'une fonction \textit{run} qui sera jouée 
 à chaque tour de la simulation, certains comportement tels que la mort si la 
 jauge de nourriture tombe à zéro seront également universels.
+
+La modélisation du vieillissement est elle aussi commune, l'âge en lui même 
+n'est pas prs en compte mais la mort des agents par vieillesse existe. La 
+modélisation mathématique retenue est une simplification du modèle de Weibull 
+(courbe en baignoire). En effet au début le taux de mortalité est décroissant 
+et correspond à une période de mortalité infantile, ensuite le taux de 
+mortalité est constant (et faible) puis il ré-augmente.\\
+
+% figure baignoire
+
+Dans notre modèle la courbe a été simplifiée en la modélisant par des droites 
+dont les coefficients ont été choisis arbitrairement, cette modélisation se 
+trouve dans le fichier \textit{LifeExpectancy.py}. A chaque appel de la 
+fonction \textit{run} pour savoir si l'agent meurt de mort naturelle.
 
 		\subsubsection{Les animaux}
 
@@ -185,6 +229,9 @@ mouton, est donc que de même qu'il y a recherche dans le cas de la
 reproduction, il y a également recherche lorsqu'il faut se nourrir.
 
 		\subsubsection{Les humains}
+
+\textit{La spécification suivante est une proposition d'intréprétation du 
+sujet}
 
 \end{document}
 	
