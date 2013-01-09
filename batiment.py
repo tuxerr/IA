@@ -9,9 +9,11 @@ class Batiment:
         self.fillinFood = 0
         self.fillinWood = 0
         self.fillinHuman = 0
+        self.fillinWater = 0
         self.capacityFood = 0
         self.capacityWood = 0
         self.capacityHuman = 0
+        self.capacityWater = 0
         self.tourConstruction = 0
         self.tourConsructionMax = 24 # arbitraire
         
@@ -24,8 +26,8 @@ class Batiment:
 
     def placer(self, sprite, scale):
         interface.overviewWidgetGlobal.addItemToScene(sprite, self.position, scale)
-        iamap.matrixglobal[self.position[0]][self.position[1]].set_property(self.typeBatiment()) 
-    # je ne sais pas si ca marche correctment typeBatiment() 
+        iamap.matrixglobal[self.position[0]][self.position[1]].set_property(self.typeObjet()) 
+    # je ne sais pas si ca marche correctment typeObjet() 
         
     def peutContenir(self, ressource):
         res = False
@@ -35,6 +37,8 @@ class Batiment:
             res = (self.capacityWood != 0)
         elif (ressource == "human"):
             res = (self.capacityHuman != 0)
+        elif (ressource == "water"):
+            res = (self.capacityWater != 0)
         else:
             print("peutContenir : ressource inconnue")
         return res
@@ -54,6 +58,13 @@ class Batiment:
             else:
                 self.fillinWood = res - nombre
                 res = nombre
+        elif (aSortir == "water"):
+            res = self.fillinWater
+            if (nombre > res):
+                self.fillinWater = 0
+            else:
+                self.fillinWater = res - nombre
+                res = nombre
         else:
             res = -1
         return res
@@ -66,12 +77,19 @@ class Batiment:
             else:
                 self.fillinFood = self.fillinFood + nombre
                 res = nombre
-        elif (aSortir == "wood"):
+        elif (aRentrer == "wood"):
             res = self.capacityWood - self.fillinWood
             if (nombre > res):
                 self.fillinWood = self.capacityWood
             else:
-                self.fillinFood = self.fillinWood + nombre
+                self.fillinWood = self.fillinWood + nombre
+                res = nombre
+        elif (aRentrer == "water"):
+            res = self.capacityWater - self.fillinWater
+            if (nombre > res):
+                self.fillinWater = self.capacityWater
+            else:
+                self.fillinWater = self.fillinWater + nombre
                 res = nombre
         else:
             res = -1
@@ -127,9 +145,10 @@ class Forum(Batiment):
         self.capacityFood = 20 #arbitraire
         self.capacityWood = 20 #arbitraire
         self.capacityHuman = 10 #arbitraire
+        self.capacityWater =20 #arbitraire
         self.placer("resources/forum.png",0.4)
 
-    def typeBatiment(self):
+    def typeObjet(self):
         return 'forum'
 
 
@@ -139,7 +158,7 @@ class StockageBois(Batiment):
         Batiment.__init__(self, position)
         self.capacityWood = 30 #arbitraire
 
-    def typeBatiment(self):
+    def typeObjet(self):
         return 'stockageBois'
 
     def estVide(self):
@@ -158,7 +177,7 @@ class Abri(Batiment):
         Batiment.__init__(self, position)
         self.capacityHuman = 10 # arbitraire
 
-    def typeBatiment(self):
+    def typeObjet(self):
         return 'abri'
 
     def estVide(self):
@@ -189,7 +208,7 @@ class StockageNourriture(BatimentNourriture):
         BatimentNourriture.__init__(self, position)
         self.capacityFood = 30 #arbitraire
 
-    def typeBatiment(self):
+    def typeObjet(self):
         return 'stockageNourriture'
 
     def toucheFinale(self):
@@ -201,7 +220,7 @@ class Chaudron(Batiment):
         Batiment.__init__(self, position)
         self.capacityFood = 10 # arbitraire
         
-    def typeBatiment(self):
+    def typeObjet(self):
         return 'chaudron'
 
     def toucheFinale(self):
@@ -215,7 +234,7 @@ class Champ(Batiment):
         self.tour = 0
         self.tourMax = 9 # arbitraire
 
-    def typeBatiment(self):
+    def typeObjet(self):
         return 'champ'
 
     def cultive(self):

@@ -28,9 +28,9 @@ class Etre:
             interface.overviewWidgetGlobal.moveItem(self.qitem,movement)
             self.position=(i+x,j+y)
             iamap.matrixglobal[i][j].remove_have(self)
-            iamap.matrixglobal[i][j].remove_property(self.typeAnimal())
+            iamap.matrixglobal[i][j].remove_property(self.typeObjet())
             iamap.matrixglobal[i+x][j+y].set_have(self)
-            iamap.matrixglobal[i+x][j+y].set_property(self.typeAnimal())
+            iamap.matrixglobal[i+x][j+y].set_property(self.typeObjet())
         return canGo
     
     def setPos(self,pos):
@@ -41,16 +41,16 @@ class Etre:
             interface.overviewWidgetGlobal.setItemPos(self.qitem,pos)
             self.position=pos
             iamap.matrixglobal[i][j].remove_have(self)
-            iamap.matrixglobal[i][j].remove_property(self.typeAnimal())
+            iamap.matrixglobal[i][j].remove_property(self.typeObjet())
             iamap.matrixglobal[x][y].set_have(self)
-            iamap.matrixglobal[x][y].set_property(self.typeAnimal())
+            iamap.matrixglobal[x][y].set_property(self.typeObjet())
         return canGo
     def mort(self):
         i,j=self.position
         self.etat='mort'
         interface.overviewWidgetGlobal.removeItem(self.qitem)
         iamap.matrixglobal[i][j].remove_have(self)
-        iamap.matrixglobal[i][j].remove_property(self.typeAnimal())
+        iamap.matrixglobal[i][j].remove_property(self.typeObjet())
         manager.managerGlobal.removeEtre(self)
         
     def canGo(self,pos):

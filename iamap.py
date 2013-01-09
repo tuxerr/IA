@@ -83,6 +83,8 @@ class IAMap:
            
             if self.matrix[cellX][cellY].cell_type=="water":
                 self.matrix[cellX][cellY].cell_type="saltwater"
+                self.matrix[cellX][cellY].remove_property("water")
+                self.matrix[cellX][cellY].set_property("saltwater")
                 if cellX>0:
                     cells_to_test.append((cellX-1,cellY))
                 if cellX<(self.width-1):
@@ -232,25 +234,23 @@ class IAMap:
                     self.matrix[i][j].set_have(wolf)
                     manager.managerGlobal.addEtre(wolf)
 
-    def desHumains(self):
+    def desHumains(self,i,j):
+        roleL=['chef','scout','cueilleur','bucheron','porteurEau']
+        for role in roleL:
+            self.matrix[i][j].set_property("human")
+            human=Human([i,j],role)
+            self.matrix[i][j].set_have(human)
+            manager.managerGlobal.addEtre(human)
+        
+    def unForum(self):
         i=0
         j=0
-
-        while (self.matrix[i][j].cell_type!="land") & (not(self.matrix[i][j].has_property("tree"))):
-            i = randint(0,int(self.height))
-            j = randint(0,int(self.width))
-
-        print(i,j)        
-        self.matrix[i][j].set_property("human")
-        human=Human((i,j))
-        self.matrix[i][j].set_have(human)
-        manager.managerGlobal.addEtre(human)
-
-    def unForum(self):
-        i = int(self.height/2-1)
-        j = int(self.width/2-1)
+        while (self.matrix[i][j].properties!=["land"]):
+            i = randint(0,int(self.height)-1)
+            j = randint(0,int(self.width)-1)
         forum = Forum((i,j))
-        print(i,j)
+        self.matrix[i][j].set_have(forum)
+        self.desHumains(i,j)
 
 class IAMapCell:
     
@@ -259,7 +259,7 @@ class IAMapCell:
         self.parent=0 #le parent pour A*, en coordonée  
         self.costH=0  #le coût heuristique pour A*
         self.costR=0  #le coût réel pour A*
-        self.properties = []
+        self.properties = [cell_type]
         self.have=[]
         
     def costF(self):
@@ -280,13 +280,20 @@ class IAMapCell:
     def remove_have(self,etre):
         self.have.remove(etre)
     
-    def getAnimal(self,type):
+    def getAnimal(self,animal):
         animaux=[]
         for animal in self.have:
-            if animal.typeAnimal()==type:
+            if animal.typeObjet()==animal:
                 animaux.append(animal)
         return animaux
 
+    def getBatiment(self,batiment):
+        res=-1
+        for bat in self.have:
+            if bat.typeObjet()==batiment:
+                res=bat
+        return res
+    
     def getHuman(self):
         res = []
         for human in self.have:
@@ -300,12 +307,6 @@ class IAMapCell:
         for human in self.have:
             if (human.role == role):
                 res.append(human)
-        return res
-
-    def getBatiment(self):
-        res = []
-        for batiment in self.have:
-            res.append(batiment)
         return res
 
     def __str__(self):

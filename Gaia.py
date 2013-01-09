@@ -19,6 +19,8 @@ import iamap
 from iamap import *
 import manager
 from manager import *
+import interface
+from interface import *
 global gaia
 
 class Nature():
@@ -26,18 +28,36 @@ class Nature():
         global gaia
         self.herbes=[]
         self.arbres=[]
-        self.herbesTime=10
-        self.arbresTime=100
+        self.baies=[]
+        self.herbesTime=100
+        self.arbresTime=500
+        self.baiesTime=350
         gaia=self
         
     def addHerbes(self,h):
+        item = interface.owGlobal.itemmatrix[h[0]][h[1]]
         self.herbes.append([h,0])
         iamap.matrixglobal[h[0]][h[1]].set_property("noHerbes")
+        item.setPen(QtGui.QColor(0,0,0))
+        item.setBrush(QtGui.QColor(0,0,0))
+
 
     def addArbres(self,a):
-        self.arbres.append([h,0])
+        self.arbres.append([a,0])
         iamap.matrixglobal[a[0]][a[1]].set_property("noArbres")
         iamap.matrixglobal[a[0]][a[1]].remove_property("tree")
+        item = interface.owGlobal.itemmatrix[a[0]][a[1]]
+        item.setPen(QtGui.QColor(0,255,0))
+        item.setBrush(QtGui.QColor(0,255,0))
+        
+
+    def addBaies(self,b):
+        self.baies.append([b,0])
+        iamap.matrixglobal[b[0]][b[1]].set_property("noBaies")
+        iamap.matrixglobal[b[0]][b[1]].remove_property("baies")
+        item = interface.owGlobal.itemmatrix[b[0]][b[1]]
+        item.setPen(QtGui.QColor(0,255,0))
+        item.setBrush(QtGui.QColor(0,255,0))
         
     def incHerbes(self):
         for h in self.herbes:
@@ -47,24 +67,46 @@ class Nature():
         for a in self.arbres:
             a[1]=a[1]+1
 
+    def incBaies(self):
+        for b in self.baies:
+            b[1]=b[1]+1
+
     def removeHerbes(self):
         for h in self.herbes:
             if (h[1]>=self.herbesTime):
                 self.herbes.remove(h)    
                 iamap.matrixglobal[h[0][0]][h[0][1]].remove_property("noHerbes")
+                item = interface.owGlobal.itemmatrix[h[0][0]][h[0][1]]
+                item.setPen(QtGui.QColor(0,255,0))
+                item.setBrush(QtGui.QColor(0,255,0))
 
     def removeArbres(self):
         for a in self.arbres:
             if (a[1]>=self.arbresTime):
                 self.arbres.remove(a)
-                iamap.matrixglobal[a[0]][a[1]].remove_property("noArbres")
+                iamap.matrixglobal[a[0][0]][a[0][1]].remove_property("noArbres")
                 iamap.matrixglobal[a[0][0]][a[0][1]].set_property("tree")
-        
+                item = interface.owGlobal.itemmatrix[a[0][0]][a[0][1]]
+                item.setPen(QtGui.QColor(117,154,16))
+                item.setBrush(QtGui.QColor(117,154,16))
+
+    def removeBaies(self):
+        for b in self.baies:
+            if (b[1]>=self.baiesTime):
+                self.baies.remove(b)
+                iamap.matrixglobal[b[0][0]][b[0][1]].remove_property("noBaies")
+                iamap.matrixglobal[b[0][0]][b[0][1]].set_property("baies")
+                item = interface.owGlobal.itemmatrix[b[0][0]][b[0][1]]
+                item.setPen(QtGui.QColor(255,0,0))
+                item.setBrush(QtGui.QColor(255,0,0))
+
     def run(self):
         self.incHerbes()
         self.incArbres()
+        self.incBaies()
         self.removeHerbes()
         self.removeArbres()
+        self.removeBaies()
 
 class Animal(Etre):
     
@@ -86,7 +128,7 @@ class Animal(Etre):
     #getAnimal doit revoyer une liste
     def rechercheDeConjoint(self):
         matrix=iamap.matrixglobal
-        typeAnimal=self.typeAnimal()
+        typeObjet=self.typeObjet()
         isConjoint=True
         distance=0
         i=self.position[0]
@@ -97,8 +139,8 @@ class Animal(Etre):
             for x in range(i-distance,i+distance):
                 for y in range(j-distance,j+distance):
                     if((0<x)&(x<len(matrix))&(0<y)&(y<len(matrix))):
-                        if(matrix[x][y].has_property(typeAnimal)):
-                            for animal in matrix[x][y].getAnimal(typeAnimal):
+                        if(matrix[x][y].has_property(typeObjet)):
+                            for animal in matrix[x][y].getAnimal(typeObjet):
                                 if(self.isCorrespond(animal)):
                                     target=animal
                                     isConjoint=False
@@ -128,21 +170,21 @@ class Animal(Etre):
         return finChemin
                         
     def enfanter(self,animal):
-        if animal.typeAnimal()==self.typeAnimal():
+        if animal.typeObjet()==self.typeObjet():
             if ((self.gender=='F') & (animal.gender=='M')):
                 if(self.position==animal.position):
                     if ((self.isFecond()) & (animal.isFecond())):
                         self.jaugeNourriture=self.jaugeNourriture-200
                         animal.jaugeNourriture=animal.jaugeNourriture-200
-                        if self.typeAnimal()=='sheep':
+                        if self.typeObjet()=='sheep':
                             animalNew=Sheep((self.position[0],self.position[1]))
                         else:
                             animalNew=Wolf((self.position[0],self.position[1]))
                         #newSheep=Sheep((200,200))
                         iamap.matrixglobal[animalNew.position[0]][animalNew.position[1]].set_have(animalNew)
-                        iamap.matrixglobal[animalNew.position[0]][animalNew.position[1]].set_property(animalNew.typeAnimal())
+                        iamap.matrixglobal[animalNew.position[0]][animalNew.position[1]].set_property(animalNew.typeObjet())
                         manager.managerGlobal.addEtre(animalNew)
-                        print("un bebe est né",self.typeAnimal())
+                        print("un bebe est né",self.typeObjet())
                     else:
                         print("non fecond",self.jaugeNourriture,animal.jaugeNourriture)
                 else:
@@ -166,7 +208,7 @@ class Sheep(Animal) :
     def printCoord(self):
         print(self.position)
     
-    def typeAnimal(self):
+    def typeObjet(self):
         return 'sheep'
 
 #un hunter peut être soit un loup qui a loupé son coup soit un humain
@@ -198,7 +240,7 @@ class Sheep(Animal) :
 
     def choix(self):
         rand=random.randint(1,100)
-        if (iamap.matrixglobal[self.position[0]][self.position[1]].has_property("noHerbes")):
+        if (iamap.matrixglobal[self.position[0]][self.position[1]].has_property("noHerbes")|iamap.matrixglobal[self.position[0]][self.position[1]].has_property("beach")|iamap.matrixglobal[self.position[0]][self.position[1]].has_property("baies")|iamap.matrixglobal[self.position[0]][self.position[1]].has_property("tree")):
                 self.deplacement()
         else:
              
@@ -248,7 +290,7 @@ class Wolf(Animal):
         self.nourriture=0
         self.cheminNourriture=[]
         
-    def typeAnimal(self):
+    def typeObjet(self):
         return 'wolf'
 
 #On  regarde si la cible fuit ou pas.    
@@ -273,7 +315,7 @@ class Wolf(Animal):
         
     def chercheNourriture(self):
         matrix=iamap.matrixglobal
-        typeAnimal='sheep'
+        typeObjet='sheep'
         isConjoint=True
         distance=0
         i=self.position[0]
@@ -284,9 +326,9 @@ class Wolf(Animal):
             for x in range(i-distance,i+distance):
                 for y in range(j-distance,j+distance):
                     if((0<x)&(x<len(matrix))&(0<y)&(y<len(matrix))):
-                        if(matrix[x][y].has_property(typeAnimal)):
+                        if(matrix[x][y].has_property(typeObjet)):
                             jaugeMax=0
-                            for animal in matrix[x][y].getAnimal(typeAnimal):
+                            for animal in matrix[x][y].getAnimal(typeObjet):
                                 if(animal.jaugeNourriture>jaugeMax):
                                     target=animal
                                     jaugeMax=target.jaugeNourriture

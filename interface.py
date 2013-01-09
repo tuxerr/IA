@@ -7,6 +7,7 @@ from PyQt4 import QtGui, QtCore
 from main import *
 
 global overviewWidgetGlobal
+global owGlobal
 
 class Interface(QtGui.QMainWindow):
     
@@ -163,6 +164,7 @@ class ConfigurationWidget(QtGui.QWidget):
 
 class OverviewWidget(QtGui.QGraphicsView):
     def __init__(self,iamap):
+        global owGlobal
         self.scene = QtGui.QGraphicsScene()
 
         super().__init__(self.scene)
@@ -176,7 +178,7 @@ class OverviewWidget(QtGui.QGraphicsView):
         
         self.scaleValue=0.2
         self.scale(self.scaleValue,self.scaleValue)
-
+        owGlobal=self
 
     def initUI(self):
 #        self.setWindowTitle('Map Overview')

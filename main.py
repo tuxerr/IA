@@ -25,7 +25,7 @@ def main():
     manager.addEtre(gaia)
     iamap.desMoutonsDePartout()
     iamap.desLoupsDePartout()
-    iamap.desHumains()
+    #iamap.desHumains()
     iamap.unForum()
 
     #print(iamap.A_star((75,75),(150,150)))
