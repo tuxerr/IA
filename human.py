@@ -356,7 +356,7 @@ class Human(Etre):
         self.incMemoireMort()
         self.removeMemoireMort()
         i,j=self.forum
-        if self.forumObjet.fillinFood>=3
+        if self.forumObjet.fillinFood>=3:
             self.forumObjet.videNourriture()
             role=random.choice(['scout','scout','cueilleur','cueilleur','cueilleur','bucheron','porteurEau'])
             human=Human([i,j],role)
