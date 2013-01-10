@@ -237,9 +237,10 @@ class IAMap:
     def desHumains(self,i,j):
         roleL=['chef','scout','cueilleur','bucheron','porteurEau']
         for role in roleL:
-            self.matrix[i][j].set_property("human")
             human=Human([i,j],role)
-            self.matrix[i][j].set_have(human)
+            if role != 'chef':
+                self.matrix[i][j].set_property("human")
+                self.matrix[i][j].set_have(human)
             manager.managerGlobal.addEtre(human)
         
     def unForum(self):
@@ -280,10 +281,10 @@ class IAMapCell:
     def remove_have(self,etre):
         self.have.remove(etre)
     
-    def getAnimal(self,animal):
+    def getAnimal(self,animalt):
         animaux=[]
         for animal in self.have:
-            if animal.typeObjet()==animal:
+            if animal.typeObjet()==animalt:
                 animaux.append(animal)
         return animaux
 
@@ -297,9 +298,15 @@ class IAMapCell:
     def getHuman(self):
         res = []
         for human in self.have:
-            res.append(human)
+            if human.typeObjet()=="human":
+                res.append(human)
         return res
-
+    def getNourriture(self,t):
+        res=[]
+        for nour in self.have:
+            if nour.typeObjet()==t:
+                res.append(nour)
+        return res
 #TODO voir si getHuman(self, role) n'est pas possible
 
     def getHumanByRole(self, role):

@@ -19,7 +19,11 @@ class Etre:
         self.position=position
         self.etat='vivant'
         self.chemin=[]
-        
+        self.notMove=False
+
+    def noMove(self):
+        self.notMove=True
+
     def move(self,movement):
         i,j=self.position
         x,y=movement
@@ -52,7 +56,14 @@ class Etre:
         iamap.matrixglobal[i][j].remove_have(self)
         iamap.matrixglobal[i][j].remove_property(self.typeObjet())
         manager.managerGlobal.removeEtre(self)
-        
+        if self.typeObjet()=="sheep":
+            print("un sheep est mort")
+        elif self.typeObjet()=="human":
+            print("un humain est mort")
+        elif self.typeObjet()=="wolf":
+            print("un wolf est mort")
+        else:
+            print("ET est mort")
     def canGo(self,pos):
         i,j=pos
         canGo=False

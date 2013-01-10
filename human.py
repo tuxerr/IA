@@ -18,8 +18,13 @@ class Human(Etre):
             self.memoireMort=[]
 #on suppose que 2 fois le temps de scout permet d'être sur de pas avoir de probleme
             self.reset=100
+            self.forum=position
+            self.forumObjet=iamap.matrixglobal[self.forum[0]][self.forum[1]].getBatiment("forum")
+            super().__init__("resources/water_carrier.png",0.4,position)
             chef=self
         else:
+        #Pour nourrire les Loups
+            self.jaugeNourriture=100
             self.position=position
             self.role=role
         #Le but du voyage
@@ -40,6 +45,8 @@ class Human(Etre):
             self.distanceDeRecherche=10
         #C'est le nombre de ressource qu'il possaide, en général 1
             self.ressource=0
+        #force du peon
+            self.force=random.choice(range(40,90))
             super().__init__("resources/water_carrier.png",0.4,position)
     
 ###############################Pas utilisé et pas testé##############################            
@@ -111,6 +118,7 @@ class Human(Etre):
         return res
 ###################################Fin du non testé############################
 ###################################Testé utilisé et fonctionne#################
+
 # On ajoute des informations dans la mémoir des villagoies
 # On doit donner une liste de recherche
 # Scout = [baies,tree,water]
@@ -220,7 +228,9 @@ class Human(Etre):
                 #     coutMin=coutCurr
                 #     self.memoire=[memoire]
                 #     self.but=memoire[1]
-
+        if len(self.memoire)!=0:
+            chef.memoireChef.remove(self.memoire[0])
+            chef.memoireMort.append([self.memoire[0],0])
     def demandeWater(self):
         objet="water"
         listeObject=[]
@@ -244,7 +254,6 @@ class Human(Etre):
                     #     coutMin=coutCurr
                     #     self.memoire=[["water",res]]
                     #     self.but=res
-                     
     def runCueilleur(self):
         if self.memoire != []:
             if self.ressource == 1:
@@ -257,8 +266,8 @@ class Human(Etre):
                     self.memoire=[]
                     self.ressource=0
                     iamap.matrixglobal[self.forum[0]][self.forum[1]].getBatiment("forum").rentrerRessource("food",1)
-                    chef.memoireChef.remove(["baies",self.but])
-                    chef.memoireMort.append([["baies",self.but],0])
+                    # chef.memoireChef.remove(["baies",self.but])
+                    # chef.memoireMort.append([["baies",self.but],0])
                 else:
                     self.miseAjourDeLaMemoire(["baies"])
             else:
@@ -288,8 +297,8 @@ class Human(Etre):
                     self.memoire=[]
                     self.ressource=0
                     iamap.matrixglobal[self.forum[0]][self.forum[1]].getBatiment("forum").rentrerRessource("wood",1)
-                    chef.memoireChef.remove(["tree",self.but])
-                    chef.memoireMort.append([["tree",self.but],0])
+                    # chef.memoireChef.remove(["tree",self.but])
+                    # chef.memoireMort.append([["tree",self.but],0])
                 else:
                     self.miseAjourDeLaMemoire(["tree"])
             else:
@@ -346,41 +355,52 @@ class Human(Etre):
         #print(self.memoireChef)
         self.incMemoireMort()
         self.removeMemoireMort()
+        i,j=self.forum
+        if self.forumObjet.fillinFood>=1:
+            self.forumObjet.videNourriture()
+            role=random.choice(['scout','scout','cueilleur','cueilleur','cueilleur','bucheron','porteurEau'])
+            human=Human([i,j],role)
+            iamap.matrixglobal[self.forum[0]][self.forum[1]].set_have(human)
+            iamap.matrixglobal[self.forum[0]][self.forum[1]].set_property("human")
+            manager.managerGlobal.addEtre(human)
+            print("un ",role,"est né")
+
 
 #Role utilisé:
 #chef scout cueilleur bucheron porteurEau
     def run(self):
-        #self.runSurvie()
-        role = self.role
-        if role == 'enfant':
-            self.runEnfant()
-        elif role == 'chef':
-            self.runChef()
-        elif role == 'scout':
-            self.runScout()
-        elif role == 'cultivateur':
-            self.runCultivateur()
-        elif role == 'eleveur':
-            self.runEleveur()
-        elif role == 'chasseurLoup':
-            self.runChasseurLoup()
-        elif role == 'chasseurMouton':
-            self.runChasseurMouton()
-        elif role == 'cueilleur':
-            self.runCueilleur()
-        elif role == 'bucheron':
-            self.runBucheron()
-        elif role == 'porteurEau':
-            self.runPorteurEau()
-        elif role == 'constructeur':
-            self.runConstructeur()
-        else:
-            self.runCuisinier()
-#        self.vieilli()
-#        self.jaugeNourriture = self.jaugeNourriture - 1
-#        if (self.mortNaturelle() or self.mortDeFaim()):
-#           self.mort()
-#            print("human dead")
+        if not(self.notMove):
+         #self.runSurvie()
+            role = self.role
+            if role == 'enfant':
+                self.runEnfant()
+            elif role == 'chef':
+                self.runChef()
+            elif role == 'scout':
+                self.runScout()
+            elif role == 'cultivateur':
+                self.runCultivateur()
+            elif role == 'eleveur':
+                self.runEleveur()
+            elif role == 'chasseurLoup':
+                self.runChasseurLoup()
+            elif role == 'chasseurMouton':
+                self.runChasseurMouton()
+            elif role == 'cueilleur':
+                self.runCueilleur()
+            elif role == 'bucheron':
+                self.runBucheron()
+            elif role == 'porteurEau':
+                self.runPorteurEau()
+            elif role == 'constructeur':
+                self.runConstructeur()
+            else:
+                self.runCuisinier()
+                #        self.vieilli()
+                #        self.jaugeNourriture = self.jaugeNourriture - 1
+                #        if (self.mortNaturelle() or self.mortDeFaim()):
+                #           self.mort()
+                #            print("human dead")
 
 
     """ cuisinier (en plus de surveiller ses jauges)
