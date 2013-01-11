@@ -1,10 +1,6 @@
 Ressource naturelle :
 repousse du bois
 
-Éleveur :
-à partir des animaux ramenés par les chasseurs
-nourrir les animaux avec aliments des cultures
-reproduction, plus rapide que dans la nature car mieux nourris
 
 Chasseur :
 exploration
