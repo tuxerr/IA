@@ -163,12 +163,10 @@ modélisation mathématique retenue est une simplification du modèle de Weibull
 et correspond à une période de mortalité infantile, ensuite le taux de 
 mortalité est constant (et faible) puis il ré-augmente.\\
 
-% figure baignoire
-
 Dans notre modèle la courbe a été simplifiée en la modélisant par des droites 
 dont les coefficients ont été choisis arbitrairement, cette modélisation se 
 trouve dans le fichier \textit{LifeExpectancy.py}. A chaque appel de la 
-fonction \textit{run} pour savoir si l'agent meurt de mort naturelle.
+fonction \textit{run} pour savoir si l'agent meurt de mort naturelle.\\
 
 Par ailleurs dans le cas où l'agent devra chercher sur la carte quelque chose 
 dont il ne connait pas a priori la position, la recherche se fera mais dans 
@@ -352,38 +350,90 @@ une zone de chasse potentielle, soit explorer afin de découvrir une zone
 où il voit un mouton ou un loup. Son comportement sera différent ensuite selon 
 qu'il a à faire à un mouton (animal domesticable) ou à un loup (animal sauvage).
 Si l'animal est un mouton le chasseur, une fois sur une cellule adjacente,
-tentera de capturer le mouton (avec une probabilité arbitraire de réussite) en 
-cas de réussite il ramène le mouton au village, en cas d'échec le mouton 
-s'enfuit hors d'atteinte. Si il s'agit d'un animal sauvage il y a combat qui 
-résultera dans la mort de l'un des agents (le résultat étant déterminé par une 
-probabilité), si le chasseur reste en vie il raménera au village la nourriture 
-qu'il retirera de la mort de l'animal.\\
+tentera de tuer le mouton (avec une probabilité arbitraire de réussite) en 
+cas de réussite il ramène la viande au village, en cas d'échec le mouton 
+s'enfuit hors d'atteinte. Dans le cas des loups ils ont un comportement 
+différent que les autres agents, alors que les autres humains ne font que se 
+défendre contre les loups, les chasseurs vont plus loin et ne laisse pas le 
+cadavre par terre, mais prennent la viande pour nourrir le village.\\
+
+Les chasseurs permettent donc au clan l'accès à la nourriture. Ils trouvent leur
+place entre les cueilleurs et les éleveurs. La denrée qu'ils fournissent est 
+très rentable mais aussi dure et risquée à se procurer. Ils sont un boost 
+énorme pour l'économie du village. Si le chef en abuse il empéche l'élevage 
+alors que l'élevage permet au village d'avoir une économie stable, permettant 
+de se concentrer plus sur les autres points de la ville.\\
 
 		\begin{itemize}
 		\item Les éleveurs\\
 		\end{itemize}
 
 L'éleveur, quand il se voit confier cette tâche, se fait indiquer par le chef 
-l'emplacement d'un ou plusieurs moutons domestiqués. Son rôle sera nourrir les 
-moutons dont il aura la responsabilité, en donnant la priorité à ceux ayant la 
-jauge de nourriture la plus basse, afin que ceux ci se reproduisent. Il devra 
-faire un rapport régulier au chef en lui disant combien de moutons sont sous 
-sa garde (en particulier s'il y a eu naissance) et pour savoir s'il doit 
-continuer à les nourrir, les laisser simplement paître (et donc faire une 
-autre activité qu'éleveur) ou bien abattre certains animaux afin d'augmenter 
-les stocks de nourriture.\\
+l'emplacement d'un groupe de moutons. Son rôle sera d'aller en chercher, les 
+nourrir, en donnant la priorité à ceux ayant la jauge de nourriture la plus 
+basse, afin que ceux ci se reproduisent. Il devra faire un rapport régulier au 
+chef en lui disant combien de moutons sont sous sa garde (en particulier s'il 
+y a eu naissance) et pour savoir s'il doit continuer à les nourrir, les laisser 
+simplement paître (et donc faire une autre activité qu'éleveur) ou bien abattre 
+certains animaux afin d'augmenter les stocks de nourriture.\\
 
 		\begin{itemize}
-		\item Les porteurs d'eau/cueilleurs/bûcherons\\
+		\item Les cueilleurs\\
+		\end{itemize}
+		
+Les cueilleurs sont les premiers fournisseurs de nourriture du clan. Ils 
+récoltent lentement de la nourriture sur les baies. Les baies disparraissent 
+après leur récolte pour devenir de la plaine. Elles repoussent après un 
+certain laps temps. Une tribu n'ayant qu'accès sur les baies ne peut pas 
+évoluer. Le seul avantage des baies c'est de ne présenter aucun risque à 
+récolter et de ne nécessiter aucune infrastructure particulière.\\ 
+
+		\begin{itemize}
+		\item Les porteurs d'eau\\
+		\end{itemize}
+		
+Les porteurs d'eau vont chercher de l'eau douce pour la tribut. Leur rôle est 
+indispensable, l'eau est une denrée cléf pour la ville. Il est impossible 
+d'améliorer leur rendement. Le chef est donc obligé d'en demander constament 
+et de façon linéaire. Plus le forum est loin d'un point d'eau douce plus la 
+ville mettra du temps à grandir.\\
+
+Cette ressource est considéré comme étant inépuisable et n'entraîne donc de 
+diminution d'un stock, les lacs ne se vident pas.\\
+
+		\begin{itemize}
+		\item Les bûcherons\\
 		\end{itemize}
 
-Ces trois types d'agents ont des similarités, dans le sens où leur tâche 
-principale peut-être décrite de la façon suivante, aller chercher une 
-ressource et la ramener. De même que dans le cas de la chasse l'emplacement 
-peut être préalablement indiquée par le chef, dans le cas contraire il faut 
-rechercher la ressource. Ensuite le comportement dépendra de la ressource. 
-Dans le cas de l'eau on ne considère que l'eau des lacs, pas celle de la mer, 
-cette ressource est considéré comme étant inépuisable et n'entraîne donc de 
-diminution d'un stock.
+Les bûcherons sont le pilier de l'avancement de la tribu, ils permettent  
+l'accès à la construction de bâtiments, car ceux ci nécessitent du bois. Le 
+bois comme les baies disparaissent après avoir été coupé et repousse avec le 
+temps. On peut vivre sans bois, mais on ne peut pas bien croître sans. Le chef 
+doit penser à eux quand la nourriture et l'eau sont en croissance.\\
+
+		\begin{itemize}
+		\item Les explorateurs\\
+		\end{itemize}
+		
+Le chef utilise les explorateurs au début, afin de mieux connaître 
+l'environnement autour du village. Il va leurs indiquer une direction, 
+informatiquement ça revient à demander à l'explorateur de pondérer ses 
+déplacement pour qu'au final il prenne une certaine direction qui va permettre 
+de connaître un endroit.\\
+
+L'explorateur ne va pas enregistrer toutes les informateurs mais uniquement 
+les informations importantes comme la position de baies, du bois, de l'eau douce. 
+Pour indiquer au chef la position des moutons, l'explorateurs va définir ce 
+qu'est un groupe de moutons et enregistrer uniquement le centre de leur 
+groupe. De cette façon l'éleveur et le chasseur n'auront qu'a y aller puis 
+chercher dans leur champ de vision.\\
+
+Cette gestion de l'explorateur permet de ne pas encombrer inutilement la mémoire. 
+L'explorateur doit bien faire attention à ses jauges pour éviter de mourrir. Il 
+doit donc prendre en compte le temps de retour.\\
+
+\textit{La suite est l'état actuelle de nos humains}
+
+
 
 \end{document}
