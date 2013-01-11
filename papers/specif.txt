@@ -1,12 +1,6 @@
 Ressource naturelle :
 repousse du bois
 
-
-Chasseur :
-exploration
-rencontre domestique, réussite → on le ramène au camp, échec → le mouton fuit hors d'atteinte
-rencontre sauvage, combat à mort si survie ramène x (à déterminer) unités de bouffe
-
 Porteur d'eau/baie/bûcheron :
 période d'exploration si pas de cible
 sinon A* pour aller à la cible

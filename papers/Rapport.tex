@@ -312,7 +312,19 @@ est préparé.\\
 		\item Les chasseurs\\
 		\end{itemize}
 
-
+Le chasseur pourra éventuellement se faire attribuer une zone de chasse 
+recommandée par le chef lors de l'attribution de cette tâche, dans le cas 
+contraire il devra soit piocher dans sa mémoire pour savoir si il connait 
+une zone de chasse potentielle, soit explorer afin de découvrir une zone 
+où il voit un mouton ou un loup. Son comportement sera différent ensuite selon 
+qu'il a à faire à un mouton (animal domesticable) ou à un loup (animal sauvage).
+Si l'animal est un mouton le chasseur, une fois sur une cellule adjacente,
+tentera de capturer le mouton (avec une probabilité arbitraire de réussite) en 
+cas de réussite il ramène le mouton au village, en cas d'échec le mouton 
+s'enfuit hors d'atteinte. Si il s'agit d'un animal sauvage il y a combat qui 
+résultera dans la mort de l'un des agents (le résultat étant déterminé par une 
+probabilité), si le chasseur reste en vie il raménera au village la nourriture 
+qu'il retirera de la mort de l'animal.\\
 
 		\begin{itemize}
 		\item Les éleveurs\\
@@ -327,6 +339,11 @@ sa garde (en particulier s'il y a eu naissance) et pour savoir s'il doit
 continuer à les nourrir, les laisser simplement paître (et donc faire une 
 autre activité qu'éleveur) ou bien abattre certains animaux afin d'augmenter 
 les stocks de nourriture.\\
+
+		\begin{itemize}
+		\item Les porteurs d'eau/cueilleurs/bûcherons\\
+		\end{itemize}
+
 
 
 \end{document}
