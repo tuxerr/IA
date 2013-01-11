@@ -222,21 +222,19 @@ des petits groupes d'animaux finiront par se former.\\
 		\item Les moutons\\
 		\end{itemize}
 
-Les moutons se nourrissent d'herbe, ils peuvent donc décider de se nourrir 
-quelle que soit la nature du terrain sur lequel ils se trouvent. Ils n'ont 
-donc pas besoin de chercher leur nourriture.L'herbe se situe uniquement sur les plaines.
-Ils ne peuvent pas manger deux fois au même endroit étant donné que l'herbe disparait 
-aprés chaque consomation(devienne noir) et redevient normal après un petit lapse de temps. Ils n\\
+Les moutons se nourrissent d'herbe, celle ci se trouve sur les terrains de type
+plaine, l'herbe de la cellule est alors consommée et met un certain temps à
+repousser. Ils ne peuvent donc pas manger deux fois de suite au même endroit.\\
 
-La fonction \textit{run} du mouton dépend essentiellement de l'état de sa 
-jauge de nourriture si il est assez alimenté il cherchera à se reproduire 
-si ce n'est pas le cas soit (cette condition est déterminée par le hasard mais 
-pondérée par la jauge de nourriture) il se mettra à errer ou à se nourrir (la 
-probabilité qu'il se nourrisse sera d'autant plus importante que la jauge de 
+La fonction \textit{run} du mouton dépend essentiellement de l'état de sa
+jauge de nourriture si il est assez alimenté il cherchera à se reproduire
+si ce n'est pas le cas soit (cette condition est déterminée par le hasard mais
+pondérée par la jauge de nourriture) il se mettra à errer ou à se nourrir (la
+probabilité qu'il se nourrisse sera d'autant plus importante que la jauge de
 nourriture sera basse mais dépend en partie d'un nombre arbitraire).\\
 
-Les moutons ne communique entre eux que pour savoir s'ils acceptent de se reproduire.
-A chaque tour la jauge de nourriture diminue, mais ceci est loin d'être leur principal raison de décés.\\
+Les moutons ne communique entre eux que pour savoir s'ils acceptent ou non de 
+se reproduire.\\
 
 		\begin{itemize}
 		\item Les loups\\
