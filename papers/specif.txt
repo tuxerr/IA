@@ -1,11 +1,3 @@
-Mise en place d'un « brouillard de guerre » -> matérialisé par la distance de vision (recherche a une distance de 40)
-
-Mise en place d'un système de mémoire 
-deux personnes de même rôle partagent leurs infos si ils sont sur des cases adjacentes
-le chef a une mémoire « infinie »
-
-Une fois un rôle assigné il fait ce qu'il a à faire, puis quand il n'a plus rien à faire → chef
-
 Ressource naturelle :
 repousse du bois
 
@@ -53,18 +45,7 @@ Arbres :
 diminue à cause des bûcherons
 au bout d'un certain temps probabilité de re-spawn (qui augmente si pas de re-spawn immédiat)
 
-Catastrophes naturelles :
-catastrophe localisée géographiquement
-foudre → si personne sur la case meurt, si bâtiment → endommagé
-inondation, bâtiment → endommagé
-éboulement
-
 Humain :
-pas de pv (est juste « en vie »)
-sexe
-âge
 % de tuer (loup) → plus simple de faire un animal herbivore/omnivore
-jauge de vie
-jauge de repos
 
 Python 3.3 finalement :)

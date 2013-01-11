@@ -98,9 +98,9 @@ des animaux domestiques.\\
 
 L'univers est clos, il s'agit d'une île. Celle-ci est est générée 
 automatiquement à l'aide de Perlin Noise, c'est également le cas en ce qui 
-concerne les différents types de terrains (forêts, lacs, ...) les 
-coefficients peuvent être ajustés afin de créer des cartes ayant leur 
-spécificités propres.\\
+concerne les différents types de terrains et les ressources naturelles 
+(forêts, lacs, baies, ...) les coefficients peuvent être ajustés afin de créer 
+des cartes ayant leur spécificités propres.\\
 
 % detail perlin noise ?
 
@@ -169,6 +169,11 @@ Dans notre modèle la courbe a été simplifiée en la modélisant par des droit
 dont les coefficients ont été choisis arbitrairement, cette modélisation se 
 trouve dans le fichier \textit{LifeExpectancy.py}. A chaque appel de la 
 fonction \textit{run} pour savoir si l'agent meurt de mort naturelle.
+
+Par ailleurs dans le cas où l'agent devra chercher sur la carte quelque chose 
+dont il ne connait pas a priori la position, la recherche se fera mais dans 
+une zone restreinte centrée sur l'agent, et ceci afin de modéliser ce qu'il 
+peut voir d'où il est.
 
 		\subsubsection{Les animaux}
 
@@ -244,6 +249,12 @@ cuisinés par un agent cuisinier. Afin de remplir sa jauge de fatigue l'agent
 peut cesser l'activité qu'il pratique et se reposer, c'est pendant cette 
 période de repos qu'il aura l'occasion de se reproduire.\\
 
+Mis à part le chef dont le système de mémoire est plus développé, celui des 
+autres agents reste relativement limité. Deux agents se trouvant sur la même 
+cellule partagent les informations dont ils disposent avec d'autant plus de 
+probabilités que l'information sera en rapport avec l'activité courante de 
+l'agent.
+
 		\begin{itemize}
 		\item Le chef\\
 		\end{itemize}
@@ -254,9 +265,16 @@ ressources dont dispose le clan. Les tâches à effectuer sont a priori en temps
 limité et le chef considérera donc comme mort les agents ne revenant pas 
 demander du travail au bout d'un certain temps.\\
 
+Le chef disposant d'une mémoire plus complète que les autres agents, il est un 
+recours pour ces derniers, en effet si ils sont pris en défaut car ils 
+n'arrivent pas à trouver quelque chose par exemple ils peuvent demander au 
+chef de leur indiquer si celui ci dispose d'informations supplémentaires.\\
+
 		\begin{itemize}
 		\item Les cultivateurs\\
 		\end{itemize}
+
+
 
 \end{document}
 	
