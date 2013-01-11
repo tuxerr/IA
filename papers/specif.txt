@@ -8,18 +8,8 @@ mémoire en fonction du rôle (un nombre max de « cases mémoires »)
 tant que des choses à faire on continue, sinon on va voir le chef (si avant temps limité)
 stockage des ressources dans les bâtiments correspondants
 
-Reproduction humaine :
-pendant leur temps de repos
-+ avec personne de sexe opposé
-probabilité que ça marche 
-incapacité temporaire (à déterminer)
-le chef peut influencer les probabilités (encourager/décourager la reproduction)
-
 Arbres :
 diminue à cause des bûcherons
 au bout d'un certain temps probabilité de re-spawn (qui augmente si pas de re-spawn immédiat)
-
-Humain :
-% de tuer (loup) → plus simple de faire un animal herbivore/omnivore
 
 Python 3.3 finalement :)
