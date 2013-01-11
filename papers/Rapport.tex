@@ -209,13 +209,21 @@ de ce champ de vision est une constante arbitraire et il en va de même pour
 le niveau de la jauge de nourriture qui défini si l'animal a faim ou bien est 
 disposé à se reproduire.\\
 
+Les animaux ont tendance à rester en groupe, et ça de plusieurs faites. Le premier est du à leurs déplacement permanent.
+Même si les moutons ne sont pas en état de non reproduction ils se deplace de temps en temps. Il en est de même pour le loup.
+Ces déplacement se font aléatoirement avec autant de chance d'aller de tous les côtés. Il est donc normal qu'après une infinité de déplacement
+ils ne bougent pas. Quand pour une raison quelconque ( par exemple à l'initialisation) ils ne sont pas en groupe la recherche de conjoint 
+va faire en sorte de faire rejoindre les petits groupes d'animaux entre eux.\\
+
 		\begin{itemize}
 		\item Les moutons\\
 		\end{itemize}
 
-Les moutons se nourrissent d'herbe, celle ci se trouve sur les terrains de type 
-plaine, l'herbe de la cellule est alors consommée et met un certain temps à 
-repousser.\\
+Les moutons se nourrissent d'herbe, ils peuvent donc décider de se nourrir 
+quelle que soit la nature du terrain sur lequel ils se trouvent. Ils n'ont 
+donc pas besoin de chercher leur nourriture.L'herbe se situe uniquement sur les plaines.
+Ils ne peuvent pas manger deux fois au même endroit étant donné que l'herbe disparait 
+aprés chaque consomation(devienne noir) et redevient normal après un petit lapse de temps. Ils n\\
 
 La fonction \textit{run} du mouton dépend essentiellement de l'état de sa 
 jauge de nourriture si il est assez alimenté il cherchera à se reproduire 
@@ -224,14 +232,30 @@ pondérée par la jauge de nourriture) il se mettra à errer ou à se nourrir (l
 probabilité qu'il se nourrisse sera d'autant plus importante que la jauge de 
 nourriture sera basse mais dépend en partie d'un nombre arbitraire).\\
 
+Les moutons ne communique entre eux que pour savoir s'ils acceptent de se reproduire.
+A chaque tour la jauge de nourriture diminue, mais ceci est loin d'être leur principal raison de décés.\\
+
 		\begin{itemize}
 		\item Les loups\\
 		\end{itemize}
 
-Les loups se nourrissent de moutons, qu'ils doivent donc chasser. La 
+Les loups se nourrissent de moutons et d'humains, qu'ils doivent donc chasser. La 
 principale différence dans la fonction \textit{run}, par rapport, à celle du 
 mouton, est donc que de même qu'il y a recherche dans le cas de la 
 reproduction, il y a également recherche lorsqu'il faut se nourrir.
+La fonction de recherche de nourriture du loup contrairement à celle de reproduction 
+des animaux prend en compte le périmetre de vision du loup. Le loup quand il s'aggit de manger
+n'a pas une vision global de tous les animaux de la carte mais seulement ceux dans un petit rayon.
+Il est aussi important de noté que le loup prend pas n'importe quel animal mais le plus prés puis le plus 
+gros. Tous les loups ne sont pas tous égaux, ils ont tous une force diférente, idenpendante du sex.
+La force leur permet de determiner s'ils vont gagner leurs combats contre leurs proies.
+Quand le loup gagne le combat il mange sa proies et se nourrit en fonction de la jauge de nourriture de la victime.
+Mais d'un autre côté s'il perd, le mouton fuira ou l'humain le tuera.
+Le vieillissement des loups est modélisé par la perte de force du loup. A chaque combat le loup perd de la force.
+Le loup comme le mouton voit sa jauge de nourriture diminué à chaque tour.
+Les loups sont des acteurs non communiquand, mises à part lors de la reproduction tout comme les moutons.
+Les principales raisons de décés des loups sont leur positionnement initiale trop loin des troupeaux de moutons,
+et leur mauvaise gestion des moutons, ils déciment bien trop rapidement les troupeaux de moutons.
 
 		\subsubsection{Les humains}
 
@@ -345,7 +369,4 @@ les stocks de nourriture.\\
 		\end{itemize}
 
 
-
 \end{document}
-	
-	
