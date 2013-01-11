@@ -359,6 +359,17 @@ résultera dans la mort de l'un des agents (le résultat étant déterminé par 
 probabilité), si le chasseur reste en vie il raménera au village la nourriture 
 qu'il retirera de la mort de l'animal.\\
 
+%		\begin{itemize}
+%		\item Les chasseurs\\
+%		\end{itemize}
+%		
+%Les chasseurs sont des acteurs accés sur la nourriture. Ces acteurs ont pour but de chasser les animaux
+%pour la nourriture, aussi bien les loups que les moutons. Alors que les autres humains ne font que se défendre contre
+%les loups, les chasseurs vont plus loins, ils ne laissent pas la nourriture par terre, il l'a prenne pour nourrire le village.
+%Les chasseurs sont des humain spécialisé dans la nourriture qui trouve leur place entre les cueilleurs et les éleveurs. Ils ont besoin d'une denrée
+%trés rentable mais dur à trouver et riqué. Ils sont un boost énorme pour l'économie du village. Si le chef en abuse il empéche l'élevage alors que l'élevage permet
+%au village d'avoir une économie stable leur permettant de se concentrer plus sur les autres points de la ville. 
+
 		\begin{itemize}
 		\item Les éleveurs\\
 		\end{itemize}
@@ -374,8 +385,44 @@ autre activité qu'éleveur) ou bien abattre certains animaux afin d'augmenter
 les stocks de nourriture.\\
 
 		\begin{itemize}
-		\item Les porteurs d'eau/cueilleurs/bûcherons\\
+		\item Les cueilleurs\\
 		\end{itemize}
+		
+Les cueilleurs sont les premier fournisseur de nourriture à la tribut.
+Ils récoltent lentement de la nourriture sur les baies. Les baies disparraisse après leur récolte
+pour devenir de la plaine. Elles repoussent après quelque temps. Une tribut uniquement accès sur les baies
+ne peut pas évolué. Le seul avantage des baies c'est de n'avoir aucun risque et de ne necessiter aucune infrastructure. 
+
+		\begin{itemize}
+		\item Les porteurs d'eau\\
+		\end{itemize}
+		
+Les porteurs d'eau vont chercher de l'eau douce pour la tribut. Leur role est indispensable, l'eau est une denrée cléf pour la ville.
+Il est impossible d'améliorer leur rendement. Le chef est donc obligé d'en demander constament et de façon linéaire.
+Plus le forum est loin d'un point d'eau douce plus la ville mettra du temps à grandir.
+
+		\begin{itemize}
+		\item Les bucherons\\
+		\end{itemize}
+
+Les bucherons sont le pilié de l'avancement de la tribu, elle leur permet l'accés au batiment avec l'aide du constructeur.
+Le bois comme les baies disparaissent après qu'il est coupé et repoussera avec le temps. On peut vivre sans bois, mais on ne peut
+pas bien vivre sans. Le Chef doit penser à eux quand la nourriture et l'eau sont en croissance.
+
+		\begin{itemize}
+		\item Les explorateurs\\
+		\end{itemize}
+		
+Le Chef utilise les explorateurs au début. Il va leurs indiquer une direction, informatiquement ça revient à demander
+à l'explorateur de pondérer ses deplacement pour qu'au final il prennet une certaine direction qui va permettre de connaitre un endroit.
+L'explorateur ne va pas enregistrer toutes les informateurs mais uniquement les information importante comme la position de baies, de bois, d'eau douce.
+Pour indiquer au chef la position des moutons, l'explorateurs va definir ce qu'es un groupe de moutons et enregistrer uniquement le centre de leur groupe.
+De cette façon l'éleveur et le chasseur n'auront qu'a se rentre à ce point puis chercher dans leur champ de vision. Cette gestion de l'explorateur permet de
+ne pas encombrer inutilement la mémoire. L'explorateur doit bien faire attention à ses jauges pour éviter de mourrir. Il doit donc calulé de temps en temps
+le temps de retour
+
+\textit{La suite est l'état actuelle de nos humains}
+
 
 
 \end{document}
