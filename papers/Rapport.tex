@@ -208,14 +208,14 @@ disposé à se reproduire.\\
 		\item Les moutons\\
 		\end{itemize}
 
-Les moutons se nourrissent d'herbe, ils peuvent donc décider de se nourrir 
-quelle que soit la nature du terrain sur lequel ils se trouvent. Ils n'ont 
-donc pas besoin de chercher leur nourriture.\\
+Les moutons se nourrissent d'herbe, celle ci se trouve sur les terrains de type 
+plaine, l'herbe de la cellule est alors consommée et met un certain temps à 
+repousser.\\
 
 La fonction \textit{run} du mouton dépend essentiellement de l'état de sa 
 jauge de nourriture si il est assez alimenté il cherchera à se reproduire 
 si ce n'est pas le cas soit (cette condition est déterminée par le hasard mais 
-pondérée par la jauge de nourriture) il se mettra à errer ou se nourrira (la 
+pondérée par la jauge de nourriture) il se mettra à errer ou à se nourrir (la 
 probabilité qu'il se nourrisse sera d'autant plus importante que la jauge de 
 nourriture sera basse mais dépend en partie d'un nombre arbitraire).\\
 
@@ -232,6 +232,31 @@ reproduction, il y a également recherche lorsqu'il faut se nourrir.
 
 \textit{La spécification suivante est une proposition d'intréprétation du 
 sujet}
+
+Les agents humains disposent de deux jauges qui doivent être au dessus de 
+zéro pour que l'agent survive. Il s'agit de la jauge de nourriture, qui baisse 
+en continu de façon indépendante des activités et la jauge de fatigue qui, 
+elle baissera en fonction de l'activité pratiquée par l'agent. Pour remplir 
+la jauge de nourriture l'agent pourra consommer de la nourriture issue de la 
+chasse, de la cueillette ou bien de l'agriculture, s'il consomme directement 
+ces aliments ceux ci seront moins nourrissants que s'ils sont préalablement 
+cuisinés par un agent cuisinier. Afin de remplir sa jauge de fatigue l'agent 
+peut cesser l'activité qu'il pratique et se reposer, c'est pendant cette 
+période de repos qu'il aura l'occasion de se reproduire.\\
+
+		\begin{itemize}
+		\item Le chef\\
+		\end{itemize}
+
+Le chef est unique, il est chargé de donner des ordres aux autres agents en 
+tenant compte des connaissances dont il dispose concernant l'état des 
+ressources dont dispose le clan. Les tâches à effectuer sont a priori en temps 
+limité et le chef considérera donc comme mort les agents ne revenant pas 
+demander du travail au bout d'un certain temps.\\
+
+		\begin{itemize}
+		\item Les cultivateurs\\
+		\end{itemize}
 
 \end{document}
 	

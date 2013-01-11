@@ -4,33 +4,10 @@ Mise en place d'un système de mémoire
 deux personnes de même rôle partagent leurs infos si ils sont sur des cases adjacentes
 le chef a une mémoire « infinie »
 
-Jauge de « vie » à faire baisser en fonction des activités se récupère avec les repas du cuisinier
-Jauge de « repos » à faire baisser en fonction des activités se récupère en se reposant
-
-Vie/Mort :
-+ implémentation de l'âge (pas d'exploitation des enfants!)
-le chef supposera qu'un personnage est mort si il ne revient pas au bout d'un certain temps
-
-+ Genre :
-+ à la naissance
-+ un homme + une femme pour la reproduction
-+ pas d'autre différences
-
 Une fois un rôle assigné il fait ce qu'il a à faire, puis quand il n'a plus rien à faire → chef
 
 Ressource naturelle :
 repousse du bois
-repousse des baies ?
-
-Chef :
-donne des tâches en temps limité
-s'inquiète au bout d'un certain temps
-décide des tâches à effectuer
-à sa mort remplacé par le premier venu le voir ou par un enfant (nouvel adulte)
-
-Humain :
-surveille ses jauges, privilégie sa survie
-+ explo random initiale
 
 Cultivateur :
 champs coûte du temps
