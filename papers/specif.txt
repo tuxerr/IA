@@ -3,9 +3,6 @@ repousse du bois
 
 Cultivateur :
 champs coûte du temps
-moins rentable que la chasse
-surface max par cultivateur
-rendement au prorata surface/temps
 va stocker ses récoltes
 
 Éleveur :
@@ -24,10 +21,6 @@ sinon A* pour aller à la cible
 mémoire en fonction du rôle (un nombre max de « cases mémoires »)
 tant que des choses à faire on continue, sinon on va voir le chef (si avant temps limité)
 stockage des ressources dans les bâtiments correspondants
-
-Constructeur :
-construire
-re-construire, réparer (intempéries)
 
 Cuisinier :
 se fourni au stockage
