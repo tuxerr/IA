@@ -236,6 +236,9 @@ nourriture sera basse mais dépend en partie d'un nombre arbitraire).\\
 Les moutons ne communique entre eux que pour savoir s'ils acceptent ou non de 
 se reproduire.\\
 
+Le décès du mouton peut survenir par le fait que leur jauge de nourriture 
+tombe à zéro mais ceci est loin d'être leur principale cause de décès.\\
+
 		\begin{itemize}
 		\item Les loups\\
 		\end{itemize}
@@ -243,20 +246,25 @@ se reproduire.\\
 Les loups se nourrissent de moutons et d'humains, qu'ils doivent donc chasser. La 
 principale différence dans la fonction \textit{run}, par rapport, à celle du 
 mouton, est donc que de même qu'il y a recherche dans le cas de la 
-reproduction, il y a également recherche lorsqu'il faut se nourrir.
-La fonction de recherche de nourriture du loup contrairement à celle de reproduction 
-des animaux prend en compte le périmetre de vision du loup. Le loup quand il s'aggit de manger
-n'a pas une vision global de tous les animaux de la carte mais seulement ceux dans un petit rayon.
-Il est aussi important de noté que le loup prend pas n'importe quel animal mais le plus prés puis le plus 
-gros. Tous les loups ne sont pas tous égaux, ils ont tous une force diférente, idenpendante du sex.
-La force leur permet de determiner s'ils vont gagner leurs combats contre leurs proies.
-Quand le loup gagne le combat il mange sa proies et se nourrit en fonction de la jauge de nourriture de la victime.
-Mais d'un autre côté s'il perd, le mouton fuira ou l'humain le tuera.
-Le vieillissement des loups est modélisé par la perte de force du loup. A chaque combat le loup perd de la force.
-Le loup comme le mouton voit sa jauge de nourriture diminué à chaque tour.
-Les loups sont des acteurs non communiquand, mises à part lors de la reproduction tout comme les moutons.
-Les principales raisons de décés des loups sont leur positionnement initiale trop loin des troupeaux de moutons,
-et leur mauvaise gestion des moutons, ils déciment bien trop rapidement les troupeaux de moutons.
+reproduction, il y a également recherche lorsqu'il faut se nourrir.\\
+
+La fonction de recherche de nourriture du loup contrairement à celle de 
+reproduction des animaux prend en compte le périmètre de vision du loup. Le 
+loup quand il s'agit de manger n'a pas une vision globale de tous les animaux 
+de la carte mais seulement ceux dans un petit rayon. Il est aussi important de 
+noter que le loup choisira l'animal le plus proche, puis le plus gros parmis 
+ceux là. Tous les loups ne sont pas égaux, ils ont tous une force diférente, 
+idépendante du sexe. La force leur permet de déterminer s'ils vont gagner 
+leurs combats contre leurs proies. Quand le loup gagne le combat il mange sa 
+proie et se nourrit en fonction de la jauge de nourriture de la victime. Mais 
+s'il perd, le mouton fuira ou l'humain le tuera. Le vieillissement des loups 
+est modélisé par la perte de force du loup. A chaque combat le loup perd de la 
+force. Les loups sont des agents non communiquant, mises à part lors de la 
+reproduction tout comme les moutons.\\
+
+Les principales raisons de décès des loups sont leur positionnement initial 
+(trop loin des troupeaux de moutons) ainsi que leur mauvaise gestion des 
+moutons, en effet ils déciment bien trop rapidement les troupeaux de moutons.\\
 
 		\subsubsection{Les humains}
 
