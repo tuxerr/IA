@@ -92,13 +92,13 @@ class Interface(QtGui.QMainWindow):
         
     def generateMap(self):
         self.map.generate_map(self.conf)
-        gaia = Nature()
-        manager = Manager()
-        inter = Interface(self.conf,self.map,manager)
-        manager.addEtre(gaia)
-        self.map.desMoutonsDePartout()
-        self.map.desLoupsDePartout()
-        self.map.unForum()
+        # gaia = Nature()
+        # manager = Manager()
+        # inter = Interface(self.conf,self.map,manager)
+        # manager.addEtre(gaia)
+        # self.map.desMoutonsDePartout()
+        # self.map.desLoupsDePartout()
+        # self.map.unForum()
         self.overviewWidget.initScene()
 
         
