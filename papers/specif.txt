@@ -1,10 +1,6 @@
 Ressource naturelle :
 repousse du bois
 
-Cultivateur :
-champs coûte du temps
-va stocker ses récoltes
-
 Éleveur :
 à partir des animaux ramenés par les chasseurs
 nourrir les animaux avec aliments des cultures
