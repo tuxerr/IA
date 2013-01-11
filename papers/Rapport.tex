@@ -243,11 +243,11 @@ zéro pour que l'agent survive. Il s'agit de la jauge de nourriture, qui baisse
 en continu de façon indépendante des activités et la jauge de fatigue qui, 
 elle baissera en fonction de l'activité pratiquée par l'agent. Pour remplir 
 la jauge de nourriture l'agent pourra consommer de la nourriture issue de la 
-chasse, de la cueillette ou bien de l'agriculture, s'il consomme directement 
-ces aliments ceux ci seront moins nourrissants que s'ils sont préalablement 
-cuisinés par un agent cuisinier. Afin de remplir sa jauge de fatigue l'agent 
-peut cesser l'activité qu'il pratique et se reposer, c'est pendant cette 
-période de repos qu'il aura l'occasion de se reproduire.\\
+chasse, de la cueillette, de l'agriculture ou de l'élevage. S'il consomme 
+directement ces aliments ceux ci seront moins nourrissants que s'ils sont 
+préalablement cuisinés par un agent cuisinier. Afin de remplir sa jauge de 
+fatigue l'agent peut cesser l'activité qu'il pratique et se reposer, c'est 
+pendant cette période de repos qu'il aura l'occasion de se reproduire.\\
 
 Mis à part le chef dont le système de mémoire est plus développé, celui des 
 autres agents reste relativement limité. Deux agents se trouvant sur la même 
@@ -294,6 +294,22 @@ quand celui ci est plein apporter la nourriture dans un stockage adapté.\\
 
 		\begin{itemize}
 		\item Les cuisiniers\\
+		\end{itemize}
+
+Le cuisinier quand il se voit attribuer cette tâche se fait indiquer par le 
+chef l'emplacement d'un chaudron préalablement construit et non occupé par 
+un autre agent. Le chaudron dispose d'une capacité maximale et les agents 
+souhaitant se nourrir pourront venir s'y restaurer de façon plus efficace que 
+s'ils cosommaient de la nourriture directement. C'est le rôle du cuisinier 
+d'aller chercher de la nourriture dans un stockage quand son chaudron et vide.
+On considère que le temps de préparation sera pas pris en compte et donc que 
+la nourriture sera donc immédiatement accessible une fois dans le chaudron et 
+que la nature de la nourriture (viande, baie, issue de l'agriculture ou de 
+l'élevage) n'aura pas d'incidence sur le caractère nourrisant ou non de ce qui 
+est préparé.\\
+
+		\begin{itemize}
+		\item Les éleveurs\\
 		\end{itemize}
 
 

@@ -18,11 +18,6 @@ mémoire en fonction du rôle (un nombre max de « cases mémoires »)
 tant que des choses à faire on continue, sinon on va voir le chef (si avant temps limité)
 stockage des ressources dans les bâtiments correspondants
 
-Cuisinier :
-se fourni au stockage
-nourriture prête instantanément
-nombre de repas en fonction des « unités » de bouffe
-
 Reproduction humaine :
 pendant leur temps de repos
 + avec personne de sexe opposé
