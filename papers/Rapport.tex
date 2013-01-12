@@ -92,6 +92,35 @@ des animaux domestiques.\\
 % dans les consignes sur le site d'evrard il conseille \section{Objectifs}
 % mais je ne vois pas quoi mettre dedans
 
+\newpage
+\section{La technologie utilisée et les sources}
+
+	\subsection{Langage utilisé}
+
+Le langage utilisé est le Python dans sa version \textit{Python 3.3}. 
+L'interface graphique a été réalisée avec la bibliothéque Qt version \textit{Qt 
+4.9}.
+
+	\subsection{Comment lancer le projet ?}
+
+Une solution consiste à les télécharger et les installer, il suffit de trouver 
+la version correspondante sur leur site officiel et de lancer \textit{main.py} 
+comme tout programme Python.\\
+
+L'autre solution consiste a utilisé les exécutables \textit{main.exe} clef en 
+main. Il en existe deux, l'un pour du 32 bits et l'autre pour du 64 bits. Ces 
+exécutables ont été testés et fonctionnent sans nécessiter aucun réglage 
+préalable. Donc, sauf si vous voulez re-éxécuter le code, il vous suffit de 
+double-cliquer sur le main.exe qui convient à votre machine, l'application 
+prend un peu de temps pour se lancer.\\
+
+	\subsection{Organisation des sources}
+
+Les sources sont dans le dossier principal avec comme extension ".py", et le 
+dossier \textit{resource} contient les images utilisées pour l'interface 
+homme-machine.
+
+\newpage
 \section{Analyse du sujet et modélisation}
 
 	\subsection{L'univers}
@@ -117,52 +146,58 @@ par plusieurs agents simultanément. Les bâtiments occupent une seule cellule,
 les cellules sont occupées par un seul bâtiment au maximum. Les agents peuvent 
 traverser une cellule occupée par un bâtiment.
 
-	\subsection{La technologie utilisée et les sources}
-
-Le langage utilisé est le Python dans sa version 3.3. L'interface graphique a été réalisé avec la bibliothéque Qt version 4.9.
-Il est possible de les télécharger et de les instaler, il vous suffis de trouver la dernier release de ces versions sur leurs sites officiel,
-puis de lancer main.py comme tout programme Python.\\
-Mais ça ne sera pas utile. Il exist dans le fichier build deux dossiers comprenant 
-chancun un exécutable, main.exe. L'un des dossiers est pour du 32 bits et l'autre pour 64 bits. Nous avons testé sur plus de cinq machines
-win7 est l'exécutable marche très bien. Donc sauf si vous voulez re-éxécuter le code, il vous suffis de double cliquer sur le main.exe qui convient
-à votre machine, l'application prend un peu de temps pour se lancer.\\
-Dans le dossier principale avec comme extension ".py" sont les sources, et dans le dossier resource il y a les images utilisées pour l'interface 
-homme machine.
-
 	\subsection{L'interface homme machine}
 	
-L'interface homme machine comporte plusieurs boutons:
+L'interface homme machine comporte plusieurs boutons, expliqué ici (de gauche
+à droite).\\
 
 	\begin{itemize}
-	De gauche à droite:
-		\item Quité, permet de quiter l'application. Si vous avez regénéré la map 
-	il se peut qu'il ne marche pas dans ce cas alt+F4 ou toute autre méthode marche très bien.
-		\item Configuration, permet de modifier les paramètres pour la prochaine configuration. Mais si on ferme l'application la configuration par défaut est remie.
-		\item Play, envoie l'application.
-		\item Pause, met en pause l'application.
-		\item Generate Map, sur windows le bouton est invisible mais il existe et malheuresement il ne regénére pas les acteurs, autrement dit il ne marche pas.
-		\item Zoom +, permet de zoomer.
-		\item Zoom -, permet de deszoomer.
+
+	\item Quitter : permet de quitter l'application. Si vous avez regénéré 
+la map il se peut qu'il ne marche pas. Dans ce cas alt+F4 ou toute autre 
+méthode marche très bien.
+
+	\item Configuration : permet de modifier les paramètres pour la 
+prochaine configuration. Mais si on ferme l'application la configuration 
+par défaut est remise.
+
+	\item Play : lance l'application.
+
+	\item Pause : met l'application en pause.
+
+	\item Generate Map : sur windows le bouton est invisible mais il 
+existe et malheuresement il ne regénére pas les acteurs, autrement dit il 
+ne fonctionne pas correctement.
+
+	\item Zoom + : permet de zoomer.
+
+	\item Zoom - : permet de dézoomer.\\
+
 	\end{itemize}
 	
-La carte générée a un code couleur pour indiquer les objects et les acteurs:
+La carte générée a un code couleur pour indiquer les objects et les acteurs.\\
+
 	\begin{itemize}
-		\item Mers, pixels bleu foncé
-		\item Lacs, pixels bleu claire
-		\item Plages, pixels béige 
-		\item Bois, pixels vert foncé
-		\item Plaines, pixels vert claire
-		\item Baies, pixels rouge
-		\item Montages, pixels gris
-		\item Herbes mangées, pixels noir
-		\item Loups, dessin d'un loup
-		\item Moutons, dessin d'un mouton
-		\item Humais, dessin d'un humain
-		\item Forums, un "F" sur fond blanc
+
+	\item Mer : pixel bleu foncé
+	\item Lac : pixel bleu clair
+	\item Plage : pixel beige 
+	\item Bois : pixel vert foncé
+	\item Plaine : pixel vert clair
+	\item Baies : pixel rouge
+	\item Montage : pixel gris
+	\item Herbe mangée : pixel noir
+	\item Loup : dessin d'un loup
+	\item Mouton : dessin d'un mouton
+	\item Humain : dessin d'un humain
+	\item Forum : un "F" sur fond blanc
+
+	\end {itemize}
 
 	\subsection{Les bâtiments}
 
-Il existe plusieurs types différents de bâtiments.
+Il existe plusieurs types différents de bâtiments.\\
+
 	\begin{itemize}
 	
 	\item le Forum : il sera présent initialement sur la carte et les 
@@ -327,7 +362,7 @@ Mis à part le chef dont le système de mémoire est plus développé, celui des
 autres agents reste relativement limité. Deux agents se trouvant sur la même 
 cellule partagent les informations dont ils disposent avec d'autant plus de 
 probabilités que l'information sera en rapport avec l'activité courante de 
-l'agent.
+l'agent.\\
 
 		\begin{itemize}
 		\item Le chef\\
@@ -475,40 +510,81 @@ Cette gestion de l'explorateur permet de ne pas encombrer inutilement la mémoir
 L'explorateur doit bien faire attention à ses jauges pour éviter de mourrir. Il 
 doit donc prendre en compte le temps de retour.\\
 
-\textit{La suite est l'état actuel de nos agents humains\\}
+\textit{La suite présente l'état actuel de nos agents humains\\}
 
-Nous avons implémenté de cinqs des rôles que nous aurions voulut avoir.
-Les rôles des humains sont définis à leur création et ne seront pas changé lors de l'éxecution(mais ils sont changeable).
-Les rôles de type ramassage ont été implémenté telque les cueilleurs, les porteurs d'eau et les bucherons.
-Ces trois ont pour but de ramener des matériaux de la source au forum. Cela permet d'avoir une interaction entre l'environnement et 
-les humains. Les humains interagissent donc avec les baies, le bois et les loups. De plus les moutons intéragissent avec les loups et l'herbe.
-Au final tous les éléments créés sont reliés entre eux.
-Le porteur d'eau n'intéragie pas avec l'environnement, sauf quand un loup l'attaque. Il ne fait que aller d'un point A à un point B.\\
-L'explorateur à aussi était implémenté. Il est indispensable pour tous les autres. C'est lui qui va chercher les informations important de la carte.
-Ils se déplacent celon une direction donnée qui change quand ils rentrent au forum et ramenent au camp les informations.
-Il enregistre la position des baies, du bois et des sources d'eau douce. Il a un compteur de fatigue, dès qu'ils sont fatigués il rentre au forum
-pour se reposer et rendre compte de leurs trouvailles. Quand un obstacle le bloque il en change aléatoirement de direction.\\
-Le chef a pour rôle de mémoire global et il gére aussi la reproduction. Il reste sans bouger au forum, il est immortel.
-Il receuille les informations de tous les humains. En effet les explorateurs prennent tout type d'informations alors que 
-les trois autres enregistres uniquement les informations sur la position de leur type de ressource, par exemple, un bucheron dira au chef la position de tous les
-bois qu'il a vu. Quand ils rentrent au forum ils oublient tout et le chef gére la ressource pour pas faire de doublons.\\
-Il y a un autre type de mémoire. Elle se gére en avale, elle permet de ne pas avoir des informations éronés.
-Les recolteurs vont détruire les ressources et il serait génant qu'un explorateur dise au
-chef qu'en fait il existe encore. C'est pour cela que le cueilleur et le bucheron vont dire au chef qu'ils ont détruit une telle ressource.
-Le chef va garder dans la mémoire la destruction de cette matiére premiere. Par contre il faut le dire au chef en même temps qu'il assigne
-une destination aux recolteurs, sinon deux recolteurs vont aller au même endroit.
-Cette solution créée un probleme, si le recolteur meurt l'information du chef sera éroné, mais cela reste moins grave.
-Le chef garde cette information durant le double de la durée de fatigue de l'explorateur.
-Les recolteurs demandent au chef la premiere destination que leur propose le chef, l'implementation pour avoir la plus proche à été faite mais elle est trop lourde\\
-L'autre rôle du chef est de gérer la population. Quand la nourriture est au-dessus d'un certain seuil il donne naisssance à un nouvel humain.
-Le nouvel humain à plus de chance d'être un cueilleur puis un explorateur et enfin autant de chance pour les deux autres.\\
-Le seul batiment utilisé est le forum, il a une reserve maximum pour l'eau, le bois et la nourriture.
-L'état initial pour les humains est un forum et un humain de chaque rôle.
-Au début seul l'explorateur bouge, les autres attendent des informations de déplacements. Puis au retour de l'explorateur tous les humains se mettent à bouger.
-C'est la même image qui est utilisé pour tous les humains, la seule façon de les diférencier est en regardant leur direction.
+Nous avons implémenté cinq des rôles que nous aurions voulu avoir. Les rôles 
+des humains sont définis à leur création et ne seront pas changé lors de 
+l'éxecution (mais ils sont changeables).\\
 
+		\begin{itemize}
+		\item Les ramasseurs\\
+		\end{itemize}
 
+Les rôles de type ramassage de ressource ont été implémentés il s'agit des 
+cueilleurs, des porteurs d'eau et des bûcherons. Ces trois  rôles ont pour but 
+de ramener des matériaux de la source au forum. Cela permet d'avoir une 
+interaction entre l'environnement et les humains. Les humains interagissent 
+donc avec les baies, le bois et les loups. De plus les moutons intéragissent 
+avec les loups et l'herbe. Au final tous les éléments créés sont reliés entre 
+eux.\\
 
+		\begin{itemize}
+		\item L'explorateur\\
+		\end{itemize}
+
+Il est indispensable pour tous les autres. C'est lui qui va chercher les 
+informations importantes de la carte. Il se déplace selon une direction donnée 
+qui change quand il rentre au forum et ramène au camp les informations. Il 
+enregistre la position des baies, du bois et des sources d'eau douce. Il a un 
+compteur de fatigue, dès qu'il est fatigué il rentre au forum pour se reposer 
+et rendre compte de ses trouvailles. Quand un obstacle le bloque, il change 
+aléatoirement de direction.\\
+
+		\begin{itemize}
+		\item Le chef\\
+		\end{itemize}
+
+Le chef a pour rôle d'être la mémoire globale du village, il gére aussi la 
+reproduction. Il reste sans bouger au forum et est immortel. Il recueille les 
+informations de tous les autres agents humains. En effet les explorateurs 
+prennent tout type d'informations alors que les trois autres enregistrenet 
+uniquement les informations sur la position de leur type de ressource. Par 
+exemple, un bûcheron dira au chef la position de tous les bois qu'il a vu. 
+Quand ils rentrent au forum ils oublient tout et le chef gére la ressource 
+afin d'éviter les doublons.\\
+
+Il y a un autre type de mémoire. Elle permet une gestion en aval et évite 
+d'avoir des informations érronées. Les récolteurs vont détruire les ressources 
+et il serait génant qu'un explorateur dise au chef qu'en fait celle ci existe 
+encore. C'est pour cela que le cueilleur et le bûcheron vont dire au chef 
+quelles ressources ils ont détruites. Le chef va garder dans la mémoire la 
+destruction de cette matiére première. Par contre il faut le dire au chef 
+en même temps qu'il assigne une destination aux récolteurs, sinon deux 
+récolteurs risquent d'aller au même endroit. Cette solution crée un problème, 
+si le récolteur meurt l'information du chef sera érronée, mais cela reste 
+une solution acceptable. Le chef garde cette information durant le double de 
+la durée de fatigue de l'explorateur.\\
+
+Les récolteurs demandent au chef la première destination qu'il leur propose, 
+l'implémentation pour avoir la plus proche à été faite mais elle est trop 
+lourde.\\
+
+L'autre rôle du chef est de gérer la population. Quand la nourriture est 
+au-dessus d'un certain seuil il donne naisssance à un nouvel humain. Le nouvel 
+humain à plus de chance d'être un cueilleur puis un explorateur et enfin autant 
+de chance pour les deux autres.\\
+
+Le seul bâtiment utilisé est le forum, il a une capacité maximum pour l'eau, 
+le bois et la nourriture. Les autres types de bâtiments existent mais pas 
+les agents constructeurs.\\
+
+L'état initial est le suivant : un forum et  un humain de chaque rôle.\\
+
+Au début seul l'explorateur bouge, les autres attendent des informations de 
+déplacements. Puis au retour de l'explorateur tous les humains se mettent à 
+bouger.
+
+\newpage
 \section{Bilan}
 
 Les résultats concernant les agents animaux sont à la hauteur de l'analyse 
@@ -520,9 +596,10 @@ difficulté à implémenter les concepts et la modélisation que nous avions
 tirée du sujet, et d'autre part car la méthode de codage employée n'était pas 
 adaptée. En effet, croyant qu'il allait être possible de coder tout ce que nous 
 avions défini, nous avons essayer de coder tout ce qui concernait les humains 
-d'un coup. Rétrospectivement on peut se rendre compte que cela nous as fait 
+d'un coup. Rétrospectivement on peut se rendre compte que cela nous a fait 
 perdre beaucoup de temps et d'efficacité. C'est en changeant de méthode et en 
 utilisant une méthode de codage plus par itérations successives que tout en 
-bloc que nous avons réussi à coder quelques comportement pour nos agents humains.
+bloc que nous avons réussi à coder quelques comportements pour nos agents 
+humains.
 
 \end{document}
