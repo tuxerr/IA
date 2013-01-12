@@ -511,37 +511,77 @@ doit donc prendre en compte le temps de retour.\\
 
 \textit{La suite présente l'état actuel de nos agents humains\\}
 
-Nous avons implémenté de cinqs des rôles que nous aurions voulut avoir.
-Les rôles des humains sont définis à leur création et ne seront pas changé lors de l'éxecution(mais ils sont changeable).
-Les rôles de type ramassage ont été implémenté telque les cueilleurs, les porteurs d'eau et les bucherons.
-Ces trois ont pour but de ramener des matériaux de la source au forum. Cela permet d'avoir une interaction entre l'environnement et 
-les humains. Les humains interagissent donc avec les baies, le bois et les loups. De plus les moutons intéragissent avec les loups et l'herbe.
-Au final tous les éléments créés sont reliés entre eux.
-Le porteur d'eau n'intéragie pas avec l'environnement, sauf quand un loup l'attaque. Il ne fait que aller d'un point A à un point B.\\
-L'explorateur à aussi était implémenté. Il est indispensable pour tous les autres. C'est lui qui va chercher les informations important de la carte.
-Ils se déplacent celon une direction donnée qui change quand ils rentrent au forum et ramenent au camp les informations.
-Il enregistre la position des baies, du bois et des sources d'eau douce. Il a un compteur de fatigue, dès qu'ils sont fatigués il rentre au forum
-pour se reposer et rendre compte de leurs trouvailles. Quand un obstacle le bloque il en change aléatoirement de direction.\\
-Le chef a pour rôle de mémoire global et il gére aussi la reproduction. Il reste sans bouger au forum, il est immortel.
-Il receuille les informations de tous les humains. En effet les explorateurs prennent tout type d'informations alors que 
-les trois autres enregistres uniquement les informations sur la position de leur type de ressource, par exemple, un bucheron dira au chef la position de tous les
-bois qu'il a vu. Quand ils rentrent au forum ils oublient tout et le chef gére la ressource pour pas faire de doublons.\\
-Il y a un autre type de mémoire. Elle se gére en avale, elle permet de ne pas avoir des informations éronés.
-Les recolteurs vont détruire les ressources et il serait génant qu'un explorateur dise au
-chef qu'en fait il existe encore. C'est pour cela que le cueilleur et le bucheron vont dire au chef qu'ils ont détruit une telle ressource.
-Le chef va garder dans la mémoire la destruction de cette matiére premiere. Par contre il faut le dire au chef en même temps qu'il assigne
-une destination aux recolteurs, sinon deux recolteurs vont aller au même endroit.
-Cette solution créée un probleme, si le recolteur meurt l'information du chef sera éroné, mais cela reste moins grave.
-Le chef garde cette information durant le double de la durée de fatigue de l'explorateur.
-Les recolteurs demandent au chef la premiere destination que leur propose le chef, l'implementation pour avoir la plus proche à été faite mais elle est trop lourde\\
-L'autre rôle du chef est de gérer la population. Quand la nourriture est au-dessus d'un certain seuil il donne naisssance à un nouvel humain.
-Le nouvel humain à plus de chance d'être un cueilleur puis un explorateur et enfin autant de chance pour les deux autres.\\
-Le seul batiment utilisé est le forum, il a une reserve maximum pour l'eau, le bois et la nourriture.
-L'état initial pour les humains est un forum et un humain de chaque rôle.
-Au début seul l'explorateur bouge, les autres attendent des informations de déplacements. Puis au retour de l'explorateur tous les humains se mettent à bouger.
-C'est la même image qui est utilisé pour tous les humains, la seule façon de les diférencier est en regardant leur direction.
+Nous avons implémenté cinq des rôles que nous aurions voulu avoir. Les rôles 
+des humains sont définis à leur création et ne seront pas changé lors de 
+l'éxecution (mais ils sont changeables).\\
 
+		\begin{itemize}
+		\item Les ramasseurs\\
+		\end{itemize}
 
+Les rôles de type ramassage de ressource ont été implémentés il s'agit des 
+cueilleurs, des porteurs d'eau et des bûcherons. Ces trois  rôles ont pour but 
+de ramener des matériaux de la source au forum. Cela permet d'avoir une 
+interaction entre l'environnement et les humains. Les humains interagissent 
+donc avec les baies, le bois et les loups. De plus les moutons intéragissent 
+avec les loups et l'herbe. Au final tous les éléments créés sont reliés entre 
+eux.\\
+
+		\begin{itemize}
+		\item L'explorateur\\
+		\end{itemize}
+
+Il est indispensable pour tous les autres. C'est lui qui va chercher les 
+informations importantes de la carte. Il se déplace selon une direction donnée 
+qui change quand il rentre au forum et ramène au camp les informations. Il 
+enregistre la position des baies, du bois et des sources d'eau douce. Il a un 
+compteur de fatigue, dès qu'il est fatigué il rentre au forum pour se reposer 
+et rendre compte de ses trouvailles. Quand un obstacle le bloque, il change 
+aléatoirement de direction.\\
+
+		\begin{itemize}
+		\item Le chef\\
+		\end{itemize}
+
+Le chef a pour rôle d'être la mémoire globale du village, il gére aussi la 
+reproduction. Il reste sans bouger au forum et est immortel. Il recueille les 
+informations de tous les autres agents humains. En effet les explorateurs 
+prennent tout type d'informations alors que les trois autres enregistrenet 
+uniquement les informations sur la position de leur type de ressource. Par 
+exemple, un bûcheron dira au chef la position de tous les bois qu'il a vu. 
+Quand ils rentrent au forum ils oublient tout et le chef gére la ressource 
+afin d'éviter les doublons.\\
+
+Il y a un autre type de mémoire. Elle permet une gestion en aval et évite 
+d'avoir des informations érronées. Les récolteurs vont détruire les ressources 
+et il serait génant qu'un explorateur dise au chef qu'en fait celle ci existe 
+encore. C'est pour cela que le cueilleur et le bûcheron vont dire au chef 
+quelles ressources ils ont détruites. Le chef va garder dans la mémoire la 
+destruction de cette matiére première. Par contre il faut le dire au chef 
+en même temps qu'il assigne une destination aux récolteurs, sinon deux 
+récolteurs risquent d'aller au même endroit. Cette solution crée un problème, 
+si le récolteur meurt l'information du chef sera érronée, mais cela reste 
+une solution acceptable. Le chef garde cette information durant le double de 
+la durée de fatigue de l'explorateur.\\
+
+Les récolteurs demandent au chef la première destination qu'il leur propose, 
+l'implémentation pour avoir la plus proche à été faite mais elle est trop 
+lourde.\\
+
+L'autre rôle du chef est de gérer la population. Quand la nourriture est 
+au-dessus d'un certain seuil il donne naisssance à un nouvel humain. Le nouvel 
+humain à plus de chance d'être un cueilleur puis un explorateur et enfin autant 
+de chance pour les deux autres.\\
+
+Le seul bâtiment utilisé est le forum, il a une capacité maximum pour l'eau, 
+le bois et la nourriture. Les autres types de bâtiments existent mais pas 
+les agents constructeurs.\\
+
+L'état initial est le suivant : un forum et  un humain de chaque rôle.\\
+
+Au début seul l'explorateur bouge, les autres attendent des informations de 
+déplacements. Puis au retour de l'explorateur tous les humains se mettent à 
+bouger.
 
 \section{Bilan}
 
