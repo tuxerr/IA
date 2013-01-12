@@ -117,7 +117,7 @@ prend un peu de temps pour se lancer.\\
 	\subsection{Organisation des sources}
 
 Les sources sont dans le dossier principal avec comme extension ".py", et le 
-dossier \textit{resource} contient les images utilisées pour l'interface 
+dossier \textit{resources} contient les images utilisées pour l'interface 
 homme-machine.
 
 \newpage
@@ -131,7 +131,11 @@ concerne les différents types de terrains et les ressources naturelles
 (forêts, lacs, baies, ...) les coefficients peuvent être ajustés afin de créer 
 des cartes ayant leur spécificités propres.\\
 
-% detail perlin noise ?
+Le perlin noise est un algorithme de génération de bruit 2D qui nous permet 
+d'obtenir des formes continues. Plusieurs couches de perlin noise ont été 
+utilisées pour créer de façon réaliste la carte. La première génère la terre, 
+la plage et l'eau, la 2ème génère les forêts et la 3ème génère les moutons, 
+loups et baies.\\
 
 La carte est divisée en cellules unitaires, celles-ci contiennent les 
 informations relatives au terrain, aux agents et bâtiments présents sur la 
@@ -166,8 +170,8 @@ par défaut est remise.
 	\item Pause : met l'application en pause.
 
 	\item Generate Map : sur windows le bouton est invisible mais il 
-existe et se devine facilement. Après que la nouvelle map est générée tous les boutons
-fonctionnes correctement exepté pour le bouton quitter.
+existe et malheuresement il ne regénére pas les acteurs, autrement dit il 
+ne fonctionne pas correctement.
 
 	\item Zoom + : permet de zoomer.
 
@@ -235,7 +239,7 @@ Tous les types d'agents disposeront d'une fonction \textit{run} qui sera jouée
 jauge de nourriture tombe à zéro seront également universels.
 
 La modélisation du vieillissement est elle aussi commune, l'âge en lui même 
-n'est pas prs en compte mais la mort des agents par vieillesse existe. La 
+n'est pas pris en compte mais la mort des agents par vieillesse existe. La 
 modélisation mathématique retenue est une simplification du modèle de Weibull 
 (courbe en baignoire). En effet au début le taux de mortalité est décroissant 
 et correspond à une période de mortalité infantile, ensuite le taux de 
@@ -520,7 +524,7 @@ l'éxecution (mais ils sont changeables).\\
 		\item Les ramasseurs\\
 		\end{itemize}
 
-Les rôles de type ramassage de ressource ont été implémentés il s'agit des 
+Les rôles de type ramassage de ressource ont été implémentés : il s'agit des 
 cueilleurs, des porteurs d'eau et des bûcherons. Ces trois  rôles ont pour but 
 de ramener des matériaux de la source au forum. Cela permet d'avoir une 
 interaction entre l'environnement et les humains. Les humains interagissent 
@@ -554,7 +558,7 @@ Quand ils rentrent au forum ils oublient tout et le chef gére la ressource
 afin d'éviter les doublons.\\
 
 Il y a un autre type de mémoire. Elle permet une gestion en aval et évite 
-d'avoir des informations érronées. Les récolteurs vont détruire les ressources 
+d'avoir des informations erronées. Les récolteurs vont détruire les ressources 
 et il serait génant qu'un explorateur dise au chef qu'en fait celle ci existe 
 encore. C'est pour cela que le cueilleur et le bûcheron vont dire au chef 
 quelles ressources ils ont détruites. Le chef va garder dans la mémoire la 
@@ -572,7 +576,7 @@ lourde.\\
 L'autre rôle du chef est de gérer la population. Quand la nourriture est 
 au-dessus d'un certain seuil il donne naisssance à un nouvel humain. Le nouvel 
 humain à plus de chance d'être un cueilleur puis un explorateur et enfin autant 
-de chance pour les deux autres.\\
+de chance pour les deux autres rôles possibles.\\
 
 Le seul bâtiment utilisé est le forum, il a une capacité maximum pour l'eau, 
 le bois et la nourriture. Les autres types de bâtiments existent mais pas 
