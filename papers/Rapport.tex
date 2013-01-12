@@ -147,38 +147,56 @@ traverser une cellule occupée par un bâtiment.
 
 	\subsection{L'interface homme machine}
 	
-L'interface homme machine comporte plusieurs boutons:
+L'interface homme machine comporte plusieurs boutons, expliqué ici (de gauche
+à droite).\\
 
 	\begin{itemize}
-	De gauche à droite:
-		\item Quité, permet de quiter l'application. Si vous avez regénéré la map 
-	il se peut qu'il ne marche pas dans ce cas alt+F4 ou toute autre méthode marche très bien.
-		\item Configuration, permet de modifier les paramètres pour la prochaine configuration. Mais si on ferme l'application la configuration par défaut est remie.
-		\item Play, envoie l'application.
-		\item Pause, met en pause l'application.
-		\item Generate Map, sur windows le bouton est invisible mais il existe et malheuresement il ne regénére pas les acteurs, autrement dit il ne marche pas.
-		\item Zoom +, permet de zoomer.
-		\item Zoom -, permet de deszoomer.
+
+	\item Quitter : permet de quitter l'application. Si vous avez regénéré 
+la map il se peut qu'il ne marche pas. Dans ce cas alt+F4 ou toute autre 
+méthode marche très bien.
+
+	\item Configuration : permet de modifier les paramètres pour la 
+prochaine configuration. Mais si on ferme l'application la configuration 
+par défaut est remise.
+
+	\item Play : lance l'application.
+
+	\item Pause : met l'application en pause.
+
+	\item Generate Map : sur windows le bouton est invisible mais il 
+existe et malheuresement il ne regénére pas les acteurs, autrement dit il 
+ne fonctionne pas correctement.
+
+	\item Zoom + : permet de zoomer.
+
+	\item Zoom - : permet de dézoomer.\\
+
 	\end{itemize}
 	
-La carte générée a un code couleur pour indiquer les objects et les acteurs:
+La carte générée a un code couleur pour indiquer les objects et les acteurs.\\
+
 	\begin{itemize}
-		\item Mers, pixels bleu foncé
-		\item Lacs, pixels bleu claire
-		\item Plages, pixels béige 
-		\item Bois, pixels vert foncé
-		\item Plaines, pixels vert claire
-		\item Baies, pixels rouge
-		\item Montages, pixels gris
-		\item Herbes mangées, pixels noir
-		\item Loups, dessin d'un loup
-		\item Moutons, dessin d'un mouton
-		\item Humais, dessin d'un humain
-		\item Forums, un "F" sur fond blanc
+
+	\item Mer : pixel bleu foncé
+	\item Lac : pixel bleu clair
+	\item Plage : pixel beige 
+	\item Bois : pixel vert foncé
+	\item Plaine : pixel vert clair
+	\item Baies : pixel rouge
+	\item Montage : pixel gris
+	\item Herbe mangée : pixel noir
+	\item Loup : dessin d'un loup
+	\item Mouton : dessin d'un mouton
+	\item Humain : dessin d'un humain
+	\item Forum : un "F" sur fond blanc
+
+	\end {itemize}
 
 	\subsection{Les bâtiments}
 
-Il existe plusieurs types différents de bâtiments.
+Il existe plusieurs types différents de bâtiments.\\
+
 	\begin{itemize}
 	
 	\item le Forum : il sera présent initialement sur la carte et les 
@@ -491,7 +509,7 @@ Cette gestion de l'explorateur permet de ne pas encombrer inutilement la mémoir
 L'explorateur doit bien faire attention à ses jauges pour éviter de mourrir. Il 
 doit donc prendre en compte le temps de retour.\\
 
-\textit{La suite est l'état actuel de nos agents humains\\}
+\textit{La suite présente l'état actuel de nos agents humains\\}
 
 Nous avons implémenté de cinqs des rôles que nous aurions voulut avoir.
 Les rôles des humains sont définis à leur création et ne seront pas changé lors de l'éxecution(mais ils sont changeable).
